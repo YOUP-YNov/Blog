@@ -141,6 +141,7 @@
     <Compile Include="BLL\BLOG_BLL.cs" />
     <Compile Include="Controllers\ArticleController.cs" />
     <Compile Include="Controllers\BlogController.cs" />
+    <Compile Include="Controllers\Models\Article.cs" />
     <Compile Include="DAL\BLOG_DAL.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
