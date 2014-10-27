@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ModuleBlog.DAL
+namespace ModuleBlog.DAL.Models
 {
     public class ArticleDao
     {
@@ -17,6 +17,8 @@ namespace ModuleBlog.DAL
         public DateTime DateCreation { get; set; }
         public DateTime DateModification { get; set; }
         public bool Actif { get; set; }
+
+        public List<HashTagArticleDao> ListeTags { get; set; }
 
         public ArticleDao()
         {
