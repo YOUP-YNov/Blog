@@ -4,14 +4,15 @@ using System.Linq;
 using System.Web;
 using System.Data;
 using System.Data.SqlClient;
-
+using System.Configuration;
 
 namespace ModuleBlog.DAL
 {
     public class BLOG_DAL
     {
-        String strcon = @"User id =YoupDev;Password=youpD3VASP*;" +
-                   @"Server=avip9np4yy.database.windows.net,1433;Database=YoupDev";
+        string strcon = @"User id =YoupDev;Password=youpD3VASP*;" +
+               @"Server=avip9np4yy.database.windows.net,1433;Database=YoupDev";
+       // string strcon = ConfigurationManager.ConnectionStrings["YoupDEV"].ConnectionString;
         SqlCommand cmdselect = null;
         SqlCommand cmdupdate = null;
         SqlCommand cmddelete = null;

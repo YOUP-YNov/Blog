@@ -594,14 +594,14 @@
             <param name="categoryId">identifiant de la catégorie</param>
             <returns>Liste des blogs</returns>
         </member>
-        <member name="M:ModuleBlog.Controllers.BlogController.Post(ModuleBlog.Models.Blog)">
+        <member name="M:ModuleBlog.Controllers.BlogController.Post(ModuleBlog.Controllers.Models.Blog)">
             <summary>
             Ajouter un blog
             </summary>
             <param name="blog">le blog à ajouter</param>
             <returns>Réponse HTTP</returns>
         </member>
-        <member name="M:ModuleBlog.Controllers.BlogController.Put(ModuleBlog.Models.Blog)">
+        <member name="M:ModuleBlog.Controllers.BlogController.Put(ModuleBlog.Controllers.Models.Blog)">
             <summary>
             Mettre à jour un blog
             </summary>
