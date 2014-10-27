@@ -1,4 +1,4 @@
-﻿using ModuleBlog.Models;
+﻿using ModuleBlog.Controllers.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
