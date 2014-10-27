@@ -6,70 +6,72 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
 
+
 namespace ModuleBlog.DAL
 {
     public class BLOG_DAL
     {
-        string strcon = @"User id =YoupDev;Password=youpD3VASP*;" +
-               @"Server=avip9np4yy.database.windows.net,1433;Database=YoupDev";
-       // string strcon = ConfigurationManager.ConnectionStrings["YoupDEV"].ConnectionString;
-        SqlCommand cmdselect = null;
-        SqlCommand cmdupdate = null;
-        SqlCommand cmddelete = null;
-        SqlCommand cmdinsert = null;
+        
+
+        //string strcon = ConfigurationManager.ConnectionStrings["YoupDEV"].ConnectionString;
+        SqlCommand cmd;
         SqlConnection con;
         SqlDataAdapter da;
+        DataSet ds;
 
-        public DataSet DeleteBlog(int userId)
+        public BLOG_DAL()
         {
-            DataSet ds = new DataSet();
+            string strcon = @"User id =YoupDev;Password=youpD3VASP*;" +
+                   @"Server=avip9np4yy.database.windows.net,1433;Database=YoupDev";
             con = new SqlConnection(strcon);
-            cmddelete = new SqlCommand();
-            cmddelete.CommandText = "BLOG_DeleteBlog";
-            cmddelete.CommandTimeout = 0;
-            cmddelete.CommandType = CommandType.StoredProcedure;
-            cmddelete.Connection = con;
-            da = new SqlDataAdapter(cmddelete);
-            cmddelete.Parameters.Add(new SqlParameter("@UserId",
-                   SqlDbType.BigInt, 12, "User_id"));
-            cmddelete.Parameters["@UserId"].Value = userId;
+        }
+        public string DeleteBlog(int userId)
+        {
+            ds = new DataSet();
+
+            cmd = new SqlCommand();
+            cmd.CommandText = "BLOG_DeleteBlog";
+            cmd.CommandTimeout = 0;
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = con;
+            cmd.Parameters.AddWithValue("@UserId", userId);
+
+            da = new SqlDataAdapter(cmd);
+
             try
             {
                 con.Open();
                 da.Fill(ds);
                 con.Close();
-            }
-            catch (SqlException)
-            {
-                throw;
-            }
 
-            return ds;
+                return ds.Tables[0].Rows[0].ToString();
+            }
+            catch (SqlException ex)
+            {
+                return ex.Message;
+            }
         }
 
-        public BlogDao GetBlogById(int idBlog)
+        public BlogDao GetBlogById(int idBlog, int userId)
         {
-            DataSet ds = new DataSet();
-            BlogDao bDao = new BlogDao();
-            con = new SqlConnection(strcon);
-            cmdselect = new SqlCommand();
-            cmdselect.CommandText = "BLOG_GetBlogById";
-            cmdselect.CommandTimeout = 0;
-            cmdselect.CommandType = CommandType.StoredProcedure;
-            cmdselect.Connection = con;
-            da = new SqlDataAdapter(cmdselect);
-            cmdselect.Parameters.Add(new SqlParameter("@BlogId",
-                      SqlDbType.BigInt, 12, "Blog_id"));
-            cmdselect.Parameters.Add(new SqlParameter("@UserId",
-                      SqlDbType.BigInt, 12, "User_id"));
-            cmdselect.Parameters["@BlogId"].Value = idBlog;
-            cmdselect.Parameters["@UserId"].Value = 7;
-            // à définir la valeur du user ID ou l'a recupere t-on?
+            ds = new DataSet();
+
+            cmd = new SqlCommand();
+            cmd.CommandText = "BLOG_GetBlogById";
+            cmd.CommandTimeout = 0;
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = con;
+            cmd.Parameters.AddWithValue("@BlogId", idBlog);
+            cmd.Parameters.AddWithValue("@UserId", userId);
+
+            da = new SqlDataAdapter(cmd);
+
             try
             {
                 con.Open();
                 da.Fill(ds);
-                
+                BlogDao bDao = new BlogDao();
+
                 foreach (DataTable table in ds.Tables)
                 {
                     foreach (DataRow dr in table.Rows)
@@ -85,37 +87,33 @@ namespace ModuleBlog.DAL
                     }
                 }
                 con.Close();
+                return bDao;
             }
-            catch (SqlException)
+            catch (SqlException ex)
             {
-                throw;
+                throw ex;
             }
-            return bDao;
         }
 
-        public BlogDao GetBlogByCategory(int categoryId)
+        public BlogDao GetBlogsByCategory(int categoryId)
         {
-            DataSet ds = new DataSet();
-            BlogDao bDao = new BlogDao();
-            con = new SqlConnection(strcon);
-            cmdselect = new SqlCommand();
-            cmdselect.CommandText = "BLOG_GetBlogByCategory";
-            cmdselect.CommandTimeout = 0;
-            cmdselect.CommandType = CommandType.StoredProcedure;
-            cmdselect.Connection = con;
-            da = new SqlDataAdapter(cmdselect);
-            cmdselect.Parameters.Add(new SqlParameter("@CategoryId",
-                      SqlDbType.BigInt, 12, "Category_id"));
-            cmdselect.Parameters.Add(new SqlParameter("@CategoryId",
-                      SqlDbType.BigInt, 12, "Category_id"));
-            cmdselect.Parameters["@CategoryId"].Value = categoryId;
-            
+            ds = new DataSet();
+
+            cmd = new SqlCommand();
+            cmd.CommandText = "BLOG_GetBlogByCategory";
+            cmd.CommandTimeout = 0;
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = con;
+            cmd.Parameters.AddWithValue("@CategoryId", categoryId);
+
+            da = new SqlDataAdapter(cmd);           
 
             try
             {
                 con.Open();
-
                 da.Fill(ds);
+                BlogDao bDao = new BlogDao();
+
                 foreach (DataTable table in ds.Tables)
                 {
                     foreach (DataRow dr in table.Rows)
@@ -131,29 +129,29 @@ namespace ModuleBlog.DAL
                     }
                 }
                 con.Close();
+                return bDao;
             }
-            catch (SqlException)
+            catch (SqlException ex)
             {
-                throw;
+                throw ex;
             }
-            return bDao;
         }
         public List<BlogDao> GetBlogs()
         {
-            DataSet ds = new DataSet();
-            List<BlogDao> listBDao = new List<BlogDao>();
-            con = new SqlConnection(strcon);
-            cmdselect = new SqlCommand();
-            cmdselect.CommandText = "BLOG_GetBlogs";
-            cmdselect.CommandTimeout = 0;
-            cmdselect.CommandType = CommandType.StoredProcedure;
-            cmdselect.Connection = con;
-            da = new SqlDataAdapter(cmdselect);
+            ds = new DataSet();
+            
+            cmd = new SqlCommand();
+            cmd.CommandText = "BLOG_GetBlogs";
+            cmd.CommandTimeout = 0;
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = con;
+            da = new SqlDataAdapter(cmd);
 
             try
             {
                 con.Open();
                 da.Fill(ds);
+                List<BlogDao> listBDao = new List<BlogDao>();
                 foreach (DataTable table in ds.Tables)
                 {
                     BlogDao bDao = new BlogDao();
@@ -172,36 +170,34 @@ namespace ModuleBlog.DAL
                 }
 
                 con.Close();
+                return listBDao;
             }
-            catch (SqlException)
+            catch (SqlException ex)
             {
-                throw;
+                throw ex;
             }
-            return listBDao;
-
         }
 
         public List<BlogDao> GetBlogsBySearch(int categoryId, string keystring)
         {
-            DataSet ds = new DataSet();
-            List<BlogDao> listBDao = new List<BlogDao>();
-            con = new SqlConnection(strcon);
-            cmdselect = new SqlCommand();
-            cmdselect.CommandText = "BLOG_GetBlogBySearch";
-            cmdselect.CommandTimeout = 0;
-            cmdselect.CommandType = CommandType.StoredProcedure;
-            cmdselect.Connection = con;
-            da = new SqlDataAdapter(cmdselect);
-            cmdselect.Parameters.Add(new SqlParameter("@CategoryId",
-                      SqlDbType.BigInt, 12, "Category_id"));
-            cmdselect.Parameters.Add(new SqlParameter("@KeyString",
-                      SqlDbType.VarChar, 50, "TitreBlog"));
-            cmdselect.Parameters["@CategoryId"].Value = categoryId;
-            cmdselect.Parameters["@KeyString"].Value = keystring;
+            ds = new DataSet();
+
+            cmd= new SqlCommand();
+            cmd.CommandText = "BLOG_GetBlogBySearch";
+            cmd.CommandTimeout = 0;
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = con;
+            cmd.Parameters.AddWithValue("@CategoryId", categoryId);
+            cmd.Parameters.AddWithValue("@KeyString", keystring);
+
+            da = new SqlDataAdapter(cmd);
+
             try
             {
                 con.Open();
                 da.Fill(ds);
+                List<BlogDao> listBDao = new List<BlogDao>();
+
                 foreach (DataTable table in ds.Tables)
                 {
                     BlogDao bDao = new BlogDao();
@@ -219,30 +215,33 @@ namespace ModuleBlog.DAL
                     listBDao.Add(bDao);
                 }
                 con.Close();
+                return listBDao;
             }
-            catch (SqlException)
+            catch (SqlException ex)
             {
-                throw;
+                throw ex;
             }
-            return listBDao;
+           
         }
 
         public List<BlogDao> GetPromotedBlogs()
         {
-            DataSet ds = new DataSet();
-            List<BlogDao> listBDao = new List<BlogDao>();
-            con = new SqlConnection(strcon);
-            cmdselect = new SqlCommand();
-            cmdselect.CommandText = "BLOG_GetPromotedBlogs";
-            cmdselect.CommandTimeout = 0;
-            cmdselect.CommandType = CommandType.StoredProcedure;
-            cmdselect.Connection = con;
-            da = new SqlDataAdapter(cmdselect);
+            ds = new DataSet();
+
+            cmd = new SqlCommand();
+            cmd.CommandText = "BLOG_GetPromotedBlogs";
+            cmd.CommandTimeout = 0;
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = con;
+
+            da = new SqlDataAdapter(cmd);
 
             try
             {
                 con.Open();
                 da.Fill(ds);
+                List<BlogDao> listBDao = new List<BlogDao>();
+
                 foreach (DataTable table in ds.Tables)
                 {
                     BlogDao bDao = new BlogDao();
@@ -260,121 +259,104 @@ namespace ModuleBlog.DAL
                     listBDao.Add(bDao);
                 }
                 con.Close();
+                return listBDao;
             }
-            catch (SqlException)
+            catch (SqlException ex)
             {
-                throw;
+                throw ex;
             }
-            return listBDao;
+            
 
         }
 
-        public DataSet PromoteBlog(int userId)
+        public string PromoteBlog(int userId, bool promoted)
         {
-            DataSet ds = new DataSet();
-            con = new SqlConnection(strcon);
-            cmdupdate = new SqlCommand();
-            cmdupdate.CommandText = "BLOG_PromoteBlog";
-            cmdupdate.CommandTimeout = 0;
-            cmdupdate.CommandType = CommandType.StoredProcedure;
-            cmdupdate.Connection = con;
-            da = new SqlDataAdapter(cmdupdate);
-            cmdupdate.Parameters.Add(new SqlParameter("@UserId",
-                   SqlDbType.BigInt, 12, "User_id"));
-            cmdupdate.Parameters["@UserId"].Value = userId;
+            ds = new DataSet();
+
+            cmd = new SqlCommand();
+            cmd.CommandText = "BLOG_PromoteBlog";
+            cmd.CommandTimeout = 0;
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = con;
+            cmd.Parameters.AddWithValue("@UserId", userId);
+            cmd.Parameters.AddWithValue("@Promoted", promoted);
+
+            da = new SqlDataAdapter(cmd);
+
             try
             {
                 con.Open();
                 da.Fill(ds);
                 con.Close();
-            }
-            catch (SqlException)
-            {
-                throw;
-            }
 
-            return ds;
+                return ds.Tables[0].Rows[0].ToString();
+            }
+            catch (SqlException ex)
+            {
+                return ex.Message;
+            }
         }
 
-        public DataSet UpdateBlog(BlogDao blog)
+        public string UpdateBlog(BlogDao blog)
         {
+            ds = new DataSet();
 
-            DataSet ds = new DataSet();
-            con = new SqlConnection(strcon);
-            cmdupdate = new SqlCommand();
-            cmdupdate.CommandText = "BLOG_PromoteBlog";
-            cmdupdate.CommandTimeout = 0;
-            cmdupdate.CommandType = CommandType.StoredProcedure;
-            cmdupdate.Connection = con;
-            da = new SqlDataAdapter(cmdupdate);
-            cmdupdate.Parameters.Add(new SqlParameter("@UserId",
-                   SqlDbType.BigInt, 12, "User_id"));
-            cmdupdate.Parameters["@UserId"].Value = blog.Utilisateur_id;
-            cmdupdate.Parameters.Add(new SqlParameter("@Title",
-                   SqlDbType.VarChar, 50, "Titre_blog"));
-            cmdupdate.Parameters["@Title"].Value = blog.TitreBlog;
-            cmdupdate.Parameters.Add(new SqlParameter("@Category",
-                   SqlDbType.BigInt, 12, "Category_id"));
-            cmdupdate.Parameters["@Category"].Value = blog.Categorie_id;
-            cmdupdate.Parameters.Add(new SqlParameter("@Theme",
-                   SqlDbType.BigInt, 12, "Theme_id"));
-            cmdupdate.Parameters["@Theme"].Value = blog.Theme_id;
+            cmd = new SqlCommand();
+            cmd.CommandText = "BLOG_UpdateBlog";
+            cmd.CommandTimeout = 0;
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = con;
+            cmd.Parameters.AddWithValue("@UserId", blog.Utilisateur_id);
+            cmd.Parameters.AddWithValue("@Title", blog.TitreBlog);
+            cmd.Parameters.AddWithValue("@Category", blog.Categorie_id);
+            cmd.Parameters.AddWithValue("@Theme", blog.Theme_id);
+
+            da = new SqlDataAdapter(cmd);
            
             try
             {
                 con.Open();
                 da.Fill(ds);
                 con.Close();
-            }
-            catch (SqlException)
-            {
-                throw;
-            }
 
-            return ds;
+                return ds.Tables[0].Rows[0].ToString();
+            }
+            catch (SqlException ex)
+            {
+                return ex.Message;
+            }
         }
 
 
-        public DataSet AddBlog(BlogDao blog)
+        public string AddBlog(BlogDao blog)
         {
+            ds = new DataSet();
 
-            DataSet ds = new DataSet();
-            con = new SqlConnection(strcon);
-            cmdinsert = new SqlCommand();
-            cmdinsert.CommandText = "BLOG_AddBlog";
-            cmdinsert.CommandTimeout = 0;
-            cmdinsert.CommandType = CommandType.StoredProcedure;
-            cmdinsert.Connection = con;
-            da = new SqlDataAdapter(cmdinsert);
-            cmdinsert.Parameters.Add(new SqlParameter("@UserId",
-                   SqlDbType.BigInt, 12, "User_id"));
-            cmdinsert.Parameters["@UserId"].Value = blog.Utilisateur_id;
-            cmdinsert.Parameters.Add(new SqlParameter("@Title",
-                   SqlDbType.VarChar, 50, "Titre_blog"));
-            cmdinsert.Parameters["@Title"].Value = blog.TitreBlog;
-            cmdinsert.Parameters.Add(new SqlParameter("@Category",
-                   SqlDbType.BigInt, 12, "Category_id"));
-            cmdinsert.Parameters["@Category"].Value = blog.Categorie_id;
-            cmdinsert.Parameters.Add(new SqlParameter("@Theme",
-                   SqlDbType.BigInt, 12, "Theme_id"));
-            cmdinsert.Parameters["@Theme"].Value = blog.Theme_id;
-            cmdinsert.Parameters.Add(new SqlParameter("@CreationDate",
-                   SqlDbType.DateTime, 12, "CreationDate"));
-            cmdinsert.Parameters["@Theme"].Value = blog.DateCreation;
+            cmd = new SqlCommand();
+            cmd.CommandText = "BLOG_AddBlog";
+            cmd.CommandTimeout = 0;
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = con;
+            cmd.Parameters.AddWithValue("@UserId", blog.Utilisateur_id);
+            cmd.Parameters.AddWithValue("@Title", blog.TitreBlog);
+            cmd.Parameters.AddWithValue("@CreationDate", blog.DateCreation);
+            cmd.Parameters.AddWithValue("@Category", blog.Categorie_id);
+            cmd.Parameters.AddWithValue("@Theme", blog.Theme_id);
 
+            da = new SqlDataAdapter(cmd);
 
             try
             {
                 con.Open();
                 da.Fill(ds);
                 con.Close();
-            }
-            catch (SqlException)
-            {
-                throw;
-            }
 
-            return ds;
+                return ds.Tables[0].Rows[0].ToString();
+            }
+            catch (SqlException ex)
+            {
+                return ex.Message;
+            }
         }
 
     }

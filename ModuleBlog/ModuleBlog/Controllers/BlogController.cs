@@ -1,5 +1,4 @@
-﻿using ModuleBlog;
-using ModuleBlog.Controllers.Models;
+﻿using ModuleBlog.Controllers.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,8 +25,9 @@ namespace ModuleBlog.Controllers
         /// Récupérer un blog par son identifiant (et indique qu'il a été visité)
         /// </summary>
         /// <param name="id">identifiant du blog</param>
+        /// <param name="userId">identifiant de l'utilisateur connecté</param>
         /// <returns>le blog</returns>
-        public Blog GetById(int id)
+        public Blog GetById(int id, int userId)
         {
             return null;
         }
@@ -96,6 +96,18 @@ namespace ModuleBlog.Controllers
         /// <param name="blog">Blog à modifier</param>
         /// <returns>Réponse HTTP</returns>
         public IHttpActionResult Put(Blog blog)
+        {
+            return Ok();
+        }
+
+        // PUT : api/UpdateBlog
+        /// <summary>
+        /// Promouvoir un blog
+        /// </summary>
+        /// <param name="userId">identifiant de l'utilisateur</param>
+        /// <param name="Promoted">promouvoir = 1 (vrai)</param>
+        /// <returns>Réponse HTTP</returns>
+        public IHttpActionResult Put(int userId, bool Promoted)
         {
             return Ok();
         }
