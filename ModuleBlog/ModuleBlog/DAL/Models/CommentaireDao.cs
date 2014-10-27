@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ModuleBlog.Controllers.Models
+namespace ModuleBlog.DAL.Models
 {
     public class CommentaireDao
     {
