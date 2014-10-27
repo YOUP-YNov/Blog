@@ -5,6 +5,7 @@ using System.Web;
 using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
+using ModuleBlog.DAL.Models;
 
 
 namespace ModuleBlog.DAL
