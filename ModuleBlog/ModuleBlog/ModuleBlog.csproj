@@ -158,6 +158,7 @@
     <Compile Include="DAL\Models\ArticleDao.cs" />
     <Compile Include="DAL\BLOG_DAL.cs" />
     <Compile Include="DAL\Models\ThemeDao.cs" />
+    <Compile Include="DAL\PUBLICITE_DAL.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
