@@ -152,6 +152,7 @@
     <Compile Include="Controllers\Models\Publicite.cs" />
     <Compile Include="DAL\ARTICLE_DAL.cs" />
     <Compile Include="DAL\CATEGORIE_DAL.cs" />
+    <Compile Include="DAL\COMMENTAIRE_DAL.cs" />
     <Compile Include="DAL\Models\CategorieDao.cs" />
     <Compile Include="DAL\Models\CommentaireDao.cs" />
     <Compile Include="DAL\Models\HashTagArticleDao.cs" />

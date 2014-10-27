@@ -6,6 +6,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
 using ModuleBlog.Controllers.Models;
+using ModuleBlog.DAL.Models;
 
 namespace ModuleBlog.DAL
 {
@@ -29,7 +30,6 @@ namespace ModuleBlog.DAL
         public string DeleteCommentaire(int commentaireId)
         {
             DataSet ds = new DataSet();
-            string result = "";
             cmd = new SqlCommand();
             cmd.CommandText = "BLOG_DeleteCommentaire";
             cmd.CommandTimeout = 0;
