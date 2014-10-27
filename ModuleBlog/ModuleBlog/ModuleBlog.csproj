@@ -150,7 +150,14 @@
     <Compile Include="Controllers\Models\Categorie.cs" />
     <Compile Include="Controllers\Models\Commentaire.cs" />
     <Compile Include="Controllers\Models\Publicite.cs" />
+    <Compile Include="DAL\Models\CategorieDao.cs" />
+    <Compile Include="DAL\Models\CommentaireDao.cs" />
+    <Compile Include="DAL\Models\HashTagArticleDao.cs" />
+    <Compile Include="DAL\Models\LikeDao.cs" />
+    <Compile Include="DAL\Models\PubliciteDao.cs" />
+    <Compile Include="DAL\Models\ArticleDao.cs" />
     <Compile Include="DAL\BLOG_DAL.cs" />
+    <Compile Include="DAL\Models\ThemeDao.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
