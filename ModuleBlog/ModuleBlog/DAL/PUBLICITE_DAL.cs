@@ -1,4 +1,5 @@
 ﻿using ModuleBlog.Controllers.Models;
+using ModuleBlog.DAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
