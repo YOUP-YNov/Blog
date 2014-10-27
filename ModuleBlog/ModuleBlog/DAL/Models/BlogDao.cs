@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ModuleBlog.Controllers.Models
+namespace ModuleBlog.DAL
 {
-    public class Blog
+    public class BlogDao
     {
         public int Blog_id { get; set; }
         public int Utilisateur_id { get; set; }
@@ -17,7 +17,7 @@ namespace ModuleBlog.Controllers.Models
         public bool Promotion { get; set; }
         public int Theme_id { get; set; }
 
-        public Blog()
+        public BlogDao()
         {
 
         }

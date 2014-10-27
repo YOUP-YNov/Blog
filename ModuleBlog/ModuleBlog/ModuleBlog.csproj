@@ -146,6 +146,7 @@
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\CommentController.cs" />
     <Compile Include="Controllers\Models\Article.cs" />
+    <Compile Include="Controllers\Models\Blog.cs" />
     <Compile Include="Controllers\Models\Categorie.cs" />
     <Compile Include="Controllers\Models\Commentaire.cs" />
     <Compile Include="Controllers\Models\Publicite.cs" />
@@ -153,7 +154,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Controllers\Models\Blog.cs" />
+    <Compile Include="DAL\Models\BlogDao.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
