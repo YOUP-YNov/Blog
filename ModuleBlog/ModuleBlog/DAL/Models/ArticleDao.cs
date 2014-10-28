@@ -22,7 +22,7 @@ namespace ModuleBlog.DAL.Models
 
         public ArticleDao()
         {
-                
+            ListeTags = new List<HashTagArticleDao>();
         }
     }
 
