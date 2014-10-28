@@ -129,19 +129,25 @@ namespace ModuleBlog.DAL
                     foreach (DataRow dr in table.Rows)
                     {
                         aDao.Article_id = int.Parse(dr["Article_id"].ToString());
-                        aDao.Blog_id = int.Parse(dr["Blog_id"].ToString());
-                        aDao.TitreArticle = dr["TitreArticle"].ToString();
-                        aDao.ImageChemin = dr["ImageChemin"].ToString();
-                        aDao.ContenuArticle = dr["ContenuArticle"].ToString();
-                        aDao.Evenement_id = int.Parse(dr["Evenement_id"].ToString());
-                        aDao.DateCreation = Convert.ToDateTime(dr["DateCreation"].ToString());
-                        aDao.DateModification = Convert.ToDateTime(dr["DateModification"].ToString());
-                        aDao.Actif = bool.Parse(dr["Actif"].ToString());
 
+                        if (!listaDao.Contains(aDao))
+                        {
+                            aDao.Blog_id = int.Parse(dr["Blog_id"].ToString());
+                            aDao.TitreArticle = dr["TitreArticle"].ToString();
+                            aDao.ImageChemin = dr["ImageChemin"].ToString();
+                            aDao.ContenuArticle = dr["ContenuArticle"].ToString();
+                            aDao.Evenement_id = int.Parse(dr["Evenement_id"].ToString());
+                            aDao.DateCreation = Convert.ToDateTime(dr["DateCreation"].ToString());
+                            aDao.DateModification = Convert.ToDateTime(dr["DateModification"].ToString());
+                            aDao.Actif = bool.Parse(dr["Actif"].ToString());
+                            listaDao.Add(aDao);
+                        }
 
-                        // TODO : boucler sur la liste des tags et les ajouter à aDao.ListeTags
+                        HashTagArticleDao hashTagDao = new HashTagArticleDao();
+                        hashTagDao.HashTagArticle_id = int.Parse(dr["HashTagArticle_id"].ToString());
+                        hashTagDao.Mots = dr["Mots"].ToString();
+                        aDao.ListeTags.Add(hashTagDao);
                     }
-                    listaDao.Add(aDao);
                 }
                 con.Close();
                 return listaDao;
@@ -177,18 +183,25 @@ namespace ModuleBlog.DAL
                     foreach (DataRow dr in table.Rows)
                     {
                         aDao.Article_id = int.Parse(dr["Article_id"].ToString());
-                        aDao.Blog_id = int.Parse(dr["Blog_id"].ToString());
-                        aDao.TitreArticle = dr["TitreArticle"].ToString();
-                        aDao.ImageChemin = dr["ImageChemin"].ToString();
-                        aDao.ContenuArticle = dr["ContenuArticle"].ToString();
-                        aDao.Evenement_id = int.Parse(dr["Evenement_id"].ToString());
-                        aDao.DateCreation = Convert.ToDateTime(dr["DateCreation"].ToString());
-                        aDao.DateModification = Convert.ToDateTime(dr["DateModification"].ToString());
-                        aDao.Actif = bool.Parse(dr["Actif"].ToString());
 
-                        // TODO : boucler sur la liste des tags et les ajouter à aDao.ListeTags
+                        if (!listaDao.Contains(aDao))
+                        {
+                            aDao.Blog_id = int.Parse(dr["Blog_id"].ToString());
+                            aDao.TitreArticle = dr["TitreArticle"].ToString();
+                            aDao.ImageChemin = dr["ImageChemin"].ToString();
+                            aDao.ContenuArticle = dr["ContenuArticle"].ToString();
+                            aDao.Evenement_id = int.Parse(dr["Evenement_id"].ToString());
+                            aDao.DateCreation = Convert.ToDateTime(dr["DateCreation"].ToString());
+                            aDao.DateModification = Convert.ToDateTime(dr["DateModification"].ToString());
+                            aDao.Actif = bool.Parse(dr["Actif"].ToString());
+                            listaDao.Add(aDao);
+                        }
+
+                        HashTagArticleDao hashTagDao = new HashTagArticleDao();
+                        hashTagDao.HashTagArticle_id = int.Parse(dr["HashTagArticle_id"].ToString());
+                        hashTagDao.Mots = dr["Mots"].ToString();
+                        aDao.ListeTags.Add(hashTagDao);
                     }
-                    listaDao.Add(aDao);
                 }
                 con.Close();
                 return listaDao;
@@ -258,6 +271,16 @@ namespace ModuleBlog.DAL
                 da.Fill(ds);
                 con.Close();
 
+                string articleCreatedId = ds.Tables[0].Rows[0].ItemArray[0].ToString();
+
+                if (articleCreatedId != "PAS OK")
+                {
+                    foreach (HashTagArticleDao hashtag in article.ListeTags)
+                    {
+                        AddHashTag(hashtag, con);
+                    }
+                }
+
                 return ds.Tables[0].Rows[0].ToString();
             }
             catch (SqlException ex)
@@ -291,6 +314,29 @@ namespace ModuleBlog.DAL
             {
                 return ex.Message;
             }
+        }
+
+        private void AddHashTag(HashTagArticleDao hashtag, SqlConnection con)
+        {
+            SqlCommand command = new SqlCommand();
+            command.CommandText = "BLOG_AddHashTag";
+            command.CommandTimeout = 0;
+            command.CommandType = CommandType.StoredProcedure;
+            command.Connection = con;
+            command.Parameters.AddWithValue("@Article_id", hashtag.Article_id);
+            command.Parameters.AddWithValue("@Mots", hashtag.Mots);
+
+            SqlDataAdapter da = new SqlDataAdapter(command);
+            DataSet ds = new DataSet();
+
+            try
+            {
+                con.Open();
+                da.Fill(ds);
+                con.Close();
+            }
+            catch (SqlException ex)
+            { }
         }
 
     }
