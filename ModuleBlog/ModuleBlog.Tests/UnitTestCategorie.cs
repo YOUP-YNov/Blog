@@ -18,7 +18,6 @@ namespace ModuleBlog.Tests
         public void Init()
         {
             categoryDal = new CATEGORIE_DAL();
-            // on vérifie que l'instance n'est pas nulle
             Assert.IsNotNull(categoryDal);
 
             categoryBll = new CATEGORIE_BLL();
