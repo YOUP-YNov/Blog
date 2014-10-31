@@ -7,7 +7,7 @@ using ModuleBlog.DAL.Models;
 namespace ModuleBlog.Tests
 {
     [TestClass]
-    public class CATEGORIE_TESTS
+    public class UnitTestCategorie
     {
         private CATEGORIE_DAL categoryDal;
 

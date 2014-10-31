@@ -6,7 +6,7 @@ using ModuleBlog.DAL.Models;
 namespace ModuleBlog.Tests
 {
     [TestClass]
-    public class PUBLICITE_TESTS
+    public class UnitTestPublicite
     {
         private PUBLICITE_DAL adDal;
 
