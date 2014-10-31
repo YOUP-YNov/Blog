@@ -18,5 +18,13 @@ namespace ModuleBlog.DAL.Models
         {
 
         }
+
+        public PubliciteDao(int blogId, int largeur, int hauteur, string contenu)
+        {
+            Blog_id = blogId;
+            Largeur = largeur;
+            Hauteur = hauteur;
+            ContenuPublicite = contenu;
+        }
     }
 }
