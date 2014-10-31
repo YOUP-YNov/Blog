@@ -49,8 +49,6 @@ namespace ModuleBlog.DAL
             {
                 return ex.Message;
             }
-
-
         }
 
 
