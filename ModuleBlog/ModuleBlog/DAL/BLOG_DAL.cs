@@ -349,7 +349,6 @@ namespace ModuleBlog.DAL
             cmd.Connection = con;
             cmd.Parameters.AddWithValue("@UserId", blog.Utilisateur_id);
             cmd.Parameters.AddWithValue("@Title", blog.TitreBlog);
-            cmd.Parameters.AddWithValue("@CreationDate", blog.DateCreation);
             cmd.Parameters.AddWithValue("@Category", blog.Categorie_id);
             cmd.Parameters.AddWithValue("@Theme", blog.Theme_id);
 
