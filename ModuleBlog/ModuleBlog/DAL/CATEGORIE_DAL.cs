@@ -42,15 +42,16 @@ namespace ModuleBlog.DAL
                 con.Open();
                 da.Fill(ds);
                 List<CategorieDao> listCDao = new List<CategorieDao>();
+                CategorieDao cDao;
                 foreach (DataTable table in ds.Tables)
                 {
-                    CategorieDao cDao = new CategorieDao();
                     foreach (DataRow dr in table.Rows)
                     {
+                        cDao = new CategorieDao();
                         cDao.Categorie_id = int.Parse(dr["Categorie_id"].ToString());
                         cDao.Libelle = dr["Libelle"].ToString();
+                        listCDao.Add(cDao);
                     }
-                    listCDao.Add(cDao);
                 }
 
                 con.Close();

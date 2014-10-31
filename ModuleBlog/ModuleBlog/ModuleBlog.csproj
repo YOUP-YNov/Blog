@@ -157,6 +157,7 @@
     <Compile Include="BLL\Models\LikeBLL.cs" />
     <Compile Include="BLL\Models\PubliciteBLL.cs" />
     <Compile Include="BLL\Models\ThemeBLL.cs" />
+    <Compile Include="BLL\PUBLICITE_BLL.cs" />
     <Compile Include="Controllers\AdController.cs" />
     <Compile Include="Controllers\ArticleController.cs" />
     <Compile Include="Controllers\BlogController.cs" />
