@@ -116,7 +116,7 @@ namespace ModuleBlog.DAL
                 con.Open();
                 da.Fill(ds);
                 con.Close();
-
+                
                 return ds.Tables[0].Rows[0].ToString();
             }
             catch (SqlException ex)
