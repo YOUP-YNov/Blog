@@ -73,6 +73,9 @@ namespace ModuleBlog.Tests
             Assert.IsTrue(cdal.DeleteCommentaire(1) == "OK");
             CommentaireDao c = cdal.GetCommentaireById(1);
             Assert.IsTrue(cdal.GetCommentaireById(c.Commentaire_id).Actif == false);
+            c.Actif = true;
+            c.DateModification = DateTime.Now;
+            cdal.UpdateCommentaire(c);
         }
 
         [TestCleanup]
