@@ -53,7 +53,7 @@ namespace ModuleBlog.DAL
             }
         }
 
-        public BlogDao GetBlogById(int idBlog, int userId)
+        public BlogBLL GetBlogById(int idBlog, int userId)
         {
             ds = new DataSet();
 
@@ -71,7 +71,7 @@ namespace ModuleBlog.DAL
             {
                 con.Open();
                 da.Fill(ds);
-                BlogDao bDao = new BlogDao();
+                BlogBLL bDao = new BlogBLL();
 
                 foreach (DataTable table in ds.Tables)
                 {
@@ -97,7 +97,7 @@ namespace ModuleBlog.DAL
             }
         }
 
-        public List<BlogDao> GetBlogsByCategory(int categoryId)
+        public List<BlogBLL> GetBlogsByCategory(int categoryId)
         {
             ds = new DataSet();
 
@@ -114,14 +114,14 @@ namespace ModuleBlog.DAL
             {
                 con.Open();
                 da.Fill(ds);
-                List<BlogDao> listBDao = new List<BlogDao>();
-                BlogDao bDao;
+                List<BlogBLL> listBDao = new List<BlogBLL>();
+                BlogBLL bDao;
 
                 foreach (DataTable table in ds.Tables)
                 {
                     foreach (DataRow dr in table.Rows)
                     {
-                        bDao = new BlogDao();
+                        bDao = new BlogBLL();
                         bDao.Blog_id = int.Parse(dr["Blog_id"].ToString());
                         bDao.Utilisateur_id = int.Parse(dr["Utilisateur_id"].ToString());
                         bDao.Categorie_id = int.Parse(dr["Categorie_id"].ToString());
@@ -142,7 +142,7 @@ namespace ModuleBlog.DAL
                 throw ex;
             }
         }
-        public List<BlogDao> GetBlogs()
+        public List<BlogBLL> GetBlogs()
         {
             ds = new DataSet();
             
@@ -157,14 +157,14 @@ namespace ModuleBlog.DAL
             {
                 con.Open();
                 da.Fill(ds);
-                List<BlogDao> listBDao = new List<BlogDao>();
-                BlogDao bDao;
+                List<BlogBLL> listBDao = new List<BlogBLL>();
+                BlogBLL bDao;
                 foreach (DataTable table in ds.Tables)
                 {
 
                     foreach (DataRow dr in table.Rows)
                     {
-                        bDao = new BlogDao();
+                        bDao = new BlogBLL();
                         bDao.Blog_id = int.Parse(dr["Blog_id"].ToString());
                         bDao.Utilisateur_id = int.Parse(dr["Utilisateur_id"].ToString());
                         bDao.Categorie_id = int.Parse(dr["Categorie_id"].ToString());
@@ -188,7 +188,7 @@ namespace ModuleBlog.DAL
             }
         }
 
-        public List<BlogDao> GetBlogsBySearch(int categoryId, string keystring)
+        public List<BlogBLL> GetBlogsBySearch(int categoryId, string keystring)
         {
             ds = new DataSet();
 
@@ -206,14 +206,14 @@ namespace ModuleBlog.DAL
             {
                 con.Open();
                 da.Fill(ds);
-                List<BlogDao> listBDao = new List<BlogDao>();
-                BlogDao bDao;
+                List<BlogBLL> listBDao = new List<BlogBLL>();
+                BlogBLL bDao;
 
                 foreach (DataTable table in ds.Tables)
                 {
                     foreach (DataRow dr in table.Rows)
                     {
-                        bDao = new BlogDao();
+                        bDao = new BlogBLL();
                         bDao.Blog_id = int.Parse(dr["Blog_id"].ToString());
                         bDao.Utilisateur_id = int.Parse(dr["Utilisateur_id"].ToString());
                         bDao.Categorie_id = int.Parse(dr["Categorie_id"].ToString());
@@ -235,7 +235,7 @@ namespace ModuleBlog.DAL
            
         }
 
-        public List<BlogDao> GetPromotedBlogs()
+        public List<BlogBLL> GetPromotedBlogs()
         {
             ds = new DataSet();
 
@@ -251,15 +251,15 @@ namespace ModuleBlog.DAL
             {
                 con.Open();
                 da.Fill(ds);
-                List<BlogDao> listBDao = new List<BlogDao>();
-                BlogDao bDao;
+                List<BlogBLL> listBDao = new List<BlogBLL>();
+                BlogBLL bDao;
 
                 foreach (DataTable table in ds.Tables)
                 {
                     
                     foreach (DataRow dr in table.Rows)
                     {
-                        bDao = new BlogDao();
+                        bDao = new BlogBLL();
                         bDao.Blog_id = int.Parse(dr["Blog_id"].ToString());
                         bDao.Utilisateur_id = int.Parse(dr["Utilisateur_id"].ToString());
                         bDao.Categorie_id = int.Parse(dr["Categorie_id"].ToString());
@@ -311,7 +311,7 @@ namespace ModuleBlog.DAL
             }
         }
 
-        public string UpdateBlog(BlogDao blog)
+        public string UpdateBlog(BlogBLL blog)
         {
             ds = new DataSet();
 
@@ -342,7 +342,7 @@ namespace ModuleBlog.DAL
         }
 
 
-        public string AddBlog(BlogDao blog)
+        public string AddBlog(BlogBLL blog)
         {
             ds = new DataSet();
 
