@@ -123,8 +123,9 @@ namespace ModuleBlog.DAL
                         cDao.DateCreation = Convert.ToDateTime(dr["DateCreation"].ToString());
                         cDao.DateModification = Convert.ToDateTime(dr["DateModification"].ToString());
                         cDao.Utilisateur_id = Convert.ToInt32(dr["Utilisateur_id"].ToString());
+                        listCDao.Add(cDao);
                     }
-                    listCDao.Add(cDao);
+                   
                 }
                 con.Close();
                 return listCDao;
@@ -197,6 +198,33 @@ namespace ModuleBlog.DAL
             }
         }
 
+        public string ReportCommentaire(int commentId,int userId )
+        {
+            ds = new DataSet();
 
+            cmd = new SqlCommand();
+            cmd.CommandText = "BLOG_ReportCommentaire";
+            cmd.CommandTimeout = 0;
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = con;
+            cmd.Parameters.AddWithValue("@CommentId", commentId);
+            cmd.Parameters.AddWithValue("@UtilisateurId", userId);
+            
+
+            da = new SqlDataAdapter(cmd);
+
+            try
+            {
+                con.Open();
+                da.Fill(ds);
+                con.Close();
+
+                return ds.Tables[0].Rows[0].ToString();
+            }
+            catch (SqlException ex)
+            {
+                return ex.Message;
+            }
+        }
     }
 }
