@@ -45,7 +45,7 @@ namespace ModuleBlog.DAL
                 da.Fill(ds);
                 con.Close();
 
-                return ds.Tables[0].Rows[0].ToString();
+                return ds.Tables[0].Rows[0]["Resultat"].ToString();
             }
             catch (SqlException ex)
             {
@@ -101,7 +101,7 @@ namespace ModuleBlog.DAL
             ds = new DataSet();
 
             cmd = new SqlCommand();
-            cmd.CommandText = "BLOG_GetBlogByCategory";
+            cmd.CommandText = "BLOG_GetBlogsByCategory";
             cmd.CommandTimeout = 0;
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Connection = con;
@@ -184,11 +184,11 @@ namespace ModuleBlog.DAL
             ds = new DataSet();
 
             cmd= new SqlCommand();
-            cmd.CommandText = "BLOG_GetBlogBySearch";
+            cmd.CommandText = "BLOG_GetBlogsBySearch";
             cmd.CommandTimeout = 0;
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Connection = con;
-            cmd.Parameters.AddWithValue("@CategoryId", categoryId);
+            cmd.Parameters.AddWithValue("@Category", categoryId);
             cmd.Parameters.AddWithValue("@KeyString", keystring);
 
             da = new SqlDataAdapter(cmd);
@@ -290,7 +290,7 @@ namespace ModuleBlog.DAL
                 da.Fill(ds);
                 con.Close();
 
-                return ds.Tables[0].Rows[0].ToString();
+                return ds.Tables[0].Rows[0]["Resultat"].ToString();
             }
             catch (SqlException ex)
             {
@@ -311,6 +311,7 @@ namespace ModuleBlog.DAL
             cmd.Parameters.AddWithValue("@Title", blog.TitreBlog);
             cmd.Parameters.AddWithValue("@Category", blog.Categorie_id);
             cmd.Parameters.AddWithValue("@Theme", blog.Theme_id);
+            cmd.Parameters.AddWithValue("@Actif", blog.Actif);
 
             da = new SqlDataAdapter(cmd);
            
@@ -320,7 +321,7 @@ namespace ModuleBlog.DAL
                 da.Fill(ds);
                 con.Close();
 
-                return ds.Tables[0].Rows[0].ToString();
+                return ds.Tables[0].Rows[0]["Resultat"].ToString();
             }
             catch (SqlException ex)
             {
@@ -352,7 +353,7 @@ namespace ModuleBlog.DAL
                 da.Fill(ds);
                 con.Close();
 
-                return ds.Tables[0].Rows[0].ToString();
+                return ds.Tables[0].Rows[0]["Resultat"].ToString();
             }
             catch (SqlException ex)
             {
