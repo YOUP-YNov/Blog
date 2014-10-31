@@ -55,6 +55,7 @@
     <Compile Include="UnitTestCategorie.cs" />
     <Compile Include="UnitTestCommentaireDAL.cs" />
     <Compile Include="UnitTestPublicite.cs" />
+    <Compile Include="BLOG_TESTS.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ModuleBlog\ModuleBlog.csproj">
