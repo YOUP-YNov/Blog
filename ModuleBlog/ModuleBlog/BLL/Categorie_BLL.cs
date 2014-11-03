@@ -21,10 +21,14 @@ namespace ModuleBlog.BLL
         public List<CategorieBLL> GetCategories()
         {
             List<CategorieDao> categoriesDao = categoryDal.GetCategories();
-            Mapper.CreateMap<CategorieDao, CategorieBLL>();
-            List<CategorieBLL> categoriesBll = Mapper.Map<List<CategorieDao>, List<CategorieBLL>>(categoriesDao);
-            
-            return categoriesBll;
+            if (categoriesDao.Count > 0)
+            {
+                Mapper.CreateMap<CategorieDao, CategorieBLL>();
+                List<CategorieBLL> categoriesBll = Mapper.Map<List<CategorieDao>, List<CategorieBLL>>(categoriesDao);
+
+                return categoriesBll;
+            }
+            return null;
         }
     }
 }
