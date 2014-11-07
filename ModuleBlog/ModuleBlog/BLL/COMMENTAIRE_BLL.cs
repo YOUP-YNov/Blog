@@ -11,7 +11,7 @@ namespace ModuleBlog.BLL
 {
     public class COMMENTAIRE_BLL
     {
-
+        // comment
          private COMMENTAIRE_DAL commentaireDAL;
         public COMMENTAIRE_BLL()
         {
