@@ -22,22 +22,19 @@ namespace ModuleBlog.BLL
             ArticlesDao articlesDao = articleDal.GetArticles(idUtilisateur, idBlog);
             if (articlesDao.Count > 0)
             {
-                Mapper.CreateMap<ArticlesDao, ArticlesBLL>();
-                ArticlesBLL articlesBLL = Mapper.Map<ArticlesDao, ArticlesBLL>(articlesDao);
+                ArticlesBLL articlesBLL = new ArticlesBLL();
 
-                return articlesBLL;
-            }
+                foreach(ArticleDao article in articlesDao)
+                {
+                    Mapper.CreateMap<HashTagArticleDao, HashTagArticleBLL>();
+                    List<HashTagArticleBLL> hashTagsBLL = Mapper.Map<List<HashTagArticleDao>, List<HashTagArticleBLL>>(article.ListeTags);
 
-            return null;
-        }
+                    Mapper.CreateMap<ArticleDao, ArticleBLL>();
+                    ArticleBLL articleBLL = Mapper.Map<ArticleDao, ArticleBLL>(article);
 
-        public ArticlesBLL GetArticles(int idUtilisateur, int idBlog)
-        {
-            ArticlesDao articlesDao = articleDal.GetArticles(idUtilisateur, idBlog);
-            if (articlesDao.Count > 0)
-            {
-                Mapper.CreateMap<ArticlesDao, ArticlesBLL>();
-                ArticlesBLL articlesBLL = Mapper.Map<ArticlesDao, ArticlesBLL>(articlesDao);
+                    articleBLL.ListeTags = hashTagsBLL;
+                    articlesBLL.Add(articleBLL);
+                }
 
                 return articlesBLL;
             }

@@ -18,6 +18,7 @@ namespace ModuleBlog.Controllers.Models
         public DateTime DateModification { get; set; }
         public bool Actif { get; set; }
 
+        public List<HashTagArticle> ListeTags { get; set; }
         public Article()
         {
 
