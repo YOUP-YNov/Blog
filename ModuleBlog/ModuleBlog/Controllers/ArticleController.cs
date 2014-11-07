@@ -32,33 +32,44 @@ namespace ModuleBlog.Controllers
         {
             ArticlesBLL articlesBLL = articleBLL.GetArticles(utilisateurId, blogId);
 
+            return Map(articlesBLL);
+        }
+
+        private Articles Map(ArticlesBLL articlesToMap)
+        {
             Articles articles = new Articles();
 
-            foreach (ArticleBLL article in articlesBLL)
-            {
-                Mapper.CreateMap<HashTagArticleBLL, HashTagArticle>();
-                List<HashTagArticle> hashTags = Mapper.Map<List<HashTagArticleBLL>, List<HashTagArticle>>(article.ListeTags);
+            if (articlesToMap.Count > 0)
+            { 
 
-                Mapper.CreateMap<ArticleBLL, Article>();
-                Article articleToAdd = Mapper.Map<ArticleBLL, Article>(article);
+                foreach (ArticleBLL article in articlesToMap)
+                {
+                    Mapper.CreateMap<HashTagArticleBLL, HashTagArticle>();
+                    List<HashTagArticle> hashTags = Mapper.Map<List<HashTagArticleBLL>, List<HashTagArticle>>(article.ListeTags);
 
-                articleToAdd.ListeTags = hashTags;
-                articles.Add(articleToAdd);
+                    Mapper.CreateMap<ArticleBLL, Article>();
+                    Article articleToAdd = Mapper.Map<ArticleBLL, Article>(article);
+
+                    articleToAdd.ListeTags = hashTags;
+                    articles.Add(articleToAdd);
+                }
             }
 
             return articles;
         }
 
-        // GET: api/Article/5
+        // GET: api/Article/
         /// <summary>
         /// Récupérer les liste des articles d'un tag
         /// </summary>
         /// <param name="utilisateurId">identifiant de l'utilisateur qui faire la requête"</param>
         /// <param name="tag">tag recherché</param>
         /// <returns>Liste des blogs</returns>
-        public IEnumerable<Article> GetByTag(int idUtilisateur, string tag)
+        public IEnumerable<Article> GetByTag(int utilisateurId, string tag)
         {
-            return null;
+            ArticlesBLL articlesBLL = articleBLL.GetArticlesByTag(utilisateurId, tag);
+
+            return Map(articlesBLL);
         }
 
         // POST: api/Article

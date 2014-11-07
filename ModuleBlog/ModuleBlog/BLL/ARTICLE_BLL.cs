@@ -22,21 +22,7 @@ namespace ModuleBlog.BLL
             ArticlesDao articlesDao = articleDal.GetArticles(idUtilisateur, idBlog);
             if (articlesDao.Count > 0)
             {
-                ArticlesBLL articlesBLL = new ArticlesBLL();
-
-                foreach(ArticleDao article in articlesDao)
-                {
-                    Mapper.CreateMap<HashTagArticleDao, HashTagArticleBLL>();
-                    List<HashTagArticleBLL> hashTagsBLL = Mapper.Map<List<HashTagArticleDao>, List<HashTagArticleBLL>>(article.ListeTags);
-
-                    Mapper.CreateMap<ArticleDao, ArticleBLL>();
-                    ArticleBLL articleBLL = Mapper.Map<ArticleDao, ArticleBLL>(article);
-
-                    articleBLL.ListeTags = hashTagsBLL;
-                    articlesBLL.Add(articleBLL);
-                }
-
-                return articlesBLL;
+                return Map(articlesDao);
             }
 
             return null;
@@ -47,13 +33,33 @@ namespace ModuleBlog.BLL
             ArticlesDao articlesDao = articleDal.GetArticlesByTag(idUtilisateur, tag);
             if (articlesDao.Count > 0)
             {
-                Mapper.CreateMap<ArticlesDao, ArticlesBLL>();
-                ArticlesBLL articlesBLL = Mapper.Map<ArticlesDao, ArticlesBLL>(articlesDao);
-
-                return articlesBLL;
+                return Map(articlesDao);
             }
 
             return null;
+        }
+
+        private ArticlesBLL Map(ArticlesDao articlesToMap)
+        {
+            ArticlesBLL articlesBLL = new ArticlesBLL();
+
+            if (articlesToMap.Count > 0) 
+            {
+
+                foreach (ArticleDao article in articlesToMap)
+                {
+                    Mapper.CreateMap<HashTagArticleDao, HashTagArticleBLL>();
+                    List<HashTagArticleBLL> hashTagsBLL = Mapper.Map<List<HashTagArticleDao>, List<HashTagArticleBLL>>(article.ListeTags);
+
+                    Mapper.CreateMap<ArticleDao, ArticleBLL>();
+                    ArticleBLL articleBLL = Mapper.Map<ArticleDao, ArticleBLL>(article);
+
+                    articleBLL.ListeTags = hashTagsBLL;
+                    articlesBLL.Add(articleBLL);
+                }
+            }
+
+            return articlesBLL;
         }
 
         public string LikeArticle(int idUtilisateur, int idArticle)

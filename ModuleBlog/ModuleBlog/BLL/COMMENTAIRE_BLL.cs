@@ -18,7 +18,7 @@ namespace ModuleBlog.BLL
         {
             commentaireDAL = new COMMENTAIRE_DAL();
         }
-
+        
         public List<CommentaireBLL> GetCommentaires(int articleId)
         {
             List<CommentaireDao> listCommentaireDao = commentaireDAL.GetCommentaires(articleId);
