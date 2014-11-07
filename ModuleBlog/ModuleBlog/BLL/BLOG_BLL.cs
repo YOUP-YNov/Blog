@@ -29,6 +29,7 @@ namespace ModuleBlog.BLL
             BlogDao blogDao = blogDAL.GetBlogById(idBlog, userId);
 
             Mapper.CreateMap<BlogDao, BlogBLL>();
+            Mapper.CreateMap<ThemeDao, ThemeBLL>();
             BlogBLL blogBll = Mapper.Map<BlogDao, BlogBLL>(blogDao);
 
             return blogBll;

@@ -35,7 +35,7 @@ namespace ModuleBlog.Controllers
                 List<Blog> blogs = Mapper.Map<IEnumerable<BlogBLL>, List<Blog>>(blogsBLL);
                 return blogs;
             }
-            catch(Exception e)
+            catch(Exception)
             {
                 return null;
             }
@@ -48,9 +48,22 @@ namespace ModuleBlog.Controllers
         /// <param name="id">identifiant du blog</param>
         /// <param name="userId">identifiant de l'utilisateur connecté</param>
         /// <returns>le blog</returns>
+        [Route("api/blog/{id}")]
+        [HttpGet]
         public Blog GetById(int id, int userId)
         {
-            return null;
+            BlogBLL blogBll = blogBLL.GetBlogById(id, userId);
+            try
+            {
+                Mapper.CreateMap<BlogBLL, Blog>();
+                Mapper.CreateMap<ThemeBLL, Theme>();
+                Blog blog = Mapper.Map<BlogBLL, Blog>(blogBll);
+                return blog;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         // GET: api/BlogByCategory/5
