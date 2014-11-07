@@ -27,7 +27,7 @@ namespace ModuleBlog.Tests
         [TestMethod]
         public void TestAjoutPubliciteDAL()
         {
-            PubliciteDao adDao = new PubliciteDao(4, 150, 150, "sample content");
+            PubliciteDao adDao = new PubliciteDao(105, 150, 150, "sample content");
 
             string result = string.Empty;
             result = adDal.AddAd(adDao);
@@ -66,7 +66,7 @@ namespace ModuleBlog.Tests
         [TestMethod]
         public void TestAjoutPubliciteBLL()
         {
-            PubliciteBLL adBllModel = new PubliciteBLL(4, 150, 150, "sample content");
+            PubliciteBLL adBllModel = new PubliciteBLL(106, 150, 150, "sample content");
 
             string result = string.Empty;
             result = adBll.AddAd(adBllModel);
