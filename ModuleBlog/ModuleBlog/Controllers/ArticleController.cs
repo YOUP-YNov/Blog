@@ -72,24 +72,74 @@ namespace ModuleBlog.Controllers
             return Map(articlesBLL);
         }
 
-        // PUT : api/Article/5/Like
         /// <summary>
         /// Aime un article
         /// </summary>
         /// <param name="utilisateurId">identifiant de l'utilisateur qui fait la requête</param>
         /// <param name="articleId">identifiant de l'article qui est aimé</param>
         /// <returns></returns>
+        [Route("api/article/{id}/like")]
         [HttpPut]
-        public IHttpActionResult Put(int id, int utilisateurId)
+        public IHttpActionResult Like(int id, int utilisateurId)
         {
-            string result = articleBLL.LikeArticle(utilisateurId, id);
+            Boolean result = articleBLL.LikeArticle(utilisateurId, id);
 
-            if (result == "OK")
-                return StatusCode(HttpStatusCode.Created);
-            else if (result == "PAS OK")
-                return StatusCode(HttpStatusCode.InternalServerError);
+            if (result)
+                return StatusCode(HttpStatusCode.OK);
             else
-                return BadRequest("LOL MDR XD");
+                return StatusCode(HttpStatusCode.InternalServerError);
+        }
+
+        /// <summary>
+        /// N'aime un article
+        /// </summary>
+        /// <param name="utilisateurId">identifiant de l'utilisateur qui fait la requête</param>
+        /// <param name="articleId">identifiant de l'article qui n'est plus aimé</param>
+        /// <returns></returns>
+        [Route("api/article/{id}/dislike")]
+        [HttpPut]
+        public IHttpActionResult Dislike(int id, int utilisateurId)
+        {
+            Boolean result = articleBLL.DislikeArticle(utilisateurId, id);
+
+            if (result)
+                return StatusCode(HttpStatusCode.OK);
+            else
+                return StatusCode(HttpStatusCode.InternalServerError);
+        }
+
+        /// <summary>
+        /// Crée un article
+        /// </summary>
+        /// <param name="blogId">id du blog auquel appartient l'article</param>
+        /// <param name="titre">titre de l'article</param>
+        /// <param name="imageChemin">url de l'image de l'article</param>
+        /// <param name="contenu">contenu de l'article</param>
+        /// <param name="evenementId">id auquel appartient l'article</param>
+        /// <returns></returns>
+        [Route("api/article")]
+        [HttpPost]
+        public IHttpActionResult Add(int blogId = -1, string titre, string imageChemin, string contenu, int evenementId = - 1)
+        {
+            return null;
+        }
+
+        /// <summary>
+        /// Désactive un article
+        /// </summary>
+        /// <param name="utilisateurId">identifiant de l'utilisateur qui fait la requête</param>
+        /// <param name="articleId">identifiant de l'article qui est désactivé</param>
+        /// <returns></returns>
+        [Route("api/article/{id}/disable")]
+        [HttpPut]
+        public IHttpActionResult Disable(int id)
+        {
+            Boolean result = articleBLL.DeleteArticle(id);
+
+            if (result)
+                return StatusCode(HttpStatusCode.OK);
+            else
+                return StatusCode(HttpStatusCode.InternalServerError);
         }
     }
 }
