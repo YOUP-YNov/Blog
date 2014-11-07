@@ -1,4 +1,7 @@
-﻿using ModuleBlog.Controllers.Models;
+﻿using AutoMapper;
+using ModuleBlog.BLL;
+using ModuleBlog.BLL.Models;
+using ModuleBlog.Controllers.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +13,13 @@ namespace ModuleBlog.Controllers
 {
     public class BlogController : ApiController
     {
+        private BLOG_BLL blogBLL;
+
+        public BlogController()
+        {
+            blogBLL = new BLOG_BLL();
+        }
+
         // GET: api/Blog
         /// <summary>
         /// Récupérer la liste des blogs
@@ -17,7 +27,18 @@ namespace ModuleBlog.Controllers
         /// <returns>La liste des blogs</returns>
         public IEnumerable<Blog> Get()
         {
-            return null;
+            IEnumerable<BlogBLL> blogsBLL = blogBLL.GetBlogs();
+            try
+            {
+                Mapper.CreateMap<BlogBLL, Blog>();
+                Mapper.CreateMap<ThemeBLL, Theme>();    
+                List<Blog> blogs = Mapper.Map<IEnumerable<BlogBLL>, List<Blog>>(blogsBLL);
+                return blogs;
+            }
+            catch(Exception e)
+            {
+                return null;
+            }
         }
 
         // GET: api/BlogById/5
