@@ -62,7 +62,7 @@ namespace ModuleBlog.Controllers
         /// <summary>
         /// Récupérer les liste des articles d'un tag
         /// </summary>
-        /// <param name="utilisateurId">identifiant de l'utilisateur qui faire la requête"</param>
+        /// <param name="utilisateurId">identifiant de l'utilisateur qui fait la requête"</param>
         /// <param name="tag">tag recherché</param>
         /// <returns>Liste des blogs</returns>
         public IEnumerable<Article> GetByTag(int utilisateurId, string tag)
@@ -72,48 +72,24 @@ namespace ModuleBlog.Controllers
             return Map(articlesBLL);
         }
 
-        // POST: api/Article
+        // PUT : api/Article/5/Like
         /// <summary>
-        /// Créer un article
+        /// Aime un article
         /// </summary>
-        /// <param name="article">article à créer</param>
-        /// <returns>Réponse HTTTP</returns>
-        public IHttpActionResult Post(Article article)
+        /// <param name="utilisateurId">identifiant de l'utilisateur qui fait la requête</param>
+        /// <param name="articleId">identifiant de l'article qui est aimé</param>
+        /// <returns></returns>
+        [HttpPut]
+        public IHttpActionResult Put(int id, int utilisateurId)
         {
-            return Ok();
-        }
+            string result = articleBLL.LikeArticle(utilisateurId, id);
 
-        // PUT: api/Article/5
-        /// <summary>
-        /// Mettre à jour un article
-        /// </summary>
-        /// <param name="article">article à mettre à jour</param>
-        /// <returns>Réponse HTTP</returns>
-        public IHttpActionResult Put(Article article)
-        {
-            return Ok();
-        }
-
-        /// <summary>
-        /// Like/Dislike un article
-        /// </summary>
-        /// <param name="articleId">identifiant de l'article à aimer</param>
-        /// <param name="like">aimer un article = vrai</param>
-        /// <returns>Réponse HTTP</returns>
-        public IHttpActionResult Put(int articleId, bool like)
-        {
-            return Ok();
-        }
-
-        // DELETE: api/Article/5
-        /// <summary>
-        /// Désactiver un article
-        /// </summary>
-        /// <param name="articleId">identifiant de l'article à désactiver</param>
-        /// <returns>Réponse HTTP</returns>
-        public IHttpActionResult Delete(int articleId)
-        {
-            return Ok();
+            if (result == "OK")
+                return StatusCode(HttpStatusCode.Created);
+            else if (result == "PAS OK")
+                return StatusCode(HttpStatusCode.InternalServerError);
+            else
+                return BadRequest("LOL MDR XD");
         }
     }
 }
