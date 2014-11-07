@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ModuleBlog;
 using ModuleBlog.DAL;
 using System.Data.SqlClient;
+using ModuleBlog.DAL.Models;
 
 namespace ConsoleApplication1
 {
@@ -15,14 +16,7 @@ namespace ConsoleApplication1
         {
             BLOG_DAL obj = new BLOG_DAL();
             BlogDao bDao = new BlogDao();
-            try
-            {
-                bDao = obj.GetBlogById(4);
-            }
-            catch (SqlException e)
-            {
-                Console.WriteLine("exception sql");
-            }
+
 
 
             Console.WriteLine("1.{0}\n2.{1}\n3.{2}\n4.{3}\n5.{4}\n6.{5}\n7.{6}\n8.{7}",

@@ -673,5 +673,10 @@
             <param name="id">identifiant du commentaire</param>
             <returns></returns>
         </member>
+        <member name="M:ModuleBlog.DAL.ARTICLE_DAL.DeleteArticleForReal(System.Int32)">
+            Cette méthode ne doit pas être utilisée par les clients,
+            c'est une méthode uniquement créée pour les tests 
+            *
+        </member>
     </members>
 </doc>

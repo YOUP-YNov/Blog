@@ -45,9 +45,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\ModuleBlog\ModuleBlog.csproj">
       <Project>{fcb0a817-4870-4eb0-bbb5-c7cb3b61e0aa}</Project>
       <Name>ModuleBlog</Name>
