@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ModuleBlog.DAL.Models
+namespace ModuleBlog.BLL.Models
 {
-    public class PubliciteDao
+    public class PubliciteBLL
     {
         public int Publicite_id { get; set; }
         public int Blog_id { get; set; }
@@ -14,12 +14,12 @@ namespace ModuleBlog.DAL.Models
         public int Hauteur { get; set; }
         public string ContenuPublicite { get; set; }
 
-        public PubliciteDao()
+        public PubliciteBLL()
         {
 
         }
 
-        public PubliciteDao(int blogId, int largeur, int hauteur, string contenu)
+        public PubliciteBLL(int blogId, int largeur, int hauteur, string contenu)
         {
             Blog_id = blogId;
             Largeur = largeur;

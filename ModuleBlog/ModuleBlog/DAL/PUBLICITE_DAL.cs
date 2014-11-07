@@ -64,37 +64,7 @@ namespace ModuleBlog.DAL
             }
         }
 
-        public string UpdateAd(PubliciteDao pub)
-        {
-            ds = new DataSet();
-
-            cmd = new SqlCommand();
-            cmd.CommandText = "BLOG_PromoteBlog";
-            cmd.CommandTimeout = 0;
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Connection = con;
-            cmd.Parameters.AddWithValue("@PubliciteId", pub.Publicite_id);
-            cmd.Parameters.AddWithValue("@Largeur", pub.Largeur);
-            cmd.Parameters.AddWithValue("@Hauteur", pub.Hauteur);
-            cmd.Parameters.AddWithValue("@ContenuPublicite", pub.ContenuPublicite);
-
-            da = new SqlDataAdapter(cmd);
-
-            try
-            {
-                con.Open();
-                da.Fill(ds);
-                con.Close();
-
-                return ds.Tables[0].Rows[0].ToString();
-            }
-            catch (SqlException ex)
-            {
-                return ex.Message;
-            }
-        }
-
-        public string AddBlog(int blogId, int largeur, int hauteur, string contenu)
+        public string AddAd(PubliciteDao ad)//int blogId, int largeur, int hauteur, string contenu)
         {
             ds = new DataSet();
 
@@ -103,10 +73,10 @@ namespace ModuleBlog.DAL
             cmd.CommandTimeout = 0;
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Connection = con;
-            cmd.Parameters.AddWithValue("@BlogId", blogId);
-            cmd.Parameters.AddWithValue("@Largeur", largeur);
-            cmd.Parameters.AddWithValue("@Hauteur", hauteur);
-            cmd.Parameters.AddWithValue("@ContenuPublicite", contenu);
+            cmd.Parameters.AddWithValue("@BlogId", ad.Blog_id);
+            cmd.Parameters.AddWithValue("@Largeur", ad.Largeur);
+            cmd.Parameters.AddWithValue("@Hauteur", ad.Hauteur);
+            cmd.Parameters.AddWithValue("@ContenuPublicite", ad.ContenuPublicite);
 
 
             da = new SqlDataAdapter(cmd);
@@ -117,7 +87,37 @@ namespace ModuleBlog.DAL
                 da.Fill(ds);
                 con.Close();
                 
-                return ds.Tables[0].Rows[0].ToString();
+                return ds.Tables[0].Rows[0]["Resultat"].ToString();
+            }
+            catch (SqlException ex)
+            {
+                return ex.Message;
+            }
+        }
+
+        public string UpdateAd(PubliciteDao ad)//int publiciteId, int largeur, int hauteur, string contenu)
+        {
+            ds = new DataSet();
+
+            cmd = new SqlCommand();
+            cmd.CommandText = "BLOG_UpdateAd";
+            cmd.CommandTimeout = 0;
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = con;
+            cmd.Parameters.AddWithValue("@PubliciteId", ad.Publicite_id);
+            cmd.Parameters.AddWithValue("@Largeur", ad.Largeur);
+            cmd.Parameters.AddWithValue("@Hauteur", ad.Hauteur);
+            cmd.Parameters.AddWithValue("@ContenuPublicite", ad.ContenuPublicite);
+
+            da = new SqlDataAdapter(cmd);
+
+            try
+            {
+                con.Open();
+                da.Fill(ds);
+                con.Close();
+
+                return ds.Tables[0].Rows[0]["Resultat"].ToString();
             }
             catch (SqlException ex)
             {

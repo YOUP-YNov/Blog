@@ -39,6 +39,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper">
+      <HintPath>..\packages\AutoMapper.3.2.1\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper.Net4">
+      <HintPath>..\packages\AutoMapper.3.2.1\lib\net40\AutoMapper.Net4.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
@@ -107,7 +113,9 @@
     <Content Include="App_Data\XmlDocument.xml" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Global.asax" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
@@ -140,6 +148,16 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="BLL\BLOG_BLL.cs" />
+    <Compile Include="BLL\CATEGORIE_BLL.cs" />
+    <Compile Include="BLL\Models\ArticleBLL.cs" />
+    <Compile Include="BLL\Models\BlogBLL.cs" />
+    <Compile Include="BLL\Models\CategorieBLL.cs" />
+    <Compile Include="BLL\Models\CommentaireBLL.cs" />
+    <Compile Include="BLL\Models\HashTagArticleBLL.cs" />
+    <Compile Include="BLL\Models\LikeBLL.cs" />
+    <Compile Include="BLL\Models\PubliciteBLL.cs" />
+    <Compile Include="BLL\Models\ThemeBLL.cs" />
+    <Compile Include="BLL\PUBLICITE_BLL.cs" />
     <Compile Include="Controllers\AdController.cs" />
     <Compile Include="Controllers\ArticleController.cs" />
     <Compile Include="Controllers\BlogController.cs" />
@@ -190,7 +208,9 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
     <Content Include="Areas\HelpPage\Views\_ViewStart.cshtml" />
+    <None Include="Properties\PublishProfiles\youp-blog - FTP %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\youp-blog - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\youp-blog - Web Deploy %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\youp-blog - Web Deploy.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -225,6 +245,7 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <Import Project="..\packages\AutoMapper.3.2.1\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.2.1\tools\AutoMapper.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
