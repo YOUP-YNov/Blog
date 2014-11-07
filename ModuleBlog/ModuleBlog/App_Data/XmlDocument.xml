@@ -498,9 +498,10 @@
         </member>
         <member name="M:ModuleBlog.BLL.THEME_BLL.GetThemeById(System.Int32)">
             <summary>
-            Récupération du theme par son identifiant
+            Récupérer les informations d'un thème
             </summary>
-            <returns>Liste des catégories</returns>
+            <param name="themeId">identifiant du thème</param>
+            <returns>Thème</returns>
         </member>
         <member name="T:ModuleBlog.BLL.CATEGORIE_BLL">
             <summary>
@@ -803,9 +804,10 @@
         </member>
         <member name="M:ModuleBlog.DAL.THEME_DAL.GetThemeById(System.Int32)">
             <summary>
-            Récupération de la liste des catégories
+            Récupérer les informations d'un thème
             </summary>
-            <returns></returns>
+            <param name="themeId">identifiant du thème</param>
+            <returns>Thème</returns>
         </member>
         <member name="T:ModuleBlog.DAL.CATEGORIE_DAL">
             <summary>
