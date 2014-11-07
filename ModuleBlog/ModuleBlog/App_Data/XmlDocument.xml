@@ -481,12 +481,53 @@
             </summary>
             <param name="documentPath">The physical path to XML document.</param>
         </member>
+        <member name="T:ModuleBlog.BLL.CATEGORIE_BLL">
+            <summary>
+            Couche business pour les catégories de blog
+            </summary>
+        </member>
+        <member name="F:ModuleBlog.BLL.CATEGORIE_BLL.categoryDal">
+            <summary>
+            instance de la couche DAL des catégories
+            </summary>
+        </member>
+        <member name="M:ModuleBlog.BLL.CATEGORIE_BLL.#ctor">
+            <summary>
+            Constructeur de la classe
+            </summary>
+        </member>
+        <member name="M:ModuleBlog.BLL.CATEGORIE_BLL.GetCategories">
+            <summary>
+            Récupération des catégories de la BDD
+            </summary>
+            <returns>Liste des catégories</returns>
+        </member>
+        <member name="T:ModuleBlog.BLL.Models.CategorieBLL">
+            <summary>
+            Objet catégorie
+            </summary>
+        </member>
+        <member name="M:ModuleBlog.BLL.Models.CategorieBLL.#ctor">
+            <summary>
+            Constructeur
+            </summary>
+        </member>
+        <member name="P:ModuleBlog.BLL.Models.CategorieBLL.Categorie_id">
+            <summary>
+            identifiant
+            </summary>
+        </member>
+        <member name="P:ModuleBlog.BLL.Models.CategorieBLL.Libelle">
+            <summary>
+            libellé
+            </summary>
+        </member>
         <member name="M:ModuleBlog.Controllers.AdController.Get(System.Int32)">
             <summary>
-            Récupérer les publicités associées à un blog
+            Récupérer la publicité associée à un blog
             </summary>
             <param name="blogId">identifiant du blog</param>
-            <returns>liste des publicités</returns>
+            <returns>contenu de la publicité</returns>
         </member>
         <member name="M:ModuleBlog.Controllers.AdController.Post(ModuleBlog.Controllers.Models.Publicite)">
             <summary>
@@ -624,6 +665,21 @@
             <param name="id">identifiant du blog à désactiver</param>
             <returns>Réponse HTTP</returns>
         </member>
+        <member name="T:ModuleBlog.Controllers.CategoryController">
+            <summary>
+            Contrôleur pour les catégories de blog
+            </summary>
+        </member>
+        <member name="F:ModuleBlog.Controllers.CategoryController.categoryBLL">
+            <summary>
+            instance de la couche métiers des catégories
+            </summary>
+        </member>
+        <member name="M:ModuleBlog.Controllers.CategoryController.#ctor">
+            <summary>
+            Constructeur de la classe 
+            </summary>
+        </member>
         <member name="M:ModuleBlog.Controllers.CategoryController.Get">
             <summary>
             Récupérer la liste des catégories
@@ -672,6 +728,82 @@
             </summary>
             <param name="id">identifiant du commentaire</param>
             <returns></returns>
+        </member>
+        <member name="T:ModuleBlog.Controllers.Models.Categorie">
+            <summary>
+            Objet categorie
+            </summary>
+        </member>
+        <member name="M:ModuleBlog.Controllers.Models.Categorie.#ctor">
+            <summary>
+            Constructeur
+            </summary>
+        </member>
+        <member name="P:ModuleBlog.Controllers.Models.Categorie.Categorie_id">
+            <summary>
+            identifiant
+            </summary>
+        </member>
+        <member name="P:ModuleBlog.Controllers.Models.Categorie.Libelle">
+            <summary>
+            libellé
+            </summary>
+        </member>
+        <member name="T:ModuleBlog.DAL.CATEGORIE_DAL">
+            <summary>
+            Couche DAL des catégories des blogs
+            </summary>
+        </member>
+        <member name="F:ModuleBlog.DAL.CATEGORIE_DAL.cmd">
+            <summary>
+            Objet permettant d'effecture des requêtes à la BDD
+            </summary>
+        </member>
+        <member name="F:ModuleBlog.DAL.CATEGORIE_DAL.con">
+            <summary>
+            Objet de gestion de la connexion à la BDD
+            </summary>
+        </member>
+        <member name="F:ModuleBlog.DAL.CATEGORIE_DAL.da">
+            <summary>
+            Objet Tableau recevant les données récupérées par la requête
+            </summary>
+        </member>
+        <member name="F:ModuleBlog.DAL.CATEGORIE_DAL.ds">
+            <summary>
+            Dataset que l'on rempli grâce au SqlDataAdapter permettant de naviguer entre les lignes et colonnes
+            </summary>
+        </member>
+        <member name="M:ModuleBlog.DAL.CATEGORIE_DAL.#ctor">
+            <summary>
+            Constructeur de la classe
+            </summary>
+        </member>
+        <member name="M:ModuleBlog.DAL.CATEGORIE_DAL.GetCategories">
+            <summary>
+            Récupération de la liste des catégories
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:ModuleBlog.DAL.Models.CategorieDao">
+            <summary>
+            Objet catégorie
+            </summary>
+        </member>
+        <member name="M:ModuleBlog.DAL.Models.CategorieDao.#ctor">
+            <summary>
+            constructeur
+            </summary>
+        </member>
+        <member name="P:ModuleBlog.DAL.Models.CategorieDao.Categorie_id">
+            <summary>
+            identifiant
+            </summary>
+        </member>
+        <member name="P:ModuleBlog.DAL.Models.CategorieDao.Libelle">
+            <summary>
+            libellé
+            </summary>
         </member>
     </members>
 </doc>
