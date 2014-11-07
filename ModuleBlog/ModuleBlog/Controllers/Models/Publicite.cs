@@ -18,5 +18,20 @@ namespace ModuleBlog.Controllers.Models
         {
 
         }
+
+        public Publicite(int blog_id, int largeur, int hauteur, string contenu)
+        {
+            //Publicite_id = publicite_id;
+            Blog_id = blog_id;
+            Largeur = largeur;
+            Hauteur = hauteur;
+            ContenuPublicite = contenu;
+        }
+
+        public Publicite(int publicite_id, int blog_id, int largeur, int hauteur, string contenu)
+            : this(blog_id, largeur, hauteur, contenu)
+        {
+            Publicite_id = publicite_id;
+        }
     }
 }
