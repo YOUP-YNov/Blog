@@ -117,8 +117,5 @@ namespace ModuleBlog.BLL
 
             return themeBll;
         }
-
-
-
     }
 }

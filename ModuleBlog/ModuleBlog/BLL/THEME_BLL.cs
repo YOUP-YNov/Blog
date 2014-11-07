@@ -29,9 +29,10 @@ namespace ModuleBlog.BLL
         }
 
         /// <summary>
-        /// Récupération du theme par son identifiant
+        /// Récupérer les informations d'un thème
         /// </summary>
-        /// <returns>Liste des catégories</returns>
+        /// <param name="themeId">identifiant du thème</param>
+        /// <returns>Thème</returns>
         public ThemeBLL GetThemeById(int themeId)
         {
             ThemeDao themeDao = themeDal.GetThemeById(themeId);
