@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace ModuleBlog.Tests
 {
     [TestClass]
-    public class ARTICLE_TEST
+    public class UnitTestArticle
     {
         private ARTICLE_DAL ArticleDal;
 
