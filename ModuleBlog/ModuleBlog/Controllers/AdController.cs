@@ -46,6 +46,9 @@ namespace ModuleBlog.Controllers
         {
             if (publicite != null)
             {
+                if (publicite.Publicite_id == 0 || publicite.Blog_id == 0 || publicite.Largeur == 0
+                    || publicite.Hauteur == 0 || publicite.ContenuPublicite == string.Empty)
+                    return BadRequest("parameters format is not correct.");
                 Mapper.CreateMap<Publicite, PubliciteBLL>();
                 PubliciteBLL adBll = Mapper.Map<Publicite, PubliciteBLL>(publicite);
                 if (adBLL.AddAd(adBll))
@@ -67,6 +70,9 @@ namespace ModuleBlog.Controllers
         {
             if (publicite != null)
             {
+                if (id == 0 || publicite.Blog_id == 0 || publicite.Largeur == 0 
+                    || publicite.Hauteur == 0 || publicite.ContenuPublicite == string.Empty)
+                    return BadRequest("parameters format is not correct.");
                 publicite.Publicite_id = id;
                 Mapper.CreateMap<Publicite, PubliciteBLL>();
                 PubliciteBLL adBll = Mapper.Map<Publicite, PubliciteBLL>(publicite);
