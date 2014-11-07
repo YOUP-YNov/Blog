@@ -5,11 +5,24 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using AutoMapper;
+using ModuleBlog.BLL;
+using ModuleBlog.BLL.Models;
+using ModuleBlog.Controllers.Models;
 
 namespace ModuleBlog.Controllers
 {
     public class CommentController : ApiController
     {
+       
+        private COMMENTAIRE_BLL commentaireBLL;
+
+        
+        public CommentController()
+        {
+            commentaireBLL = new COMMENTAIRE_BLL();
+        }
+
         // GET: api/Comment
         /// <summary>
         /// Récupérer tous les commentaires d'un article
@@ -18,7 +31,10 @@ namespace ModuleBlog.Controllers
         /// <returns>Liste des commentaires</returns>
         public IEnumerable<Commentaire> Get(int articleId)
         {
-            return null;
+            IEnumerable<CommentaireBLL> commentairesBll = commentaireBLL.GetCommentaires(articleId); 
+            Mapper.CreateMap<CommentaireBLL, Commentaire>();
+            IEnumerable<Commentaire> commentaires = Mapper.Map<IEnumerable<CommentaireBLL>, IEnumerable<Commentaire>>(commentairesBll);
+            return commentaires;
         }
 
         // GET: api/Comment/5
@@ -29,7 +45,11 @@ namespace ModuleBlog.Controllers
         /// <returns>le commentaire</returns>
         public Commentaire GetById(int id)
         {
-            return null;
+            CommentaireBLL commentaireBll = commentaireBLL.GetCommentaireById(id);
+            Mapper.CreateMap<CommentaireBLL, Commentaire>();
+            Commentaire commentaire = Mapper.Map<CommentaireBLL, Commentaire>(commentaireBll);
+
+            return commentaire;
         }
 
         // POST: api/Comment
@@ -40,6 +60,21 @@ namespace ModuleBlog.Controllers
         /// <returns>Réponse HTTP</returns>
         public IHttpActionResult Post(Commentaire comment)
         {
+            /*
+            if (comment != null)
+            {
+                if (comment.Article_id == 0 || comment.Commentaire_id == 0 || comment.ContenuCommentaire == string.Empty)
+                    return BadRequest("parameters format is not correct.");
+                Mapper.CreateMap<Commentaire, CommentaireBLL>();
+                CommentaireBLL commentaireBll = Mapper.Map<Commentaire, CommentaireBLL>(comment);
+                if (adBLL.AddAd(commentBll))
+                    return StatusCode(HttpStatusCode.Created);
+                else
+                    return BadRequest("an error occured");
+            }
+            else
+                return BadRequest("parameter is null");
+             */
             return Ok();
         }
 
@@ -51,6 +86,9 @@ namespace ModuleBlog.Controllers
         /// <returns>Réponse HTTP</returns>
         public IHttpActionResult Post(int commentId, int userId)
         {
+
+
+            string resultat = commentaireBLL.ReportCommentaire(commentId, userId);
             return Ok();
         }
 
@@ -75,5 +113,8 @@ namespace ModuleBlog.Controllers
         {
             return Ok();
         }
+
+
+
     }
 }
