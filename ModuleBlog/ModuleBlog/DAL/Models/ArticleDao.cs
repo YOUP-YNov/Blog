@@ -17,7 +17,7 @@ namespace ModuleBlog.DAL.Models
         public DateTime DateCreation { get; set; }
         public DateTime DateModification { get; set; }
         public bool Actif { get; set; }
-
+        public bool IsLiked { get; set; }
         public List<HashTagArticleDao> ListeTags { get; set; }
 
         public ArticleDao()

@@ -147,9 +147,11 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="BLL\ARTICLE_BLL.cs" />
     <Compile Include="BLL\BLOG_BLL.cs" />
     <Compile Include="BLL\CATEGORIE_BLL.cs" />
     <Compile Include="BLL\Models\ArticleBLL.cs" />
+    <Compile Include="BLL\Models\ArticlesBLL.cs" />
     <Compile Include="BLL\Models\BlogBLL.cs" />
     <Compile Include="BLL\Models\CategorieBLL.cs" />
     <Compile Include="BLL\Models\CommentaireBLL.cs" />
@@ -171,10 +173,10 @@
     <Compile Include="DAL\ARTICLE_DAL.cs" />
     <Compile Include="DAL\CATEGORIE_DAL.cs" />
     <Compile Include="DAL\COMMENTAIRE_DAL.cs" />
+    <Compile Include="DAL\Models\ArticlesDao.cs" />
     <Compile Include="DAL\Models\CategorieDao.cs" />
     <Compile Include="DAL\Models\CommentaireDao.cs" />
     <Compile Include="DAL\Models\HashTagArticleDao.cs" />
-    <Compile Include="DAL\Models\LikeDao.cs" />
     <Compile Include="DAL\Models\PubliciteDao.cs" />
     <Compile Include="DAL\Models\ArticleDao.cs" />
     <Compile Include="DAL\BLOG_DAL.cs" />

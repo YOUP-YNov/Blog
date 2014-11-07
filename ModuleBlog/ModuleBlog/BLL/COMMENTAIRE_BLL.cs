@@ -11,8 +11,9 @@ namespace ModuleBlog.BLL
 {
     public class COMMENTAIRE_BLL
     {
-
-         private COMMENTAIRE_DAL commentaireDAL;
+        
+        private COMMENTAIRE_DAL commentaireDAL;
+        
         public COMMENTAIRE_BLL()
         {
             commentaireDAL = new COMMENTAIRE_DAL();
@@ -21,9 +22,16 @@ namespace ModuleBlog.BLL
         public List<CommentaireBLL> GetCommentaires(int articleId)
         {
             List<CommentaireDao> listCommentaireDao = commentaireDAL.GetCommentaires(articleId);
-            Mapper.CreateMap<CommentaireDao, CommentaireBLL>();
-            List<CommentaireBLL> listCommentaireBLL = Mapper.Map<List<CommentaireDao>,List<CommentaireBLL>>(listCommentaireDao);
-            return listCommentaireBLL;
+            if (listCommentaireDao.Count > 0)
+            {
+                Mapper.CreateMap<CommentaireDao, CommentaireBLL>();
+                List<CommentaireBLL> listCommentaireBLL = Mapper.Map<List<CommentaireDao>, List<CommentaireBLL>>(listCommentaireDao);
+                return listCommentaireBLL;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public CommentaireBLL GetCommentaireById(int commentaireId)
