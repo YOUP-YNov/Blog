@@ -2,6 +2,7 @@
 using ModuleBlog.BLL;
 using ModuleBlog.BLL.Models;
 using ModuleBlog.Controllers.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,76 +38,45 @@ namespace ModuleBlog.Controllers
 
         // POST: api/Ad
         /// <summary>
-        /// Ajouter une publicité à un blog
+        /// Ajouter une publicite à un blog
         /// </summary>
-        /// <param name="blogid">id du blog concerné</param>
-        /// <param name="largeur">largeur de la publicité</param>
-        /// <param name="hauteur">hauteur de la publicité</param>
-        /// <param name="contenu">contenu de la publicité</param>
+        /// <param name="publicite">publicité à ajouter</param>
         /// <returns>Réponse HTTP</returns>
-        public IHttpActionResult Post(string blogid, string largeur, string hauteur, string contenu)
+        public IHttpActionResult Post([FromBody]Publicite publicite)//string blogid, string largeur, string hauteur, string contenu)
         {
-            try
+            if (publicite != null)
             {
-                int blogidint = Convert.ToInt32(blogid);
-                int largeurint = Convert.ToInt32(largeur);
-                int hauteurint = Convert.ToInt32(hauteur);
-                if(contenu == string.Empty)
-                    throw new ArgumentException();
-                Publicite publicite = new Publicite(blogidint, largeurint, hauteurint, contenu);
                 Mapper.CreateMap<Publicite, PubliciteBLL>();
                 PubliciteBLL adBll = Mapper.Map<Publicite, PubliciteBLL>(publicite);
-                if(adBLL.AddAd(adBll))
+                if (adBLL.AddAd(adBll))
                     return StatusCode(HttpStatusCode.Created);
                 else
                     return BadRequest("an error occured");
-
             }
-            catch(ArgumentException)
-            {
-                return BadRequest("parameters are not correct.");
-            }
-            catch (FormatException)
-            {
-                return BadRequest("paramaters format is not correct.");
-            }
+            else
+                return BadRequest("parameter is null");
         }
 
         // PUT: api/Ad/5
         /// <summary>
-        /// Mettre à jour une publicité pour un blog
+        /// Mettre à jour une publicité
         /// </summary>
-        /// <param name="blogid"></param>
-        /// <param name="largeur"></param>
-        /// <param name="hauteur"></param>
-        /// <param name="contenu"></param>
-        /// <returns></returns>
-        public IHttpActionResult Put(int id, string blogid, string largeur, string hauteur, string contenu)
+        /// <param name="publicite">publicité à mettre à jour</param>
+        /// <returns>Réponse HTTP</returns>
+        public IHttpActionResult Put(int id, [FromBody]Publicite publicite)
         {
-            try
+            if (publicite != null)
             {
-                int blogidint = Convert.ToInt32(blogid);
-                int largeurint = Convert.ToInt32(largeur);
-                int hauteurint = Convert.ToInt32(hauteur);
-                if (contenu == string.Empty)
-                    throw new ArgumentException();
-                Publicite publicite = new Publicite(id, blogidint, largeurint, hauteurint, contenu);
+                publicite.Publicite_id = id;
                 Mapper.CreateMap<Publicite, PubliciteBLL>();
                 PubliciteBLL adBll = Mapper.Map<Publicite, PubliciteBLL>(publicite);
                 if (adBLL.UpdateAdd(adBll))
                     return StatusCode(HttpStatusCode.Created);
                 else
                     return BadRequest("an error occured");
-
             }
-            catch (ArgumentException)
-            {
-                return BadRequest("parameters are not correct.");
-            }
-            catch (FormatException)
-            {
-                return BadRequest("paramaters format is not correct.");
-            }            
+            else
+                return BadRequest("parameter is null");          
         }
     }
 }

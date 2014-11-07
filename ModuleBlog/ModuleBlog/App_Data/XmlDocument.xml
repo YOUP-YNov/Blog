@@ -529,25 +529,19 @@
             <param name="blogId">identifiant du blog</param>
             <returns>contenu de la publicité</returns>
         </member>
-        <member name="M:ModuleBlog.Controllers.AdController.Post(System.String,System.String,System.String,System.String)">
+        <member name="M:ModuleBlog.Controllers.AdController.Post(ModuleBlog.Controllers.Models.Publicite)">
             <summary>
-            Ajouter une publicité à un blog
+            Ajouter une publicite à un blog
             </summary>
-            <param name="blogid">id du blog concerné</param>
-            <param name="largeur">largeur de la publicité</param>
-            <param name="hauteur">hauteur de la publicité</param>
-            <param name="contenu">contenu de la publicité</param>
+            <param name="publicite">publicité à ajouter</param>
             <returns>Réponse HTTP</returns>
         </member>
-        <member name="M:ModuleBlog.Controllers.AdController.Put(System.Int32,System.String,System.String,System.String,System.String)">
+        <member name="M:ModuleBlog.Controllers.AdController.Put(System.Int32,ModuleBlog.Controllers.Models.Publicite)">
             <summary>
-            Mettre à jour une publicité pour un blog
+            Mettre à jour une publicité
             </summary>
-            <param name="blogid"></param>
-            <param name="largeur"></param>
-            <param name="hauteur"></param>
-            <param name="contenu"></param>
-            <returns></returns>
+            <param name="publicite">publicité à mettre à jour</param>
+            <returns>Réponse HTTP</returns>
         </member>
         <member name="M:ModuleBlog.Controllers.ArticleController.Get(System.Int32,System.Int32)">
             <summary>
@@ -749,6 +743,11 @@
             <summary>
             libellé
             </summary>
+        </member>
+        <member name="M:ModuleBlog.DAL.ARTICLE_DAL.DeleteArticleForReal(System.Int32)">
+            Cette méthode ne doit pas être utilisée par les clients,
+            c'est une méthode uniquement créée pour les tests 
+            *
         </member>
         <member name="T:ModuleBlog.DAL.CATEGORIE_DAL">
             <summary>
