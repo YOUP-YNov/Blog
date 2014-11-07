@@ -11,8 +11,8 @@ using ModuleBlog.DAL.Models;
 namespace ModuleBlog.DAL
 {
     public class ARTICLE_DAL
-    { 
-        //string strcon = ConfigurationManager.ConnectionStrings["YoupDEV"].ConnectionString;
+    {
+        string strcon = ConfigurationManager.ConnectionStrings["YoupDEV"].ConnectionString;
         SqlCommand cmd;
         SqlConnection con;
         SqlDataAdapter da;
@@ -20,8 +20,6 @@ namespace ModuleBlog.DAL
 
         public ARTICLE_DAL()
         {
-            string strcon = @"User id =YoupDev;Password=youpD3VASP*;" +
-                   @"Server=avip9np4yy.database.windows.net,1433;Database=YoupDev";
             con = new SqlConnection(strcon);
         }
 
