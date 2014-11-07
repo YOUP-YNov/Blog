@@ -16,6 +16,7 @@ namespace ModuleBlog.Controllers.Models
         public bool Actif { get; set; }
         public bool Promotion { get; set; }
         public int Theme_id { get; set; }
+        public Theme Theme { get; set; }
 
         public Blog()
         {

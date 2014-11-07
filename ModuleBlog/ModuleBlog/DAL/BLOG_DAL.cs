@@ -12,9 +12,9 @@ namespace ModuleBlog.DAL
 {
     public class BLOG_DAL
     {
-        
 
-        //string strcon = ConfigurationManager.ConnectionStrings["YoupDEV"].ConnectionString;
+
+        string strcon = ConfigurationManager.ConnectionStrings["YoupDEV"].ConnectionString;
         SqlCommand cmd;
         SqlConnection con;
         SqlDataAdapter da;
@@ -22,8 +22,6 @@ namespace ModuleBlog.DAL
 
         public BLOG_DAL()
         {
-            string strcon = @"User id =YoupDev;Password=youpD3VASP*;" +
-                   @"Server=avip9np4yy.database.windows.net,1433;Database=YoupDev";
             con = new SqlConnection(strcon);
         }
         public string DeleteBlog(int userId)
@@ -130,7 +128,7 @@ namespace ModuleBlog.DAL
                         bDao.Actif = bool.Parse(dr["Actif"].ToString());
                         bDao.Promotion = bool.Parse(dr["Promotion"].ToString());
                         bDao.Theme_id = int.Parse(dr["Theme_id"].ToString());
-
+                        bDao.Theme = GetThemeById(bDao.Theme_id);
                         listBDao.Add(bDao);
                     }
                 }
@@ -172,6 +170,7 @@ namespace ModuleBlog.DAL
                         bDao.Actif = bool.Parse(dr["Actif"].ToString());
                         bDao.Promotion = bool.Parse(dr["Promotion"].ToString());
                         bDao.Theme_id = int.Parse(dr["Theme_id"].ToString());
+                        bDao.Theme = GetThemeById(bDao.Theme_id);
                         listBDao.Add(bDao);
                     }
                 }
@@ -384,7 +383,8 @@ namespace ModuleBlog.DAL
 
             try
             {
-                con.Open();
+                if(con.State == ConnectionState.Closed)
+                    con.Open();
                 da.Fill(ds);
                 ThemeDao tDao = new ThemeDao();
 

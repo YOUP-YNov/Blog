@@ -13,7 +13,7 @@ namespace ModuleBlog.DAL
     /// <summary>
     /// Couche DAL des catégories des blogs
     /// </summary>
-    public class CATEGORIE_DAL
+    public class THEME_DAL
     {
         #region propriétés
         //string strcon = ConfigurationManager.ConnectionStrings["YoupDEV"].ConnectionString;
@@ -35,55 +35,54 @@ namespace ModuleBlog.DAL
         DataSet ds; 
         #endregion
 
-        string strcon = ConfigurationManager.ConnectionStrings["YoupDEV"].ConnectionString;
         /// <summary>
         /// Constructeur de la classe
         /// </summary>
-        public CATEGORIE_DAL()
+        public THEME_DAL()
         {
-            //string strcon = @"User id =YoupDev;Password=youpD3VASP*;" +
-            //       @"Server=avip9np4yy.database.windows.net,1433;Database=YoupDev";
+            string strcon = @"User id =YoupDev;Password=youpD3VASP*;" +
+                   @"Server=avip9np4yy.database.windows.net,1433;Database=YoupDev";
             con = new SqlConnection(strcon);
         }
         
         /// <summary>
-        /// Récupération de la liste des catégories
+        /// Récupérer les informations d'un thème
         /// </summary>
-        /// <returns></returns>
-        public List<CategorieDao> GetCategories()
+        /// <param name="themeId">identifiant du thème</param>
+        /// <returns>Thème</returns>
+        public ThemeDao GetThemeById(int themeId)
         {
             ds = new DataSet();
             
             cmd = new SqlCommand();
-            cmd.CommandText = "BLOG_GetCategories";
+            cmd.CommandText = "BLOG_GetThemeById";
             cmd.CommandTimeout = 0;
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Connection = con;
+            cmd.Parameters.AddWithValue("@ThemeId", themeId);
             da = new SqlDataAdapter(cmd);
 
             try
             {
                 con.Open();
                 da.Fill(ds);
-                List<CategorieDao> listCDao = new List<CategorieDao>();
-                CategorieDao cDao;
+                ThemeDao tDao = new ThemeDao();
                 foreach (DataTable table in ds.Tables)
                 {
                     foreach (DataRow dr in table.Rows)
                     {
-                        cDao = new CategorieDao();
-                        cDao.Categorie_id = int.Parse(dr["Categorie_id"].ToString());
-                        cDao.Libelle = dr["Libelle"].ToString();
-                        listCDao.Add(cDao);
+                        tDao.Theme_id = int.Parse(dr["Theme_id"].ToString());
+                        tDao.Couleur = dr["Couleur"].ToString();
+                        tDao.ImageChemin = dr["ImageChemin"].ToString();
                     }
                 }
 
                 con.Close();
-                return listCDao;
+                return tDao;
             }
             catch (SqlException ex)
             {
-                throw ex;
+                return null;
             }
         }
     }
