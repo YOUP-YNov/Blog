@@ -72,9 +72,22 @@ namespace ModuleBlog.Controllers
         /// </summary>
         /// <param name="categoryId">identifiant de la catégorie</param>
         /// <returns>la liste des blogs</returns>
-        public IEnumerable<Blog> GetByCategory(int categoryId)
+        [Route("api/blog/{id}")]
+        [HttpGet]
+        public IEnumerable<Blog> GetByCategory(int id, int categoryId)
         {
-            return null;
+            IEnumerable<BlogBLL> blogsBLL = blogBLL.GetBlogsByCategory(categoryId);
+            try
+            {
+                Mapper.CreateMap<BlogBLL, Blog>();
+                Mapper.CreateMap<ThemeBLL, Theme>();
+                List<Blog> blogs = Mapper.Map<IEnumerable<BlogBLL>, List<Blog>>(blogsBLL);
+                return blogs;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
 

@@ -128,7 +128,7 @@ namespace ModuleBlog.DAL
                         bDao.Actif = bool.Parse(dr["Actif"].ToString());
                         bDao.Promotion = bool.Parse(dr["Promotion"].ToString());
                         bDao.Theme_id = int.Parse(dr["Theme_id"].ToString());
-
+                        bDao.Theme = GetThemeById(bDao.Theme_id);
                         listBDao.Add(bDao);
                     }
                 }

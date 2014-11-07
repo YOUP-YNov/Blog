@@ -603,7 +603,7 @@
             <param name="userId">identifiant de l'utilisateur connecté</param>
             <returns>le blog</returns>
         </member>
-        <member name="M:ModuleBlog.Controllers.BlogController.GetByCategory(System.Int32)">
+        <member name="M:ModuleBlog.Controllers.BlogController.GetByCategory(System.Int32,System.Int32)">
             <summary>
             Récupérer la liste des blogs pour une catégorie
             </summary>
