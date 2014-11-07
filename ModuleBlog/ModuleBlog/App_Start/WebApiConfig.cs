@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Web.Http;
 
 namespace ModuleBlog
@@ -10,6 +11,7 @@ namespace ModuleBlog
         public static void Register(HttpConfiguration config)
         {
             // Configuration et services API Web
+            config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
 
             // Itinéraires de l'API Web
             config.MapHttpAttributeRoutes();

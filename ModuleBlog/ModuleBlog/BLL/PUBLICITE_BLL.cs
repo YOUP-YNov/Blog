@@ -22,27 +22,36 @@ namespace ModuleBlog.BLL
         public PubliciteBLL GetAdByBlogId(int id)
         {
             PubliciteDao adDao = adDal.GetAdByBlogId(id);
+            if (adDao != null)
+            {
+                Mapper.CreateMap<PubliciteDao, PubliciteBLL>();
+                PubliciteBLL adBll = Mapper.Map<PubliciteDao, PubliciteBLL>(adDao);
 
-            Mapper.CreateMap<PubliciteDao, PubliciteBLL>();
-            PubliciteBLL adBll = Mapper.Map<PubliciteDao, PubliciteBLL>(adDao);
-
-            return adBll;
+                return adBll;
+            }
+            return null;
         }
 
-        public string AddAd(PubliciteBLL ad)
+        public bool AddAd(PubliciteBLL ad)
         {
             Mapper.CreateMap<PubliciteBLL, PubliciteDao>();
             PubliciteDao adDao = Mapper.Map<PubliciteBLL, PubliciteDao>(ad);
             string add = adDal.AddAd(adDao);
-            return add;
+            if (string.Equals(add, "OK"))
+                return true;
+            else
+                return false;
         }
 
-        public string UpdateAdd(PubliciteBLL ad)
+        public bool UpdateAdd(PubliciteBLL ad)
         {
             Mapper.CreateMap<PubliciteBLL, PubliciteDao>();
             PubliciteDao adDao = Mapper.Map<PubliciteBLL, PubliciteDao>(ad);
             string updateResult = adDal.UpdateAd(adDao);
-            return updateResult;
+            if (string.Equals(updateResult, "OK"))
+                return true;
+            else
+                return false;
         }
     }
 }

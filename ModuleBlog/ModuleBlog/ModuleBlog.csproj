@@ -150,6 +150,7 @@
     <Compile Include="BLL\ARTICLE_BLL.cs" />
     <Compile Include="BLL\BLOG_BLL.cs" />
     <Compile Include="BLL\CATEGORIE_BLL.cs" />
+    <Compile Include="BLL\COMMENTAIRE_BLL.cs" />
     <Compile Include="BLL\Models\ArticleBLL.cs" />
     <Compile Include="BLL\Models\ArticlesBLL.cs" />
     <Compile Include="BLL\Models\BlogBLL.cs" />
@@ -238,7 +239,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>24750</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:24750/</IISUrl>
+          <IISUrl>http://localhost:24750</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

@@ -10,14 +10,34 @@ using ModuleBlog.DAL.Models;
 
 namespace ModuleBlog.DAL
 {
+    /// <summary>
+    /// Couche DAL des catégories des blogs
+    /// </summary>
     public class CATEGORIE_DAL
-    {      
+    {
+        #region propriétés
         //string strcon = ConfigurationManager.ConnectionStrings["YoupDEV"].ConnectionString;
+        /// <summary>
+        /// Objet permettant d'effecture des requêtes à la BDD
+        /// </summary>
         SqlCommand cmd;
+        /// <summary>
+        /// Objet de gestion de la connexion à la BDD
+        /// </summary>
         SqlConnection con;
+        /// <summary>
+        /// Objet Tableau recevant les données récupérées par la requête
+        /// </summary>
         SqlDataAdapter da;
-        DataSet ds;
+        /// <summary>
+        /// Dataset que l'on rempli grâce au SqlDataAdapter permettant de naviguer entre les lignes et colonnes
+        /// </summary>
+        DataSet ds; 
+        #endregion
 
+        /// <summary>
+        /// Constructeur de la classe
+        /// </summary>
         public CATEGORIE_DAL()
         {
             string strcon = @"User id =YoupDev;Password=youpD3VASP*;" +
@@ -25,7 +45,10 @@ namespace ModuleBlog.DAL
             con = new SqlConnection(strcon);
         }
         
-
+        /// <summary>
+        /// Récupération de la liste des catégories
+        /// </summary>
+        /// <returns></returns>
         public List<CategorieDao> GetCategories()
         {
             ds = new DataSet();
