@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
-namespace ModuleBlog.BLL.Models
+namespace ModuleBlog.Controllers.Models
 {
-    public class HashTagArticleBLL
+    public class HashTagArticle
     {
         public int HashTagArticle_id { get; set; }
         public int Article_id { get; set; }
         public string Mots { get; set; }
 
-        public HashTagArticleBLL()
+        public HashTagArticle()
         {
 
         }

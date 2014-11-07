@@ -549,26 +549,21 @@
             <param name="contenu"></param>
             <returns></returns>
         </member>
-        <member name="M:ModuleBlog.Controllers.ArticleController.Get(System.Int32)">
+        <member name="M:ModuleBlog.Controllers.ArticleController.Get(System.Int32,System.Int32)">
             <summary>
             Récupérer la liste des articles d'un blog
             </summary>
+            <param name="utilisateurId">identifiant de l'utilisateur qui faire la requête</param>
             <param name="blogId">identifiant du blog</param>
             <returns>Liste des articles du blog</returns>
         </member>
-        <member name="M:ModuleBlog.Controllers.ArticleController.GetByTag(System.Int32)">
+        <member name="M:ModuleBlog.Controllers.ArticleController.GetByTag(System.Int32,System.String)">
             <summary>
             Récupérer les liste des articles d'un tag
             </summary>
-            <param name="id">identifiant du tag</param>
+            <param name="utilisateurId">identifiant de l'utilisateur qui faire la requête"</param>
+            <param name="tag">tag recherché</param>
             <returns>Liste des blogs</returns>
-        </member>
-        <member name="M:ModuleBlog.Controllers.ArticleController.Get(System.String)">
-            <summary>
-            Récupérer la liste des articles correspondants au critère de recherche
-            </summary>
-            <param name="keyword">chaine de caractères à rechercher</param>
-            <returns>Liste des articles</returns>
         </member>
         <member name="M:ModuleBlog.Controllers.ArticleController.Post(ModuleBlog.Controllers.Models.Article)">
             <summary>
@@ -596,7 +591,7 @@
             <summary>
             Désactiver un article
             </summary>
-            <param name="id">identifiant de l'article à désactiver</param>
+            <param name="articleId">identifiant de l'article à désactiver</param>
             <returns>Réponse HTTP</returns>
         </member>
         <member name="M:ModuleBlog.Controllers.BlogController.Get">

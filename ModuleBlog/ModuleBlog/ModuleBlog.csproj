@@ -156,7 +156,6 @@
     <Compile Include="BLL\Models\CategorieBLL.cs" />
     <Compile Include="BLL\Models\CommentaireBLL.cs" />
     <Compile Include="BLL\Models\HashTagArticleBLL.cs" />
-    <Compile Include="BLL\Models\LikeBLL.cs" />
     <Compile Include="BLL\Models\PubliciteBLL.cs" />
     <Compile Include="BLL\Models\ThemeBLL.cs" />
     <Compile Include="BLL\PUBLICITE_BLL.cs" />
@@ -166,9 +165,11 @@
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\CommentController.cs" />
     <Compile Include="Controllers\Models\Article.cs" />
+    <Compile Include="Controllers\Models\Articles.cs" />
     <Compile Include="Controllers\Models\Blog.cs" />
     <Compile Include="Controllers\Models\Categorie.cs" />
     <Compile Include="Controllers\Models\Commentaire.cs" />
+    <Compile Include="Controllers\Models\HashTagArticle.cs" />
     <Compile Include="Controllers\Models\Publicite.cs" />
     <Compile Include="DAL\ARTICLE_DAL.cs" />
     <Compile Include="DAL\CATEGORIE_DAL.cs" />
