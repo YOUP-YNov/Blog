@@ -529,19 +529,25 @@
             <param name="blogId">identifiant du blog</param>
             <returns>contenu de la publicité</returns>
         </member>
-        <member name="M:ModuleBlog.Controllers.AdController.Post(ModuleBlog.Controllers.Models.Publicite)">
+        <member name="M:ModuleBlog.Controllers.AdController.Post(System.String,System.String,System.String,System.String)">
             <summary>
-            Ajouter une publicite à un blog
+            Ajouter une publicité à un blog
             </summary>
-            <param name="publicite">publicité à ajouter</param>
+            <param name="blogid">id du blog concerné</param>
+            <param name="largeur">largeur de la publicité</param>
+            <param name="hauteur">hauteur de la publicité</param>
+            <param name="contenu">contenu de la publicité</param>
             <returns>Réponse HTTP</returns>
         </member>
-        <member name="M:ModuleBlog.Controllers.AdController.Put(System.Int32,ModuleBlog.Controllers.Models.Publicite)">
+        <member name="M:ModuleBlog.Controllers.AdController.Put(System.Int32,System.String,System.String,System.String,System.String)">
             <summary>
-            Mettre à jour une publicité
+            Mettre à jour une publicité pour un blog
             </summary>
-            <param name="publicite">publicité à mettre à jour</param>
-            <returns>Réponse HTTP</returns>
+            <param name="blogid"></param>
+            <param name="largeur"></param>
+            <param name="hauteur"></param>
+            <param name="contenu"></param>
+            <returns></returns>
         </member>
         <member name="M:ModuleBlog.Controllers.ArticleController.Get(System.Int32,System.Int32)">
             <summary>
@@ -555,38 +561,17 @@
             <summary>
             Récupérer les liste des articles d'un tag
             </summary>
-            <param name="utilisateurId">identifiant de l'utilisateur qui faire la requête"</param>
+            <param name="utilisateurId">identifiant de l'utilisateur qui fait la requête"</param>
             <param name="tag">tag recherché</param>
             <returns>Liste des blogs</returns>
         </member>
-        <member name="M:ModuleBlog.Controllers.ArticleController.Post(ModuleBlog.Controllers.Models.Article)">
+        <member name="M:ModuleBlog.Controllers.ArticleController.Put(System.Int32,System.Int32)">
             <summary>
-            Créer un article
+            Aime un article
             </summary>
-            <param name="article">article à créer</param>
-            <returns>Réponse HTTTP</returns>
-        </member>
-        <member name="M:ModuleBlog.Controllers.ArticleController.Put(ModuleBlog.Controllers.Models.Article)">
-            <summary>
-            Mettre à jour un article
-            </summary>
-            <param name="article">article à mettre à jour</param>
-            <returns>Réponse HTTP</returns>
-        </member>
-        <member name="M:ModuleBlog.Controllers.ArticleController.Put(System.Int32,System.Boolean)">
-            <summary>
-            Like/Dislike un article
-            </summary>
-            <param name="articleId">identifiant de l'article à aimer</param>
-            <param name="like">aimer un article = vrai</param>
-            <returns>Réponse HTTP</returns>
-        </member>
-        <member name="M:ModuleBlog.Controllers.ArticleController.Delete(System.Int32)">
-            <summary>
-            Désactiver un article
-            </summary>
-            <param name="articleId">identifiant de l'article à désactiver</param>
-            <returns>Réponse HTTP</returns>
+            <param name="utilisateurId">identifiant de l'utilisateur qui fait la requête</param>
+            <param name="articleId">identifiant de l'article qui est aimé</param>
+            <returns></returns>
         </member>
         <member name="M:ModuleBlog.Controllers.BlogController.Get">
             <summary>
