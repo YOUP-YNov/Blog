@@ -170,6 +170,8 @@ namespace ModuleBlog.DAL
                         bDao.Actif = bool.Parse(dr["Actif"].ToString());
                         bDao.Promotion = bool.Parse(dr["Promotion"].ToString());
                         bDao.Theme_id = int.Parse(dr["Theme_id"].ToString());
+                        THEME_DAL themeDal = new THEME_DAL();
+                        bDao.Theme = themeDal.GetThemeById(bDao.Theme_id);
                         listBDao.Add(bDao);
                     }
                 }

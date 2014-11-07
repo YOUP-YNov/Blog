@@ -46,9 +46,10 @@ namespace ModuleBlog.DAL
         }
         
         /// <summary>
-        /// Récupération de la liste des catégories
+        /// Récupérer les informations d'un thème
         /// </summary>
-        /// <returns></returns>
+        /// <param name="themeId">identifiant du thème</param>
+        /// <returns>Thème</returns>
         public ThemeDao GetThemeById(int themeId)
         {
             ds = new DataSet();

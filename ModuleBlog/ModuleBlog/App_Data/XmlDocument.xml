@@ -481,6 +481,28 @@
             </summary>
             <param name="documentPath">The physical path to XML document.</param>
         </member>
+        <member name="T:ModuleBlog.BLL.THEME_BLL">
+            <summary>
+            Couche business pour obtenir un theme
+            </summary>
+        </member>
+        <member name="F:ModuleBlog.BLL.THEME_BLL.themeDal">
+            <summary>
+            instance de la couche DAL des themes
+            </summary>
+        </member>
+        <member name="M:ModuleBlog.BLL.THEME_BLL.#ctor">
+            <summary>
+            Constructeur de la classe
+            </summary>
+        </member>
+        <member name="M:ModuleBlog.BLL.THEME_BLL.GetThemeById(System.Int32)">
+            <summary>
+            Récupérer les informations d'un thème
+            </summary>
+            <param name="themeId">identifiant du thème</param>
+            <returns>Thème</returns>
+        </member>
         <member name="T:ModuleBlog.BLL.CATEGORIE_BLL">
             <summary>
             Couche business pour les catégories de blog
@@ -639,6 +661,28 @@
             <param name="id">identifiant du blog à désactiver</param>
             <returns>Réponse HTTP</returns>
         </member>
+        <member name="T:ModuleBlog.Controllers.ThemeController">
+            <summary>
+            Contrôleur pour les themes de blog
+            </summary>
+        </member>
+        <member name="F:ModuleBlog.Controllers.ThemeController.themeBLL">
+            <summary>
+            instance de la couche métiers des thèmes
+            </summary>
+        </member>
+        <member name="M:ModuleBlog.Controllers.ThemeController.#ctor">
+            <summary>
+            Constructeur de la classe 
+            </summary>
+        </member>
+        <member name="M:ModuleBlog.Controllers.ThemeController.Get(System.Int32)">
+            <summary>
+            Obtenir les informations d'un thème
+            </summary>
+            <param name="themeId">identifiant du thème</param>
+            <returns>thème correspondant</returns>
+        </member>
         <member name="T:ModuleBlog.Controllers.CategoryController">
             <summary>
             Contrôleur pour les catégories de blog
@@ -727,6 +771,43 @@
             Cette méthode ne doit pas être utilisée par les clients,
             c'est une méthode uniquement créée pour les tests 
             *
+        </member>
+        <member name="T:ModuleBlog.DAL.THEME_DAL">
+            <summary>
+            Couche DAL des catégories des blogs
+            </summary>
+        </member>
+        <member name="F:ModuleBlog.DAL.THEME_DAL.cmd">
+            <summary>
+            Objet permettant d'effecture des requêtes à la BDD
+            </summary>
+        </member>
+        <member name="F:ModuleBlog.DAL.THEME_DAL.con">
+            <summary>
+            Objet de gestion de la connexion à la BDD
+            </summary>
+        </member>
+        <member name="F:ModuleBlog.DAL.THEME_DAL.da">
+            <summary>
+            Objet Tableau recevant les données récupérées par la requête
+            </summary>
+        </member>
+        <member name="F:ModuleBlog.DAL.THEME_DAL.ds">
+            <summary>
+            Dataset que l'on rempli grâce au SqlDataAdapter permettant de naviguer entre les lignes et colonnes
+            </summary>
+        </member>
+        <member name="M:ModuleBlog.DAL.THEME_DAL.#ctor">
+            <summary>
+            Constructeur de la classe
+            </summary>
+        </member>
+        <member name="M:ModuleBlog.DAL.THEME_DAL.GetThemeById(System.Int32)">
+            <summary>
+            Récupérer les informations d'un thème
+            </summary>
+            <param name="themeId">identifiant du thème</param>
+            <returns>Thème</returns>
         </member>
         <member name="T:ModuleBlog.DAL.CATEGORIE_DAL">
             <summary>

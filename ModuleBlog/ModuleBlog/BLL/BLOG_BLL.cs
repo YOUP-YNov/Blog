@@ -53,8 +53,8 @@ namespace ModuleBlog.BLL
             if (blogsDao.Count > 0)
             {
                 Mapper.CreateMap<BlogDao, BlogBLL>();
+                Mapper.CreateMap<ThemeDao, ThemeBLL>();
                 List<BlogBLL> blogsBll = Mapper.Map<List<BlogDao>, List<BlogBLL>>(blogsDao);
-
                 return blogsBll;
             }
             return null;
@@ -117,8 +117,5 @@ namespace ModuleBlog.BLL
 
             return themeBll;
         }
-
-
-
     }
 }
