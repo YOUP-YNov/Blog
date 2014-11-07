@@ -2,6 +2,7 @@
 using ModuleBlog.DAL.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -15,11 +16,10 @@ namespace ModuleBlog.DAL
         SqlConnection con;
         SqlDataAdapter da;
         DataSet ds;
+        string strcon = ConfigurationManager.ConnectionStrings["YoupDEV"].ConnectionString;
 
         public PUBLICITE_DAL()
         {
-            string strcon = @"User id =YoupDev;Password=youpD3VASP*;" +
-                   @"Server=avip9np4yy.database.windows.net,1433;Database=YoupDev";
             con = new SqlConnection(strcon);
         }
 

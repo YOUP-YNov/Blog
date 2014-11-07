@@ -35,13 +35,14 @@ namespace ModuleBlog.DAL
         DataSet ds; 
         #endregion
 
+        string strcon = ConfigurationManager.ConnectionStrings["YoupDEV"].ConnectionString;
         /// <summary>
         /// Constructeur de la classe
         /// </summary>
         public CATEGORIE_DAL()
         {
-            string strcon = @"User id =YoupDev;Password=youpD3VASP*;" +
-                   @"Server=avip9np4yy.database.windows.net,1433;Database=YoupDev";
+            //string strcon = @"User id =YoupDev;Password=youpD3VASP*;" +
+            //       @"Server=avip9np4yy.database.windows.net,1433;Database=YoupDev";
             con = new SqlConnection(strcon);
         }
         
