@@ -114,7 +114,7 @@ namespace ModuleBlog.Controllers
             }
         }
 
-        // GET : api/Blog/
+        // GET : api/Blog
         /// <summary>
         /// Effectuer une recherche de blog par noms
         /// </summary>
@@ -122,9 +122,21 @@ namespace ModuleBlog.Controllers
         /// <returns>Liste des blogs</returns>
         public IEnumerable<Blog> Get(string keyword)
         {
-            return null;
+            IEnumerable<BlogBLL> blogsBLL = blogBLL.GetBlogsBySearch(0, keyword);
+            try
+            {
+                Mapper.CreateMap<BlogBLL, Blog>();
+                Mapper.CreateMap<ThemeBLL, Theme>();
+                List<Blog> blogs = Mapper.Map<IEnumerable<BlogBLL>, List<Blog>>(blogsBLL);
+                return blogs;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
+        // GET : api/Blog
         /// <summary>
         /// Effectuer une recherche de blog par noms pour une catégorie
         /// </summary>
@@ -133,7 +145,18 @@ namespace ModuleBlog.Controllers
         /// <returns>Liste des blogs</returns>
         public IEnumerable<Blog> Get(string keyword, int categoryId)
         {
-            return null;
+            IEnumerable<BlogBLL> blogsBLL = blogBLL.GetBlogsBySearch(categoryId, keyword);
+            try
+            {
+                Mapper.CreateMap<BlogBLL, Blog>();
+                Mapper.CreateMap<ThemeBLL, Theme>();
+                List<Blog> blogs = Mapper.Map<IEnumerable<BlogBLL>, List<Blog>>(blogsBLL);
+                return blogs;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
 
