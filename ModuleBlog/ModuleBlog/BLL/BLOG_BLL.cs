@@ -102,11 +102,14 @@ namespace ModuleBlog.BLL
             return resultat;
         }
 
-        public string AddBlog(BlogBLL blog)
+        public bool AddBlog(BlogBLL blog)
         {
             Mapper.CreateMap<BlogBLL, BlogDao>();
+            Mapper.CreateMap<ThemeBLL, ThemeDao>();
             BlogDao blogDao = Mapper.Map<BlogBLL, BlogDao>(blog);
-            string resultat = blogDAL.AddBlog(blogDao);
+            //ThemeDao themeDao = Mapper.Map<ThemeBLL, ThemeDao>(blog.Theme);
+            //blogDao.Theme = themeDao;
+            bool resultat = blogDAL.AddBlog(blogDao);
             return resultat;
         }
 
