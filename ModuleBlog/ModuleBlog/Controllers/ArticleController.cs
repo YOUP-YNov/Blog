@@ -119,7 +119,7 @@ namespace ModuleBlog.Controllers
         /// <returns></returns>
         [Route("api/article")]
         [HttpPost]
-        public IHttpActionResult Add(int blogId = -1, string titre, string imageChemin, string contenu, int evenementId = - 1)
+        public IHttpActionResult Add(string titre, string imageChemin, string contenu, int blogId = -1, int evenementId = - 1)
         {
             return null;
         }

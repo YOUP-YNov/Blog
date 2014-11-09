@@ -41,14 +41,14 @@ namespace ModuleBlog.Controllers
             }
         }
 
-        // GET: api/BlogById/5
+        // GET: api/Blog/5
         /// <summary>
         /// Récupérer un blog par son identifiant (et indique qu'il a été visité)
         /// </summary>
         /// <param name="id">identifiant du blog</param>
         /// <param name="userId">identifiant de l'utilisateur connecté</param>
         /// <returns>le blog</returns>
-        [Route("api/blog/{id}")]
+        [Route("api/Blog/{id}")]
         [HttpGet]
         public Blog GetById(int id, int userId)
         {
@@ -66,13 +66,13 @@ namespace ModuleBlog.Controllers
             }
         }
 
-        // GET: api/BlogByCategory/5
+        // GET: api/Blog/5
         /// <summary>
         /// Récupérer la liste des blogs pour une catégorie
         /// </summary>
         /// <param name="categoryId">identifiant de la catégorie</param>
         /// <returns>la liste des blogs</returns>
-        [Route("api/blog/{id}")]
+        [Route("api/Blog/{id}")]
         [HttpGet]
         public IEnumerable<Blog> GetByCategory(int id, int categoryId)
         {
@@ -91,15 +91,27 @@ namespace ModuleBlog.Controllers
         }
 
 
-        // GET: api/PromotedBlogs
+        // GET: api/Blog/Promoted
         /// <summary>
         /// Récupérer la liste des blogs mis en avant
         /// </summary>
-        /// <param name="promoted">blog mis en avant = vrai</param>
         /// <returns>Liste des blogs</returns>
-        public IEnumerable<Blog> Get(bool promoted)
+        [Route("api/Blog/Promoted")]
+        [HttpGet]
+        public IEnumerable<Blog> GetPromoted()
         {
-            return null;
+            IEnumerable<BlogBLL> blogsBLL = blogBLL.GetPromotedBlogs();
+            try
+            {
+                Mapper.CreateMap<BlogBLL, Blog>();
+                Mapper.CreateMap<ThemeBLL, Theme>();
+                List<Blog> blogs = Mapper.Map<IEnumerable<BlogBLL>, List<Blog>>(blogsBLL);
+                return blogs;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         // GET : api/Blog/
