@@ -62,14 +62,14 @@ namespace ModuleBlog.BLL
             return articlesBLL;
         }
 
-        public string LikeArticle(int idUtilisateur, int idArticle)
+        public Boolean LikeArticle(int idUtilisateur, int idArticle)
         {
-            return articleDal.LikeArticle(idUtilisateur, idArticle);
+            return (articleDal.LikeArticle(idUtilisateur, idArticle) == "OK");
         }
 
-        public string DislikeArticle(int idUtilisateur, int idArticle)
+        public Boolean DislikeArticle(int idUtilisateur, int idArticle)
         {
-            return articleDal.DislikeArticle(idUtilisateur, idArticle);
+            return (articleDal.DislikeArticle(idUtilisateur, idArticle) == "OK");
         }
 
         public string AddArticle(ArticleBLL article)
@@ -79,9 +79,9 @@ namespace ModuleBlog.BLL
             return articleDal.AddArticle(articleDao);
         }
 
-        public string DeleteArticle(int idArticle)
+        public Boolean DeleteArticle(int idArticle)
         {
-            return articleDal.DeleteArticle(idArticle);
+            return (articleDal.DeleteArticle(idArticle) == "OK");
         }
     }
 }

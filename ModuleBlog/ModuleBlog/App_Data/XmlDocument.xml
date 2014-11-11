@@ -581,12 +581,39 @@
             <param name="tag">tag recherché</param>
             <returns>Liste des blogs</returns>
         </member>
-        <member name="M:ModuleBlog.Controllers.ArticleController.Put(System.Int32,System.Int32)">
+        <member name="M:ModuleBlog.Controllers.ArticleController.Like(System.Int32,System.Int32)">
             <summary>
             Aime un article
             </summary>
             <param name="utilisateurId">identifiant de l'utilisateur qui fait la requête</param>
             <param name="articleId">identifiant de l'article qui est aimé</param>
+            <returns></returns>
+        </member>
+        <member name="M:ModuleBlog.Controllers.ArticleController.Dislike(System.Int32,System.Int32)">
+            <summary>
+            N'aime un article
+            </summary>
+            <param name="utilisateurId">identifiant de l'utilisateur qui fait la requête</param>
+            <param name="articleId">identifiant de l'article qui n'est plus aimé</param>
+            <returns></returns>
+        </member>
+        <member name="M:ModuleBlog.Controllers.ArticleController.Add(System.String,System.String,System.String,System.Int32,System.Int32)">
+            <summary>
+            Crée un article
+            </summary>
+            <param name="blogId">id du blog auquel appartient l'article</param>
+            <param name="titre">titre de l'article</param>
+            <param name="imageChemin">url de l'image de l'article</param>
+            <param name="contenu">contenu de l'article</param>
+            <param name="evenementId">id auquel appartient l'article</param>
+            <returns></returns>
+        </member>
+        <member name="M:ModuleBlog.Controllers.ArticleController.Disable(System.Int32)">
+            <summary>
+            Désactive un article
+            </summary>
+            <param name="utilisateurId">identifiant de l'utilisateur qui fait la requête</param>
+            <param name="articleId">identifiant de l'article qui est désactivé</param>
             <returns></returns>
         </member>
         <member name="M:ModuleBlog.Controllers.BlogController.Get">
@@ -603,18 +630,17 @@
             <param name="userId">identifiant de l'utilisateur connecté</param>
             <returns>le blog</returns>
         </member>
-        <member name="M:ModuleBlog.Controllers.BlogController.GetByCategory(System.Int32)">
+        <member name="M:ModuleBlog.Controllers.BlogController.GetByCategory(System.Int32,System.Int32)">
             <summary>
             Récupérer la liste des blogs pour une catégorie
             </summary>
             <param name="categoryId">identifiant de la catégorie</param>
             <returns>la liste des blogs</returns>
         </member>
-        <member name="M:ModuleBlog.Controllers.BlogController.Get(System.Boolean)">
+        <member name="M:ModuleBlog.Controllers.BlogController.GetPromoted">
             <summary>
             Récupérer la liste des blogs mis en avant
             </summary>
-            <param name="promoted">blog mis en avant = vrai</param>
             <returns>Liste des blogs</returns>
         </member>
         <member name="M:ModuleBlog.Controllers.BlogController.Get(System.String)">

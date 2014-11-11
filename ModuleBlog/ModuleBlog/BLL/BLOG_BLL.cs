@@ -29,6 +29,7 @@ namespace ModuleBlog.BLL
             BlogDao blogDao = blogDAL.GetBlogById(idBlog, userId);
 
             Mapper.CreateMap<BlogDao, BlogBLL>();
+            Mapper.CreateMap<ThemeDao, ThemeBLL>();
             BlogBLL blogBll = Mapper.Map<BlogDao, BlogBLL>(blogDao);
 
             return blogBll;
@@ -40,6 +41,7 @@ namespace ModuleBlog.BLL
             if (blogsDao.Count > 0)
             {
                 Mapper.CreateMap<BlogDao, BlogBLL>();
+                Mapper.CreateMap<ThemeDao, ThemeBLL>();
                 List<BlogBLL> blogsBll = Mapper.Map<List<BlogDao>, List<BlogBLL>>(blogsDao);
 
                 return blogsBll;
@@ -100,11 +102,14 @@ namespace ModuleBlog.BLL
             return resultat;
         }
 
-        public string AddBlog(BlogBLL blog)
+        public bool AddBlog(BlogBLL blog)
         {
             Mapper.CreateMap<BlogBLL, BlogDao>();
+            Mapper.CreateMap<ThemeBLL, ThemeDao>();
             BlogDao blogDao = Mapper.Map<BlogBLL, BlogDao>(blog);
-            string resultat = blogDAL.AddBlog(blogDao);
+            //ThemeDao themeDao = Mapper.Map<ThemeBLL, ThemeDao>(blog.Theme);
+            //blogDao.Theme = themeDao;
+            bool resultat = blogDAL.AddBlog(blogDao);
             return resultat;
         }
 

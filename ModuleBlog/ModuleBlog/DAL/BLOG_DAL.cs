@@ -42,10 +42,10 @@ namespace ModuleBlog.DAL
                 con.Open();
                 try
                 {
-                    da.Fill(ds);
-                    con.Close();
-                    return ds.Tables[0].Rows[0]["Resultat"].ToString();
-                }
+                da.Fill(ds);
+                con.Close();
+                return ds.Tables[0].Rows[0]["Resultat"].ToString();
+            }
                 catch(Exception ex)
                 {
                     con.Close();
@@ -77,27 +77,27 @@ namespace ModuleBlog.DAL
                 con.Open();
                 try
                 {
-                    da.Fill(ds);
-                    BlogDao bDao = new BlogDao();
+                da.Fill(ds);
+                BlogDao bDao = new BlogDao();
 
-                    foreach (DataTable table in ds.Tables)
+                foreach (DataTable table in ds.Tables)
+                {
+                    foreach (DataRow dr in table.Rows)
                     {
-                        foreach (DataRow dr in table.Rows)
-                        {
-                            bDao.Blog_id = int.Parse(dr["Blog_id"].ToString());
-                            bDao.Utilisateur_id = int.Parse(dr["Utilisateur_id"].ToString());
-                            bDao.Categorie_id = int.Parse(dr["Categorie_id"].ToString());
-                            bDao.TitreBlog = dr["TitreBlog"].ToString();
-                            bDao.DateCreation = DateTime.Parse(dr["DateCreation"].ToString());
-                            bDao.Actif = bool.Parse(dr["Actif"].ToString());
-                            bDao.Promotion = bool.Parse(dr["Promotion"].ToString());
-                            bDao.Theme_id = int.Parse(dr["Theme_id"].ToString());
-                            bDao.Theme = GetThemeById(bDao.Theme_id);
-                        }
+                        bDao.Blog_id = int.Parse(dr["Blog_id"].ToString());
+                        bDao.Utilisateur_id = int.Parse(dr["Utilisateur_id"].ToString());
+                        bDao.Categorie_id = int.Parse(dr["Categorie_id"].ToString());
+                        bDao.TitreBlog = dr["TitreBlog"].ToString();
+                        bDao.DateCreation = DateTime.Parse(dr["DateCreation"].ToString());
+                        bDao.Actif = bool.Parse(dr["Actif"].ToString());
+                        bDao.Promotion = bool.Parse(dr["Promotion"].ToString());
+                        bDao.Theme_id = int.Parse(dr["Theme_id"].ToString());
+                        bDao.Theme = GetThemeById(bDao.Theme_id);
                     }
-                    con.Close();
-                    return bDao;
                 }
+                con.Close();
+                return bDao;
+            }
                 catch(Exception ex)
                 {
                     con.Close();
@@ -128,30 +128,30 @@ namespace ModuleBlog.DAL
                 con.Open();
                 try
                 {
-                    da.Fill(ds);
-                    List<BlogDao> listBDao = new List<BlogDao>();
-                    BlogDao bDao;
+                da.Fill(ds);
+                List<BlogDao> listBDao = new List<BlogDao>();
+                BlogDao bDao;
 
-                    foreach (DataTable table in ds.Tables)
+                foreach (DataTable table in ds.Tables)
+                {
+                    foreach (DataRow dr in table.Rows)
                     {
-                        foreach (DataRow dr in table.Rows)
-                        {
-                            bDao = new BlogDao();
-                            bDao.Blog_id = int.Parse(dr["Blog_id"].ToString());
-                            bDao.Utilisateur_id = int.Parse(dr["Utilisateur_id"].ToString());
-                            bDao.Categorie_id = int.Parse(dr["Categorie_id"].ToString());
-                            bDao.TitreBlog = dr["TitreBlog"].ToString();
-                            bDao.DateCreation = DateTime.Parse(dr["DateCreation"].ToString());
-                            bDao.Actif = bool.Parse(dr["Actif"].ToString());
-                            bDao.Promotion = bool.Parse(dr["Promotion"].ToString());
-                            bDao.Theme_id = int.Parse(dr["Theme_id"].ToString());
-
-                            listBDao.Add(bDao);
-                        }
+                        bDao = new BlogDao();
+                        bDao.Blog_id = int.Parse(dr["Blog_id"].ToString());
+                        bDao.Utilisateur_id = int.Parse(dr["Utilisateur_id"].ToString());
+                        bDao.Categorie_id = int.Parse(dr["Categorie_id"].ToString());
+                        bDao.TitreBlog = dr["TitreBlog"].ToString();
+                        bDao.DateCreation = DateTime.Parse(dr["DateCreation"].ToString());
+                        bDao.Actif = bool.Parse(dr["Actif"].ToString());
+                        bDao.Promotion = bool.Parse(dr["Promotion"].ToString());
+                        bDao.Theme_id = int.Parse(dr["Theme_id"].ToString());
+                        bDao.Theme = GetThemeById(bDao.Theme_id);
+                        listBDao.Add(bDao);
                     }
-                    con.Close();
-                    return listBDao;
                 }
+                con.Close();
+                return listBDao;
+            }
                 catch(Exception ex)
                 {
                     con.Close();
@@ -179,31 +179,30 @@ namespace ModuleBlog.DAL
                 con.Open();
                 try
                 {
-                    da.Fill(ds);
-                    List<BlogDao> listBDao = new List<BlogDao>();
-                    BlogDao bDao;
-                    foreach (DataTable table in ds.Tables)
+                da.Fill(ds);
+                List<BlogDao> listBDao = new List<BlogDao>();
+                BlogDao bDao;
+                foreach (DataTable table in ds.Tables)
+                {
+                    foreach (DataRow dr in table.Rows)
                     {
-                        foreach (DataRow dr in table.Rows)
-                        {
-                            bDao = new BlogDao();
-                            bDao.Blog_id = int.Parse(dr["Blog_id"].ToString());
-                            bDao.Utilisateur_id = int.Parse(dr["Utilisateur_id"].ToString());
-                            bDao.Categorie_id = int.Parse(dr["Categorie_id"].ToString());
-                            bDao.TitreBlog = dr["TitreBlog"].ToString();
-                            bDao.DateCreation = DateTime.Parse(dr["DateCreation"].ToString());
-                            bDao.Actif = bool.Parse(dr["Actif"].ToString());
-                            bDao.Promotion = bool.Parse(dr["Promotion"].ToString());
-                            bDao.Theme_id = int.Parse(dr["Theme_id"].ToString());
-                            THEME_DAL themeDal = new THEME_DAL();
-                            bDao.Theme = themeDal.GetThemeById(bDao.Theme_id);
-                            listBDao.Add(bDao);
-                        }
+                        bDao = new BlogDao();
+                        bDao.Blog_id = int.Parse(dr["Blog_id"].ToString());
+                        bDao.Utilisateur_id = int.Parse(dr["Utilisateur_id"].ToString());
+                        bDao.Categorie_id = int.Parse(dr["Categorie_id"].ToString());
+                        bDao.TitreBlog = dr["TitreBlog"].ToString();
+                        bDao.DateCreation = DateTime.Parse(dr["DateCreation"].ToString());
+                        bDao.Actif = bool.Parse(dr["Actif"].ToString());
+                        bDao.Promotion = bool.Parse(dr["Promotion"].ToString());
+                        bDao.Theme_id = int.Parse(dr["Theme_id"].ToString());
+                        bDao.Theme = GetThemeById(bDao.Theme_id);
+                        listBDao.Add(bDao);
                     }
-
-                    con.Close();
-                    return listBDao;
                 }
+
+                con.Close();
+                return listBDao;
+            }
                 catch(Exception ex)
                 {
                     con.Close();
@@ -235,29 +234,29 @@ namespace ModuleBlog.DAL
                 con.Open();
                 try
                 {
-                    da.Fill(ds);
-                    List<BlogDao> listBDao = new List<BlogDao>();
-                    BlogDao bDao;
+                da.Fill(ds);
+                List<BlogDao> listBDao = new List<BlogDao>();
+                BlogDao bDao;
 
-                    foreach (DataTable table in ds.Tables)
+                foreach (DataTable table in ds.Tables)
+                {
+                    foreach (DataRow dr in table.Rows)
                     {
-                        foreach (DataRow dr in table.Rows)
-                        {
-                            bDao = new BlogDao();
-                            bDao.Blog_id = int.Parse(dr["Blog_id"].ToString());
-                            bDao.Utilisateur_id = int.Parse(dr["Utilisateur_id"].ToString());
-                            bDao.Categorie_id = int.Parse(dr["Categorie_id"].ToString());
-                            bDao.TitreBlog = dr["TitreBlog"].ToString();
-                            bDao.DateCreation = DateTime.Parse(dr["DateCreation"].ToString());
-                            bDao.Actif = bool.Parse(dr["Actif"].ToString());
-                            bDao.Promotion = bool.Parse(dr["Promotion"].ToString());
-                            bDao.Theme_id = int.Parse(dr["Theme_id"].ToString());
-                            listBDao.Add(bDao);
-                        }
+                        bDao = new BlogDao();
+                        bDao.Blog_id = int.Parse(dr["Blog_id"].ToString());
+                        bDao.Utilisateur_id = int.Parse(dr["Utilisateur_id"].ToString());
+                        bDao.Categorie_id = int.Parse(dr["Categorie_id"].ToString());
+                        bDao.TitreBlog = dr["TitreBlog"].ToString();
+                        bDao.DateCreation = DateTime.Parse(dr["DateCreation"].ToString());
+                        bDao.Actif = bool.Parse(dr["Actif"].ToString());
+                        bDao.Promotion = bool.Parse(dr["Promotion"].ToString());
+                        bDao.Theme_id = int.Parse(dr["Theme_id"].ToString());
+                        listBDao.Add(bDao);
                     }
-                    con.Close();
-                    return listBDao;
                 }
+                con.Close();
+                return listBDao;
+            }
                 catch(Exception ex)
                 {
                     con.Close();
@@ -288,29 +287,29 @@ namespace ModuleBlog.DAL
                 con.Open();
                 try
                 {
-                    da.Fill(ds);
-                    List<BlogDao> listBDao = new List<BlogDao>();
-                    BlogDao bDao;
+                da.Fill(ds);
+                List<BlogDao> listBDao = new List<BlogDao>();
+                BlogDao bDao;
 
-                    foreach (DataTable table in ds.Tables)
+                foreach (DataTable table in ds.Tables)
+                {
+                    foreach (DataRow dr in table.Rows)
                     {
-                        foreach (DataRow dr in table.Rows)
-                        {
-                            bDao = new BlogDao();
-                            bDao.Blog_id = int.Parse(dr["Blog_id"].ToString());
-                            bDao.Utilisateur_id = int.Parse(dr["Utilisateur_id"].ToString());
-                            bDao.Categorie_id = int.Parse(dr["Categorie_id"].ToString());
-                            bDao.TitreBlog = dr["TitreBlog"].ToString();
-                            bDao.DateCreation = DateTime.Parse(dr["DateCreation"].ToString());
-                            bDao.Actif = bool.Parse(dr["Actif"].ToString());
-                            bDao.Promotion = bool.Parse(dr["Promotion"].ToString());
-                            bDao.Theme_id = int.Parse(dr["Theme_id"].ToString());
-                            listBDao.Add(bDao);
-                        }
+                        bDao = new BlogDao();
+                        bDao.Blog_id = int.Parse(dr["Blog_id"].ToString());
+                        bDao.Utilisateur_id = int.Parse(dr["Utilisateur_id"].ToString());
+                        bDao.Categorie_id = int.Parse(dr["Categorie_id"].ToString());
+                        bDao.TitreBlog = dr["TitreBlog"].ToString();
+                        bDao.DateCreation = DateTime.Parse(dr["DateCreation"].ToString());
+                        bDao.Actif = bool.Parse(dr["Actif"].ToString());
+                        bDao.Promotion = bool.Parse(dr["Promotion"].ToString());
+                        bDao.Theme_id = int.Parse(dr["Theme_id"].ToString());
+                        listBDao.Add(bDao);
                     }
-                    con.Close();
-                    return listBDao;
                 }
+                con.Close();
+                return listBDao;
+            }
                 catch(Exception ex)
                 {
                     con.Close();
@@ -344,10 +343,10 @@ namespace ModuleBlog.DAL
                 con.Open();
                 try
                 {
-                    da.Fill(ds);
-                    con.Close();
-                    return ds.Tables[0].Rows[0]["Resultat"].ToString();
-                }
+                da.Fill(ds);
+                con.Close();
+                return ds.Tables[0].Rows[0]["Resultat"].ToString();
+            }
                 catch(Exception ex)
                 {
                     con.Close();
@@ -382,10 +381,10 @@ namespace ModuleBlog.DAL
                 con.Open();
                 try
                 {
-                    da.Fill(ds);
-                    con.Close();
-                    return ds.Tables[0].Rows[0]["Resultat"].ToString();
-                }
+                da.Fill(ds);
+                con.Close();
+                return ds.Tables[0].Rows[0]["Resultat"].ToString();
+            }
                 catch(Exception ex)
                 {
                     con.Close();
@@ -420,10 +419,10 @@ namespace ModuleBlog.DAL
                 con.Open();
                 try
                 {
-                    da.Fill(ds);
-                    con.Close();
+                da.Fill(ds);
+                con.Close();
                     return ds.Tables[0].Rows[0]["Resultat"].ToString();
-                }
+            }
                 catch(Exception ex)
                 {
                     con.Close();
@@ -452,24 +451,25 @@ namespace ModuleBlog.DAL
 
             try
             {
+                if(con.State == ConnectionState.Closed)
                 con.Open();
                 try
                 {
-                    da.Fill(ds);
-                    ThemeDao tDao = new ThemeDao();
+                da.Fill(ds);
+                ThemeDao tDao = new ThemeDao();
 
-                    foreach (DataTable table in ds.Tables)
+                foreach (DataTable table in ds.Tables)
+                {
+                    foreach (DataRow dr in table.Rows)
                     {
-                        foreach (DataRow dr in table.Rows)
-                        {
-                            tDao.Theme_id = int.Parse(dr["Theme_id"].ToString());
-                            tDao.Couleur = dr["Couleur"].ToString();
-                            tDao.ImageChemin = dr["ImageChemin"].ToString();
-                        }
+                        tDao.Theme_id = int.Parse(dr["Theme_id"].ToString());
+                        tDao.Couleur = dr["Couleur"].ToString();
+                        tDao.ImageChemin = dr["ImageChemin"].ToString();
                     }
-                    con.Close();
-                    return tDao;
                 }
+                con.Close();
+                return tDao;
+            }
                 catch(Exception ex)
                 {
                     con.Close();
