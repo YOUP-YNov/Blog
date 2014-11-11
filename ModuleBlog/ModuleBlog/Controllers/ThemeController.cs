@@ -19,14 +19,14 @@ namespace ModuleBlog.Controllers
         /// <summary>
         /// instance de la couche métiers des thèmes
         /// </summary>
-        private THEME_BLL themeBLL;
+        private ThemeBLL themeBLL;
 
         /// <summary>
         /// Constructeur de la classe 
         /// </summary>
         public ThemeController()
         {
-            themeBLL = new THEME_BLL();
+            themeBLL = new ThemeBLL();
         }
 
         // GET: api/Theme
@@ -35,13 +35,13 @@ namespace ModuleBlog.Controllers
         /// </summary>
         /// <param name="themeId">identifiant du thème</param>
         /// <returns>thème correspondant</returns>
-        public Theme Get(int themeId)
+        public ModuleBlog.Controllers.Models.Theme Get(int themeId)
         {
             if (themeId == 0)
                 return null;
-            ThemeBLL themeBll = themeBLL.GetThemeById(themeId);
-            Mapper.CreateMap<ThemeBLL, Theme>();
-            Theme theme = Mapper.Map<ThemeBLL, Theme>(themeBll);
+            ModuleBlog.BLL.Models.Theme themeBll = themeBLL.GetThemeById(themeId);
+            Mapper.CreateMap<ModuleBlog.BLL.Models.Theme, ModuleBlog.Controllers.Models.Theme>();
+            ModuleBlog.Controllers.Models.Theme theme = Mapper.Map<ModuleBlog.BLL.Models.Theme, ModuleBlog.Controllers.Models.Theme>(themeBll);
             return theme;
         }
     }

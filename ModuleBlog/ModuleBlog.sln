@@ -3,9 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModuleBlog", "ModuleBlog\ModuleBlog.csproj", "{FCB0A817-4870-4EB0-BBB5-C7CB3B61E0AA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogControllers", "ModuleBlog\BlogControllers.csproj", "{FCB0A817-4870-4EB0-BBB5-C7CB3B61E0AA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModuleBlog.Tests", "ModuleBlog.Tests\ModuleBlog.Tests.csproj", "{FB67AC84-1357-4361-8A4A-4A5792B3B32C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DALBlog", "BlogDAL\DALBlog.csproj", "{8F25A745-2651-4864-B87A-46EA1157786A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLLBlog", "BlogBLL\BLLBlog.csproj", "{B8D20E85-5151-4A22-A7DD-EB264178FB47}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{FB67AC84-1357-4361-8A4A-4A5792B3B32C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FB67AC84-1357-4361-8A4A-4A5792B3B32C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FB67AC84-1357-4361-8A4A-4A5792B3B32C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F25A745-2651-4864-B87A-46EA1157786A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F25A745-2651-4864-B87A-46EA1157786A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F25A745-2651-4864-B87A-46EA1157786A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F25A745-2651-4864-B87A-46EA1157786A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8D20E85-5151-4A22-A7DD-EB264178FB47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8D20E85-5151-4A22-A7DD-EB264178FB47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8D20E85-5151-4A22-A7DD-EB264178FB47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8D20E85-5151-4A22-A7DD-EB264178FB47}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

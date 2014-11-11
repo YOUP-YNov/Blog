@@ -11,23 +11,23 @@ namespace ModuleBlog.Tests
     [TestClass]
     public class UnitTestCategorie
     {
-        private CATEGORIE_DAL categoryDal;
-        private CATEGORIE_BLL categoryBll;
+        private CategorieDAL categoryDal;
+        private CategorieBLL categoryBll;
 
         [TestInitialize]
         public void Init()
         {
-            categoryDal = new CATEGORIE_DAL();
+            categoryDal = new CategorieDAL();
             Assert.IsNotNull(categoryDal);
 
-            categoryBll = new CATEGORIE_BLL();
+            categoryBll = new CategorieBLL();
             Assert.IsNotNull(categoryBll);
         }
 
         [TestMethod]
         public void TestLectureCategoriesDAL()
         {
-            List<CategorieDao> categoryList;
+            List<ModuleBlog.DAL.Models.Categorie> categoryList;
             categoryList = categoryDal.GetCategories();
 
             Assert.IsNotNull(categoryList);
@@ -37,7 +37,7 @@ namespace ModuleBlog.Tests
         [TestMethod]
         public void TestLectureCategoriesBLL()
         {
-            List<CategorieBLL> categoryList;
+            List<ModuleBlog.BLL.Models.Categorie> categoryList;
             categoryList = categoryBll.GetCategories();
 
             Assert.IsNotNull(categoryList);

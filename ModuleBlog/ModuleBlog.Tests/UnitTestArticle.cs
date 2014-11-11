@@ -12,25 +12,25 @@ namespace ModuleBlog.Tests
     [TestClass]
     public class UnitTestArticle
     {
-        private ARTICLE_DAL ArticleDal;
+        private ArticleDAL ArticleDal;
 
         private int ArticleId;
 
         [TestInitialize]
         public void TestInitialize()
         {
-            ArticleDal = new ARTICLE_DAL();
+            ArticleDal = new ArticleDAL();
 
-            ArticleDao articleToInsert = new ArticleDao();
+            Article articleToInsert = new Article();
             articleToInsert.Blog_id = 4;
             articleToInsert.ContenuArticle = "Contenu d'un article inséré pour les tests";
             articleToInsert.TitreArticle = "Article de test";
             articleToInsert.ImageChemin = "";
             articleToInsert.Evenement_id = 2;
 
-            articleToInsert.ListeTags = new List<HashTagArticleDao>();
+            articleToInsert.ListeTags = new List<HashTagArticle>();
 
-            HashTagArticleDao hashTag1 = new HashTagArticleDao();
+            HashTagArticle hashTag1 = new HashTagArticle();
             hashTag1.Mots = "Tag1";
             articleToInsert.ListeTags.Add(hashTag1);
 
@@ -41,14 +41,14 @@ namespace ModuleBlog.Tests
         [TestMethod]
         public void TestGetArticles()
         {
-            List<ArticleDao> articles = ArticleDal.GetArticles(1, 4);
+            List<Article> articles = ArticleDal.GetArticles(1, 4);
             Assert.IsTrue(articles.Count != 0);
         }
 
         [TestMethod]
         public void TestGetArticlesByTag()
         {
-            List<ArticleDao>  articles = ArticleDal.GetArticlesByTag(0, "Tag1");
+            List<Article>  articles = ArticleDal.GetArticlesByTag(0, "Tag1");
             Assert.IsTrue(articles.Count != 0);
 
             articles = ArticleDal.GetArticlesByTag(0, "un random tag qui existe pas");
@@ -58,7 +58,7 @@ namespace ModuleBlog.Tests
         [TestMethod]
         public void TestInsertArticle()
         {
-            ArticleDao articleToInsert = new ArticleDao();
+            Article articleToInsert = new Article();
             articleToInsert.Blog_id = 4;
             articleToInsert.ContenuArticle = "Contenu d'un article inséré pour les tests";
             articleToInsert.TitreArticle = "Article de test";
@@ -67,7 +67,7 @@ namespace ModuleBlog.Tests
 
             string id = ArticleDal.AddArticle(articleToInsert);
 
-            ArticleDao articleAdded = ArticleDal.GetArticles(1, 4).GetArticleDao(int.Parse(id));
+            Article articleAdded = ArticleDal.GetArticles(1, 4).Search(int.Parse(id));
             Assert.AreEqual(articleToInsert.Blog_id, articleAdded.Blog_id);
             Assert.AreEqual(articleToInsert.ContenuArticle, articleAdded.ContenuArticle);
             Assert.AreEqual(articleToInsert.TitreArticle, articleAdded.TitreArticle);
@@ -78,19 +78,19 @@ namespace ModuleBlog.Tests
         [TestMethod]
         public void TestAddArticleWithHashTags()
         {
-            ArticleDao articleToInsert = new ArticleDao();
+            Article articleToInsert = new Article();
             articleToInsert.Blog_id = 4;
             articleToInsert.ContenuArticle = "Contenu d'un article avec hashtag inséré pour les tests";
             articleToInsert.TitreArticle = "Article de test avec hashtag";
             articleToInsert.ImageChemin = "";
             articleToInsert.Evenement_id = 2;
-            articleToInsert.ListeTags = new List<HashTagArticleDao>();
+            articleToInsert.ListeTags = new List<HashTagArticle>();
 
-            HashTagArticleDao hashTag1 = new HashTagArticleDao();
+            HashTagArticle hashTag1 = new HashTagArticle();
             hashTag1.Mots = "Premier hash tag avec test";
-            HashTagArticleDao hashTag2 = new HashTagArticleDao();
+            HashTagArticle hashTag2 = new HashTagArticle();
             hashTag2.Mots = "Second hash tag avec test";
-            HashTagArticleDao hashTag3 = new HashTagArticleDao();
+            HashTagArticle hashTag3 = new HashTagArticle();
             hashTag3.Mots = "Troisième hash tag avec test";
 
             articleToInsert.ListeTags.Add(hashTag1);
@@ -99,7 +99,7 @@ namespace ModuleBlog.Tests
 
             string id = ArticleDal.AddArticle(articleToInsert);
 
-            ArticleDao articleAdded = ArticleDal.GetArticles(1, 4).GetArticleDao(int.Parse(id));
+            Article articleAdded = ArticleDal.GetArticles(1, 4).Search(int.Parse(id));
             Assert.AreEqual(articleToInsert.Blog_id, articleAdded.Blog_id);
             Assert.AreEqual(articleToInsert.ContenuArticle, articleAdded.ContenuArticle);
             Assert.AreEqual(articleToInsert.TitreArticle, articleAdded.TitreArticle);
@@ -113,7 +113,7 @@ namespace ModuleBlog.Tests
         public void TestUpdateArticle()
         {
             string NouveauContenu = "Un nouveau contenu d'article lol ";
-            ArticleDao ArticleToUpdate = ArticleDal.GetArticlesByTag(0, "Tag1")[0];
+            Article ArticleToUpdate = ArticleDal.GetArticlesByTag(0, "Tag1")[0];
 
             ArticleToUpdate.ContenuArticle = NouveauContenu;
 
@@ -126,13 +126,13 @@ namespace ModuleBlog.Tests
         public void TestUpdateArticleWithTags()
         {
             string NouveauContenu = "Un nouveau contenu d'article lol ";
-            ArticleDao ArticleToUpdate = ArticleDal.GetArticlesByTag(7, "Tag1").Last();
+            Article ArticleToUpdate = ArticleDal.GetArticlesByTag(7, "Tag1").Last();
 
-            HashTagArticleDao hashTag1 = new HashTagArticleDao();
+            HashTagArticle hashTag1 = new HashTagArticle();
             hashTag1.Mots = "Premier hash tag avec test";
-            HashTagArticleDao hashTag2 = new HashTagArticleDao();
+            HashTagArticle hashTag2 = new HashTagArticle();
             hashTag2.Mots = "Second hash tag avec test";
-            HashTagArticleDao hashTag3 = new HashTagArticleDao();
+            HashTagArticle hashTag3 = new HashTagArticle();
             hashTag3.Mots = "Troisième hash tag avec test";
 
             ArticleToUpdate.ListeTags.Add(hashTag1);
@@ -143,7 +143,7 @@ namespace ModuleBlog.Tests
 
             ArticleDal.UpdateArticle(ArticleToUpdate);
 
-            ArticleDao ArticleUpdated = ArticleDal.GetArticlesByTag(7, "Tag1").Last();
+            Article ArticleUpdated = ArticleDal.GetArticlesByTag(7, "Tag1").Last();
  
             Assert.IsTrue(ArticleUpdated.ContenuArticle == NouveauContenu);
             Assert.AreEqual(ArticleToUpdate.ListeTags.Count, ArticleUpdated.ListeTags.Count);       
@@ -152,12 +152,12 @@ namespace ModuleBlog.Tests
         [TestMethod]
         public void TestDeleteArticle()
         {
-            ArticlesDao articles = ArticleDal.GetArticles(1, 4);
+            Articles articles = ArticleDal.GetArticles(1, 4);
 
             if (articles.Count > 0)
             {
                 int articlesCount = articles.Count;
-                ArticleDao articleToDelete = articles.Last();
+                Article articleToDelete = articles.Last();
 
                 ArticleDal.DeleteArticle(articleToDelete.Article_id);
 
@@ -172,7 +172,7 @@ namespace ModuleBlog.Tests
         public void TestLikeArticle()
         {
             ArticleDal.LikeArticle(7, ArticleId);
-            ArticleDao articleToLike = ArticleDal.GetArticles(7, 4).Last();
+            Article articleToLike = ArticleDal.GetArticles(7, 4).Last();
 
             Assert.IsTrue(articleToLike.IsLiked);
         }
@@ -183,7 +183,7 @@ namespace ModuleBlog.Tests
             ArticleDal.LikeArticle(7, ArticleId);
 
             ArticleDal.DislikeArticle(7, ArticleId);
-            ArticleDao articleToDislike = ArticleDal.GetArticles(7, 4).Last();
+            Article articleToDislike = ArticleDal.GetArticles(7, 4).Last();
 
             Assert.IsFalse(articleToDislike.IsLiked);
         }

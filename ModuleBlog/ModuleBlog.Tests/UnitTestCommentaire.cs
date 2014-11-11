@@ -13,12 +13,12 @@ namespace ModuleBlog.Tests
     [TestClass]
     public class COMMENTAIRE_TESTS
     {
-        private COMMENTAIRE_DAL cdal;
+        private CommentaireDAL cdal;
 
         [TestInitialize]
 
         public void Init(){
-             cdal = new ModuleBlog.DAL.COMMENTAIRE_DAL();
+             cdal = new ModuleBlog.DAL.CommentaireDAL();
             Assert.IsNotNull(cdal);
 
         }
@@ -26,7 +26,7 @@ namespace ModuleBlog.Tests
 
         public void TestMethodGetCommentaireById()
         {
-            CommentaireDao commentaire;
+            ModuleBlog.DAL.Models.Commentaire commentaire;
             commentaire = cdal.GetCommentaireById(1);
             Assert.IsNotNull(commentaire);
             Assert.IsTrue(commentaire.Article_id==10001);
@@ -36,7 +36,7 @@ namespace ModuleBlog.Tests
         [TestMethod]
         public void TestMethodGetCommentaires()
         {
-            List<CommentaireDao> commentaireList;
+            List<ModuleBlog.DAL.Models.Commentaire> commentaireList;
             commentaireList = cdal.GetCommentaires(10001);
 
             Assert.IsNotNull(commentaireList);
@@ -48,30 +48,30 @@ namespace ModuleBlog.Tests
         [TestMethod]
         public void TestMethodUpdateCommentaire()
         {
-            CommentaireDao commentaire;
+            ModuleBlog.DAL.Models.Commentaire commentaire;
             commentaire = cdal.GetCommentaireById(1);
             commentaire.ContenuCommentaire="Update Commentaire Test";
             commentaire.DateModification = DateTime.Now;
-            Assert.IsTrue(cdal.UpdateCommentaire(commentaire) == "OK");
+            Assert.IsTrue(cdal.UpdateCommentaire(commentaire));
             
         }
         [TestMethod]
         public void TestMethodReportCommentaire()
         {            
-                Assert.IsTrue(cdal.ReportCommentaire(1, 7) == "OK");  
+                Assert.IsTrue(cdal.ReportCommentaire(1, 7));  
         }
 
         [TestMethod]
         public void TestMethodAddCommentaire()
         {
-            CommentaireDao c = cdal.GetCommentaireById(1);
-            Assert.IsTrue(cdal.AddCommentaire(c) == "OK");
+            ModuleBlog.DAL.Models.Commentaire c = cdal.GetCommentaireById(1);
+            Assert.IsTrue(cdal.AddCommentaire(c));
         }
         [TestMethod]
         public void TestMethodDeleteCommentaire()
         {
-            Assert.IsTrue(cdal.DeleteCommentaire(1) == "OK");
-            CommentaireDao c = cdal.GetCommentaireById(1);
+            Assert.IsTrue(cdal.DeleteCommentaire(1));
+            ModuleBlog.DAL.Models.Commentaire c = cdal.GetCommentaireById(1);
             Assert.IsTrue(cdal.GetCommentaireById(c.Commentaire_id).Actif == false);
             c.Actif = true;
             c.DateModification = DateTime.Now;

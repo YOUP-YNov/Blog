@@ -481,84 +481,21 @@
             </summary>
             <param name="documentPath">The physical path to XML document.</param>
         </member>
-        <member name="T:ModuleBlog.BLL.THEME_BLL">
-            <summary>
-            Couche business pour obtenir un theme
-            </summary>
-        </member>
-        <member name="F:ModuleBlog.BLL.THEME_BLL.themeDal">
-            <summary>
-            instance de la couche DAL des themes
-            </summary>
-        </member>
-        <member name="M:ModuleBlog.BLL.THEME_BLL.#ctor">
-            <summary>
-            Constructeur de la classe
-            </summary>
-        </member>
-        <member name="M:ModuleBlog.BLL.THEME_BLL.GetThemeById(System.Int32)">
-            <summary>
-            Récupérer les informations d'un thème
-            </summary>
-            <param name="themeId">identifiant du thème</param>
-            <returns>Thème</returns>
-        </member>
-        <member name="T:ModuleBlog.BLL.CATEGORIE_BLL">
-            <summary>
-            Couche business pour les catégories de blog
-            </summary>
-        </member>
-        <member name="F:ModuleBlog.BLL.CATEGORIE_BLL.categoryDal">
-            <summary>
-            instance de la couche DAL des catégories
-            </summary>
-        </member>
-        <member name="M:ModuleBlog.BLL.CATEGORIE_BLL.#ctor">
-            <summary>
-            Constructeur de la classe
-            </summary>
-        </member>
-        <member name="M:ModuleBlog.BLL.CATEGORIE_BLL.GetCategories">
-            <summary>
-            Récupération des catégories de la BDD
-            </summary>
-            <returns>Liste des catégories</returns>
-        </member>
-        <member name="T:ModuleBlog.BLL.Models.CategorieBLL">
-            <summary>
-            Objet catégorie
-            </summary>
-        </member>
-        <member name="M:ModuleBlog.BLL.Models.CategorieBLL.#ctor">
-            <summary>
-            Constructeur
-            </summary>
-        </member>
-        <member name="P:ModuleBlog.BLL.Models.CategorieBLL.Categorie_id">
-            <summary>
-            identifiant
-            </summary>
-        </member>
-        <member name="P:ModuleBlog.BLL.Models.CategorieBLL.Libelle">
-            <summary>
-            libellé
-            </summary>
-        </member>
-        <member name="M:ModuleBlog.Controllers.AdController.Get(System.Int32)">
+        <member name="M:ModuleBlog.Controllers.PubliciteController.Get(System.Int32)">
             <summary>
             Récupérer la publicité associée à un blog
             </summary>
             <param name="blogId">identifiant du blog</param>
             <returns>contenu de la publicité</returns>
         </member>
-        <member name="M:ModuleBlog.Controllers.AdController.Post(ModuleBlog.Controllers.Models.Publicite)">
+        <member name="M:ModuleBlog.Controllers.PubliciteController.Post(ModuleBlog.Controllers.Models.Publicite)">
             <summary>
             Ajouter une publicite à un blog
             </summary>
             <param name="publicite">publicité à ajouter</param>
             <returns>Réponse HTTP</returns>
         </member>
-        <member name="M:ModuleBlog.Controllers.AdController.Put(System.Int32,ModuleBlog.Controllers.Models.Publicite)">
+        <member name="M:ModuleBlog.Controllers.PubliciteController.Put(System.Int32,ModuleBlog.Controllers.Models.Publicite)">
             <summary>
             Mettre à jour une publicité
             </summary>
@@ -597,7 +534,7 @@
             <param name="articleId">identifiant de l'article qui n'est plus aimé</param>
             <returns></returns>
         </member>
-        <member name="M:ModuleBlog.Controllers.ArticleController.Add(System.String,System.String,System.String,System.Int32,System.Int32)">
+        <member name="M:ModuleBlog.Controllers.ArticleController.Add(System.Int32,System.String,System.String,System.String,System.Int32)">
             <summary>
             Crée un article
             </summary>
@@ -669,7 +606,7 @@
             <summary>
             Mettre à jour un blog
             </summary>
-            <param name="blog">Blog à modifier</param>
+            <param name="blog">ModuleBlog.Controllers.Models.Blog à modifier</param>
             <returns>Réponse HTTP</returns>
         </member>
         <member name="M:ModuleBlog.Controllers.BlogController.Put(System.Int32,System.Boolean)">
@@ -709,49 +646,49 @@
             <param name="themeId">identifiant du thème</param>
             <returns>thème correspondant</returns>
         </member>
-        <member name="T:ModuleBlog.Controllers.CategoryController">
+        <member name="T:ModuleBlog.Controllers.CategorieController">
             <summary>
             Contrôleur pour les catégories de blog
             </summary>
         </member>
-        <member name="F:ModuleBlog.Controllers.CategoryController.categoryBLL">
+        <member name="F:ModuleBlog.Controllers.CategorieController.categoryBLL">
             <summary>
             instance de la couche métiers des catégories
             </summary>
         </member>
-        <member name="M:ModuleBlog.Controllers.CategoryController.#ctor">
+        <member name="M:ModuleBlog.Controllers.CategorieController.#ctor">
             <summary>
             Constructeur de la classe 
             </summary>
         </member>
-        <member name="M:ModuleBlog.Controllers.CategoryController.Get">
+        <member name="M:ModuleBlog.Controllers.CategorieController.Get">
             <summary>
             Récupérer la liste des catégories
             </summary>
             <returns>liste des catégories</returns>
         </member>
-        <member name="M:ModuleBlog.Controllers.CommentController.Get(System.Int32)">
+        <member name="M:ModuleBlog.Controllers.CommentaireController.Get(System.Int32)">
             <summary>
             Récupérer tous les commentaires d'un article
             </summary>
             <param name="articleId">identifiant de l'article</param>
             <returns>Liste des commentaires</returns>
         </member>
-        <member name="M:ModuleBlog.Controllers.CommentController.GetById(System.Int32)">
+        <member name="M:ModuleBlog.Controllers.CommentaireController.GetById(System.Int32)">
             <summary>
             Récupérer un commentaire spécifique
             </summary>
             <param name="id">identifiant du commentaire</param>
             <returns>le commentaire</returns>
         </member>
-        <member name="M:ModuleBlog.Controllers.CommentController.Post(ModuleBlog.Controllers.Models.Commentaire)">
+        <member name="M:ModuleBlog.Controllers.CommentaireController.Post(ModuleBlog.Controllers.Models.Commentaire)">
             <summary>
             Ajouter un commentaire
             </summary>
             <param name="comment">commentaire à ajouter</param>
             <returns>Réponse HTTP</returns>
         </member>
-        <member name="M:ModuleBlog.Controllers.CommentController.Post(System.Int32,System.Int32)">
+        <member name="M:ModuleBlog.Controllers.CommentaireController.Post(System.Int32,System.Int32)">
             <summary>
             Reporter un commentaire (ajout dans table HR_Signaler)
             </summary>
@@ -759,14 +696,14 @@
             <param name="userId">Identifiant de l'utilisateur</param>
             <returns>Réponse HTTP</returns>
         </member>
-        <member name="M:ModuleBlog.Controllers.CommentController.Put(ModuleBlog.Controllers.Models.Commentaire)">
+        <member name="M:ModuleBlog.Controllers.CommentaireController.Put(ModuleBlog.Controllers.Models.Commentaire)">
             <summary>
             Mettre à jour un commentaire
             </summary>
             <param name="comment">commentaire à mettre à jour</param>
             <returns>Réponse HTTP</returns>
         </member>
-        <member name="M:ModuleBlog.Controllers.CommentController.Delete(System.Int32)">
+        <member name="M:ModuleBlog.Controllers.CommentaireController.Delete(System.Int32)">
             <summary>
             Désactiver un commentaire
             </summary>
@@ -789,104 +726,6 @@
             </summary>
         </member>
         <member name="P:ModuleBlog.Controllers.Models.Categorie.Libelle">
-            <summary>
-            libellé
-            </summary>
-        </member>
-        <member name="M:ModuleBlog.DAL.ARTICLE_DAL.DeleteArticleForReal(System.Int32)">
-            Cette méthode ne doit pas être utilisée par les clients,
-            c'est une méthode uniquement créée pour les tests 
-            *
-        </member>
-        <member name="T:ModuleBlog.DAL.THEME_DAL">
-            <summary>
-            Couche DAL des catégories des blogs
-            </summary>
-        </member>
-        <member name="F:ModuleBlog.DAL.THEME_DAL.cmd">
-            <summary>
-            Objet permettant d'effecture des requêtes à la BDD
-            </summary>
-        </member>
-        <member name="F:ModuleBlog.DAL.THEME_DAL.con">
-            <summary>
-            Objet de gestion de la connexion à la BDD
-            </summary>
-        </member>
-        <member name="F:ModuleBlog.DAL.THEME_DAL.da">
-            <summary>
-            Objet Tableau recevant les données récupérées par la requête
-            </summary>
-        </member>
-        <member name="F:ModuleBlog.DAL.THEME_DAL.ds">
-            <summary>
-            Dataset que l'on rempli grâce au SqlDataAdapter permettant de naviguer entre les lignes et colonnes
-            </summary>
-        </member>
-        <member name="M:ModuleBlog.DAL.THEME_DAL.#ctor">
-            <summary>
-            Constructeur de la classe
-            </summary>
-        </member>
-        <member name="M:ModuleBlog.DAL.THEME_DAL.GetThemeById(System.Int32)">
-            <summary>
-            Récupérer les informations d'un thème
-            </summary>
-            <param name="themeId">identifiant du thème</param>
-            <returns>Thème</returns>
-        </member>
-        <member name="T:ModuleBlog.DAL.CATEGORIE_DAL">
-            <summary>
-            Couche DAL des catégories des blogs
-            </summary>
-        </member>
-        <member name="F:ModuleBlog.DAL.CATEGORIE_DAL.cmd">
-            <summary>
-            Objet permettant d'effecture des requêtes à la BDD
-            </summary>
-        </member>
-        <member name="F:ModuleBlog.DAL.CATEGORIE_DAL.con">
-            <summary>
-            Objet de gestion de la connexion à la BDD
-            </summary>
-        </member>
-        <member name="F:ModuleBlog.DAL.CATEGORIE_DAL.da">
-            <summary>
-            Objet Tableau recevant les données récupérées par la requête
-            </summary>
-        </member>
-        <member name="F:ModuleBlog.DAL.CATEGORIE_DAL.ds">
-            <summary>
-            Dataset que l'on rempli grâce au SqlDataAdapter permettant de naviguer entre les lignes et colonnes
-            </summary>
-        </member>
-        <member name="M:ModuleBlog.DAL.CATEGORIE_DAL.#ctor">
-            <summary>
-            Constructeur de la classe
-            </summary>
-        </member>
-        <member name="M:ModuleBlog.DAL.CATEGORIE_DAL.GetCategories">
-            <summary>
-            Récupération de la liste des catégories
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="T:ModuleBlog.DAL.Models.CategorieDao">
-            <summary>
-            Objet catégorie
-            </summary>
-        </member>
-        <member name="M:ModuleBlog.DAL.Models.CategorieDao.#ctor">
-            <summary>
-            constructeur
-            </summary>
-        </member>
-        <member name="P:ModuleBlog.DAL.Models.CategorieDao.Categorie_id">
-            <summary>
-            identifiant
-            </summary>
-        </member>
-        <member name="P:ModuleBlog.DAL.Models.CategorieDao.Libelle">
             <summary>
             libellé
             </summary>

@@ -14,11 +14,11 @@ namespace ModuleBlog.Controllers
     public class ArticleController : ApiController
     {
 
-        private ARTICLE_BLL articleBLL;
+        private ArticleBLL articleBLL;
 
         public ArticleController()
         {
-            articleBLL = new ARTICLE_BLL();
+            articleBLL = new ArticleBLL();
         }
 
         // GET: api/Article
@@ -28,27 +28,29 @@ namespace ModuleBlog.Controllers
         /// <param name="utilisateurId">identifiant de l'utilisateur qui faire la requête</param>
         /// <param name="blogId">identifiant du blog</param>
         /// <returns>Liste des articles du blog</returns>
-        public IEnumerable<Article> Get(int utilisateurId, int blogId)
+        [Route ("api/article")]
+        [HttpGet]
+        public IEnumerable<ModuleBlog.Controllers.Models.Article> Get(int utilisateurId, int blogId)
         {
-            ArticlesBLL articlesBLL = articleBLL.GetArticles(utilisateurId, blogId);
+            ModuleBlog.BLL.Models.Articles articlesBLL = articleBLL.GetArticles(utilisateurId, blogId);
 
             return Map(articlesBLL);
         }
 
-        private Articles Map(ArticlesBLL articlesToMap)
+        private ModuleBlog.Controllers.Models.Articles Map(ModuleBlog.BLL.Models.Articles articlesToMap)
         {
-            Articles articles = new Articles();
+            ModuleBlog.Controllers.Models.Articles articles = new ModuleBlog.Controllers.Models.Articles();
 
             if (articlesToMap.Count > 0)
-            { 
+            {
 
-                foreach (ArticleBLL article in articlesToMap)
+                foreach (ModuleBlog.BLL.Models.Article article in articlesToMap)
                 {
-                    Mapper.CreateMap<HashTagArticleBLL, HashTagArticle>();
-                    List<HashTagArticle> hashTags = Mapper.Map<List<HashTagArticleBLL>, List<HashTagArticle>>(article.ListeTags);
+                    Mapper.CreateMap<ModuleBlog.BLL.Models.HashTagArticle, ModuleBlog.Controllers.Models.HashTagArticle>();
+                    List<ModuleBlog.Controllers.Models.HashTagArticle> hashTags = Mapper.Map<List<ModuleBlog.BLL.Models.HashTagArticle>, List<ModuleBlog.Controllers.Models.HashTagArticle>>(article.ListeTags);
 
-                    Mapper.CreateMap<ArticleBLL, Article>();
-                    Article articleToAdd = Mapper.Map<ArticleBLL, Article>(article);
+                    Mapper.CreateMap<ModuleBlog.BLL.Models.Article, ModuleBlog.Controllers.Models.Article>();
+                    ModuleBlog.Controllers.Models.Article articleToAdd = Mapper.Map<ModuleBlog.BLL.Models.Article, ModuleBlog.Controllers.Models.Article>(article);
 
                     articleToAdd.ListeTags = hashTags;
                     articles.Add(articleToAdd);
@@ -65,9 +67,11 @@ namespace ModuleBlog.Controllers
         /// <param name="utilisateurId">identifiant de l'utilisateur qui fait la requête"</param>
         /// <param name="tag">tag recherché</param>
         /// <returns>Liste des blogs</returns>
-        public IEnumerable<Article> GetByTag(int utilisateurId, string tag)
+        [Route("api/article")]
+        [HttpGet]
+        public IEnumerable<ModuleBlog.Controllers.Models.Article> GetByTag(int utilisateurId, string tag)
         {
-            ArticlesBLL articlesBLL = articleBLL.GetArticlesByTag(utilisateurId, tag);
+            ModuleBlog.BLL.Models.Articles articlesBLL = articleBLL.GetArticlesByTag(utilisateurId, tag);
 
             return Map(articlesBLL);
         }
@@ -82,7 +86,7 @@ namespace ModuleBlog.Controllers
         [HttpPut]
         public IHttpActionResult Like(int id, int utilisateurId)
         {
-            Boolean result = articleBLL.LikeArticle(utilisateurId, id);
+            bool result = articleBLL.LikeArticle(utilisateurId, id);
 
             if (result)
                 return StatusCode(HttpStatusCode.OK);
@@ -100,7 +104,7 @@ namespace ModuleBlog.Controllers
         [HttpPut]
         public IHttpActionResult Dislike(int id, int utilisateurId)
         {
-            Boolean result = articleBLL.DislikeArticle(utilisateurId, id);
+            bool result = articleBLL.DislikeArticle(utilisateurId, id);
 
             if (result)
                 return StatusCode(HttpStatusCode.OK);
@@ -134,7 +138,7 @@ namespace ModuleBlog.Controllers
         [HttpPut]
         public IHttpActionResult Disable(int id)
         {
-            Boolean result = articleBLL.DeleteArticle(id);
+            bool result = articleBLL.DeleteArticle(id);
 
             if (result)
                 return StatusCode(HttpStatusCode.OK);

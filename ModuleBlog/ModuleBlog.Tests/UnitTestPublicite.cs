@@ -10,16 +10,16 @@ namespace ModuleBlog.Tests
     [TestClass]
     public class UnitTestPublicite
     {
-        private PUBLICITE_DAL adDal;
-        private PUBLICITE_BLL adBll;
+        private PubliciteDAL adDal;
+        private PubliciteBLL adBll;
 
         [TestInitialize]
         public void Init()
         {
-            adDal = new PUBLICITE_DAL();
+            adDal = new PubliciteDAL();
             Assert.IsNotNull(adDal);
 
-            adBll = new PUBLICITE_BLL();
+            adBll = new PubliciteBLL();
             Assert.IsNotNull(adBll);
         }
 
@@ -27,38 +27,32 @@ namespace ModuleBlog.Tests
         [TestMethod]
         public void TestAjoutPubliciteDAL()
         {
-            PubliciteDao adDao = new PubliciteDao(105, 150, 150, "sample content");
+            ModuleBlog.DAL.Models.Publicite adDao = new ModuleBlog.DAL.Models.Publicite(105, 150, 150, "sample content");
 
-            string result = string.Empty;
-            result = adDal.AddAd(adDao);
-            Assert.AreNotEqual(string.Empty, result);
-            Assert.AreEqual("OK", result);
+            Assert.IsTrue(adDal.AddAd(adDao));
         }
 
         [TestMethod]
-        public PubliciteDao TestLecturePubliciteDAL()
+        public ModuleBlog.DAL.Models.Publicite TestLecturePubliciteDAL()
         {
-            PubliciteDao dao;
+            ModuleBlog.DAL.Models.Publicite dao;
             dao = adDal.GetAdByBlogId(4);
 
             Assert.IsNotNull(dao);
             Assert.IsTrue(dao.Blog_id == 4);
+
             return dao;
         }
 
         [TestMethod]
         public void TestModificationPubliciteDAL()
         {
-            PubliciteDao adDao = TestLecturePubliciteDAL();
+            ModuleBlog.DAL.Models.Publicite adDao = TestLecturePubliciteDAL();
             adDao.Hauteur += 50;
             adDao.Largeur += 50;
             adDao.ContenuPublicite = "test Update";
 
-            string result = string.Empty;
-            result = adDal.UpdateAd(adDao);
-
-            Assert.AreNotEqual(string.Empty, result);
-            Assert.AreEqual("OK", result);
+            Assert.IsTrue(adDal.UpdateAd(adDao));
         }
         #endregion
 
@@ -66,37 +60,32 @@ namespace ModuleBlog.Tests
         [TestMethod]
         public void TestAjoutPubliciteBLL()
         {
-            PubliciteBLL adBllModel = new PubliciteBLL(106, 150, 150, "sample content");
+            ModuleBlog.BLL.Models.Publicite adBllModel = new ModuleBlog.BLL.Models.Publicite(106, 150, 150, "sample content");
 
-            string result = string.Empty;
-            result = adBll.AddAd(adBllModel);
-            Assert.AreNotEqual(string.Empty, result);
-            Assert.AreEqual("OK", result);
+            Assert.IsTrue(adBll.AddAd(adBllModel));
         }
 
         [TestMethod]
-        public PubliciteBLL TestLecturePubliciteBLL()
+        public ModuleBlog.BLL.Models.Publicite TestLecturePubliciteBLL()
         {
-            PubliciteBLL bll;
+            ModuleBlog.BLL.Models.Publicite bll;
             bll = adBll.GetAdByBlogId(4);
 
             Assert.IsNotNull(bll);
             Assert.IsTrue(bll.Blog_id == 4);
+
             return bll;
         }
 
         [TestMethod]
         public void TestModificationPubliciteBLL()
         {
-            PubliciteBLL adBllModel = TestLecturePubliciteBLL();
+            ModuleBlog.BLL.Models.Publicite adBllModel = TestLecturePubliciteBLL();
             adBllModel.Hauteur += 50;
             adBllModel.Largeur += 50;
             adBllModel.ContenuPublicite = "test Update";
 
-            string result = string.Empty;
-            result = adBll.UpdateAdd(adBllModel);
-            Assert.AreNotEqual(string.Empty, result);
-            Assert.AreEqual("OK", result);
+            Assert.IsTrue(adBll.UpdateAdd(adBllModel));
         }
         #endregion
     }
