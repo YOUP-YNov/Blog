@@ -359,7 +359,7 @@ namespace ModuleBlog.DAL
             }
         }
 
-        public string UpdateBlog(BlogDao blog)
+        public bool UpdateBlog(BlogDao blog)
         {
             ds = new DataSet();
 
@@ -383,7 +383,10 @@ namespace ModuleBlog.DAL
                 {
                 da.Fill(ds);
                 con.Close();
-                return ds.Tables[0].Rows[0]["Resultat"].ToString();
+                if (string.Equals(ds.Tables[0].Rows[0]["Resultat"].ToString(), "OK"))
+                    return true;
+                else
+                    return false;
             }
                 catch(Exception ex)
                 {
@@ -393,7 +396,7 @@ namespace ModuleBlog.DAL
             }
             catch (SqlException ex)
             {
-                return ex.Message;
+                return false;
             }
         }
 
@@ -452,7 +455,7 @@ namespace ModuleBlog.DAL
             try
             {
                 if(con.State == ConnectionState.Closed)
-                con.Open();
+                    con.Open();
                 try
                 {
                 da.Fill(ds);
