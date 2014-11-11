@@ -40,10 +40,17 @@ namespace ModuleBlog.DAL
             try
             {
                 con.Open();
+                try
+                {
                 da.Fill(ds);
                 con.Close();
-
                 return ds.Tables[0].Rows[0]["Resultat"].ToString();
+            }
+                catch(Exception ex)
+                {
+                    con.Close();
+                    return ex.Message;
+                }
             }
             catch (SqlException ex)
             {
@@ -68,6 +75,8 @@ namespace ModuleBlog.DAL
             try
             {
                 con.Open();
+                try
+                {
                 da.Fill(ds);
                 BlogDao bDao = new BlogDao();
 
@@ -88,6 +97,12 @@ namespace ModuleBlog.DAL
                 }
                 con.Close();
                 return bDao;
+            }
+                catch(Exception ex)
+                {
+                    con.Close();
+                    throw ex;
+                }
             }
             catch (SqlException ex)
             {
@@ -111,6 +126,8 @@ namespace ModuleBlog.DAL
             try
             {
                 con.Open();
+                try
+                {
                 da.Fill(ds);
                 List<BlogDao> listBDao = new List<BlogDao>();
                 BlogDao bDao;
@@ -134,6 +151,12 @@ namespace ModuleBlog.DAL
                 }
                 con.Close();
                 return listBDao;
+            }
+                catch(Exception ex)
+                {
+                    con.Close();
+                    throw ex;
+                }
             }
             catch (SqlException ex)
             {
@@ -154,6 +177,8 @@ namespace ModuleBlog.DAL
             try
             {
                 con.Open();
+                try
+                {
                 da.Fill(ds);
                 List<BlogDao> listBDao = new List<BlogDao>();
                 BlogDao bDao;
@@ -177,6 +202,12 @@ namespace ModuleBlog.DAL
 
                 con.Close();
                 return listBDao;
+            }
+                catch(Exception ex)
+                {
+                    con.Close();
+                    throw ex;
+                }
             }
             catch (SqlException ex)
             {
@@ -201,6 +232,8 @@ namespace ModuleBlog.DAL
             try
             {
                 con.Open();
+                try
+                {
                 da.Fill(ds);
                 List<BlogDao> listBDao = new List<BlogDao>();
                 BlogDao bDao;
@@ -223,6 +256,12 @@ namespace ModuleBlog.DAL
                 }
                 con.Close();
                 return listBDao;
+            }
+                catch(Exception ex)
+                {
+                    con.Close();
+                    throw ex;
+                }
             }
             catch (SqlException ex)
             {
@@ -246,6 +285,8 @@ namespace ModuleBlog.DAL
             try
             {
                 con.Open();
+                try
+                {
                 da.Fill(ds);
                 List<BlogDao> listBDao = new List<BlogDao>();
                 BlogDao bDao;
@@ -268,6 +309,12 @@ namespace ModuleBlog.DAL
                 }
                 con.Close();
                 return listBDao;
+            }
+                catch(Exception ex)
+                {
+                    con.Close();
+                    throw ex;
+                }
             }
             catch (SqlException ex)
             {
@@ -294,10 +341,17 @@ namespace ModuleBlog.DAL
             try
             {
                 con.Open();
+                try
+                {
                 da.Fill(ds);
                 con.Close();
-
                 return ds.Tables[0].Rows[0]["Resultat"].ToString();
+            }
+                catch(Exception ex)
+                {
+                    con.Close();
+                    return ex.Message;
+                }
             }
             catch (SqlException ex)
             {
@@ -305,7 +359,7 @@ namespace ModuleBlog.DAL
             }
         }
 
-        public string UpdateBlog(BlogDao blog)
+        public bool UpdateBlog(BlogDao blog)
         {
             ds = new DataSet();
 
@@ -325,14 +379,24 @@ namespace ModuleBlog.DAL
             try
             {
                 con.Open();
+                try
+                {
                 da.Fill(ds);
                 con.Close();
-
-                return ds.Tables[0].Rows[0]["Resultat"].ToString();
+                if (string.Equals(ds.Tables[0].Rows[0]["Resultat"].ToString(), "OK"))
+                    return true;
+                else
+                    return false;
+            }
+                catch(Exception ex)
+                {
+                    con.Close();
+                    return ex.Message;
+                }
             }
             catch (SqlException ex)
             {
-                return ex.Message;
+                return false;
             }
         }
 
@@ -356,10 +420,17 @@ namespace ModuleBlog.DAL
             try
             {
                 con.Open();
+                try
+                {
                 da.Fill(ds);
                 con.Close();
-
-                return ds.Tables[0].Rows[0]["Resultat"].ToString();
+                    return ds.Tables[0].Rows[0]["Resultat"].ToString();
+            }
+                catch(Exception ex)
+                {
+                    con.Close();
+                    return ex.Message;
+                }
             }
             catch (SqlException ex)
             {
@@ -385,6 +456,8 @@ namespace ModuleBlog.DAL
             {
                 if(con.State == ConnectionState.Closed)
                     con.Open();
+                try
+                {
                 da.Fill(ds);
                 ThemeDao tDao = new ThemeDao();
 
@@ -399,6 +472,12 @@ namespace ModuleBlog.DAL
                 }
                 con.Close();
                 return tDao;
+            }
+                catch(Exception ex)
+                {
+                    con.Close();
+                    throw ex;
+                }
             }
             catch (SqlException ex)
             {

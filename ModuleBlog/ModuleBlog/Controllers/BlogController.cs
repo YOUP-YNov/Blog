@@ -41,14 +41,14 @@ namespace ModuleBlog.Controllers
             }
         }
 
-        // GET: api/BlogById/5
+        // GET: api/Blog/5
         /// <summary>
         /// Récupérer un blog par son identifiant (et indique qu'il a été visité)
         /// </summary>
         /// <param name="id">identifiant du blog</param>
         /// <param name="userId">identifiant de l'utilisateur connecté</param>
         /// <returns>le blog</returns>
-        [Route("api/blog/{id}")]
+        [Route("api/Blog/{id}")]
         [HttpGet]
         public Blog GetById(int id, int userId)
         {
@@ -66,13 +66,13 @@ namespace ModuleBlog.Controllers
             }
         }
 
-        // GET: api/BlogByCategory/5
+        // GET: api/Blog/5
         /// <summary>
         /// Récupérer la liste des blogs pour une catégorie
         /// </summary>
         /// <param name="categoryId">identifiant de la catégorie</param>
         /// <returns>la liste des blogs</returns>
-        [Route("api/blog/{id}")]
+        [Route("api/Blog/{id}")]
         [HttpGet]
         public IEnumerable<Blog> GetByCategory(int id, int categoryId)
         {
@@ -91,18 +91,30 @@ namespace ModuleBlog.Controllers
         }
 
 
-        // GET: api/PromotedBlogs
+        // GET: api/Blog/Promoted
         /// <summary>
         /// Récupérer la liste des blogs mis en avant
         /// </summary>
-        /// <param name="promoted">blog mis en avant = vrai</param>
         /// <returns>Liste des blogs</returns>
-        public IEnumerable<Blog> Get(bool promoted)
+        [Route("api/Blog/Promoted")]
+        [HttpGet]
+        public IEnumerable<Blog> GetPromoted()
         {
-            return null;
+            IEnumerable<BlogBLL> blogsBLL = blogBLL.GetPromotedBlogs();
+            try
+            {
+                Mapper.CreateMap<BlogBLL, Blog>();
+                Mapper.CreateMap<ThemeBLL, Theme>();
+                List<Blog> blogs = Mapper.Map<IEnumerable<BlogBLL>, List<Blog>>(blogsBLL);
+                return blogs;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
-        // GET : api/Blog/
+        // GET : api/Blog
         /// <summary>
         /// Effectuer une recherche de blog par noms
         /// </summary>
@@ -110,9 +122,21 @@ namespace ModuleBlog.Controllers
         /// <returns>Liste des blogs</returns>
         public IEnumerable<Blog> Get(string keyword)
         {
-            return null;
+            IEnumerable<BlogBLL> blogsBLL = blogBLL.GetBlogsBySearch(0, keyword);
+            try
+            {
+                Mapper.CreateMap<BlogBLL, Blog>();
+                Mapper.CreateMap<ThemeBLL, Theme>();
+                List<Blog> blogs = Mapper.Map<IEnumerable<BlogBLL>, List<Blog>>(blogsBLL);
+                return blogs;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
+        // GET : api/Blog
         /// <summary>
         /// Effectuer une recherche de blog par noms pour une catégorie
         /// </summary>
@@ -121,7 +145,18 @@ namespace ModuleBlog.Controllers
         /// <returns>Liste des blogs</returns>
         public IEnumerable<Blog> Get(string keyword, int categoryId)
         {
-            return null;
+            IEnumerable<BlogBLL> blogsBLL = blogBLL.GetBlogsBySearch(categoryId, keyword);
+            try
+            {
+                Mapper.CreateMap<BlogBLL, Blog>();
+                Mapper.CreateMap<ThemeBLL, Theme>();
+                List<Blog> blogs = Mapper.Map<IEnumerable<BlogBLL>, List<Blog>>(blogsBLL);
+                return blogs;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
 
@@ -131,9 +166,25 @@ namespace ModuleBlog.Controllers
         /// </summary>
         /// <param name="blog">le blog à ajouter</param>
         /// <returns>Réponse HTTP</returns>
-        public IHttpActionResult Post(Blog blog)
+        public IHttpActionResult Post([FromBody]Blog blog)
         {
-            return Ok();
+            if (blog != null)
+            {
+                if (blog.Categorie_id == 0 || blog.Theme_id == 0
+                    || blog.TitreBlog == string.Empty || blog.Utilisateur_id == 0)
+                    return BadRequest("parameters format is not correct.");
+                ThemeController tcontroller = new ThemeController();
+                blog.Theme = tcontroller.Get(blog.Theme_id);
+                Mapper.CreateMap<Blog, BlogBLL>();
+                Mapper.CreateMap<Theme, ThemeBLL>();
+                BlogBLL blogBll = Mapper.Map<Blog, BlogBLL>(blog);
+                if (blogBLL.AddBlog(blogBll))
+                    return StatusCode(HttpStatusCode.Created);
+                else
+                    return BadRequest("an error occured");
+            }
+            else
+                return BadRequest("parameter is null");
         }
 
         // PUT: api/UpdateBlog
@@ -142,9 +193,25 @@ namespace ModuleBlog.Controllers
         /// </summary>
         /// <param name="blog">Blog à modifier</param>
         /// <returns>Réponse HTTP</returns>
-        public IHttpActionResult Put(Blog blog)
+        public IHttpActionResult Put([FromBody]Blog blog)
         {
-            return Ok();
+            if (blog != null)
+            {
+                if (blog.Categorie_id == 0 || blog.Theme_id == 0
+                    || blog.TitreBlog == string.Empty || blog.Utilisateur_id == 0)
+                    return BadRequest("parameters format is not correct.");
+                ThemeController tcontroller = new ThemeController();
+                blog.Theme = tcontroller.Get(blog.Theme_id);
+                Mapper.CreateMap<Blog, BlogBLL>();
+                Mapper.CreateMap<Theme, ThemeBLL>();
+                BlogBLL blogBll = Mapper.Map<Blog, BlogBLL>(blog);
+                if (blogBLL.UpdateBlog(blogBll))
+                    return StatusCode(HttpStatusCode.Created);
+                else
+                    return BadRequest("an error occured");
+            }
+            else
+                return BadRequest("parameter is null");
         }
 
         // PUT : api/UpdateBlog

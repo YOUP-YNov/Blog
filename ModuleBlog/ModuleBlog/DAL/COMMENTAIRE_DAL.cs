@@ -39,9 +39,17 @@ namespace ModuleBlog.DAL
             try
             {
                 con.Open();
-                da.Fill(ds);
-                con.Close();
-                return ds.Tables[0].Rows[0]["Resultat"].ToString();
+                try
+                {
+                    da.Fill(ds);
+                    con.Close();
+                    return ds.Tables[0].Rows[0]["Resultat"].ToString();
+                }
+                catch(Exception ex)
+                {
+                    con.Close();
+                    return ex.Message;
+                }
             }
             catch (SqlException ex)
             {
@@ -66,29 +74,37 @@ namespace ModuleBlog.DAL
             try
             {
                 con.Open();
-                da.Fill(ds);
-                CommentaireDao cDao = new CommentaireDao();
-
-                foreach (DataTable table in ds.Tables)
+                try
                 {
-                    foreach (DataRow dr in table.Rows)
+                    da.Fill(ds);
+                    CommentaireDao cDao = new CommentaireDao();
+
+                    foreach (DataTable table in ds.Tables)
                     {
-                        cDao.ContenuCommentaire = Convert.ToString(dr["ContenuCommentaire"].ToString());
-                        cDao.Actif = Convert.ToBoolean(dr["Actif"].ToString());
-                        cDao.Article_id = Convert.ToInt32(dr["Article_id"].ToString());
-                        cDao.Commentaire_id = Convert.ToInt32(dr["Commentaire_id"].ToString());
-                        cDao.DateCreation = Convert.ToDateTime(dr["DateCreation"].ToString());
-                        cDao.Utilisateur_id = Convert.ToInt32(dr["Utilisateur_id"].ToString());
-                        if(!String.IsNullOrEmpty(dr["DateModification"].ToString()))
+                        foreach (DataRow dr in table.Rows)
                         {
-                        cDao.DateModification = Convert.ToDateTime(dr["DateModification"].ToString());
+                            cDao.ContenuCommentaire = Convert.ToString(dr["ContenuCommentaire"].ToString());
+                            cDao.Actif = Convert.ToBoolean(dr["Actif"].ToString());
+                            cDao.Article_id = Convert.ToInt32(dr["Article_id"].ToString());
+                            cDao.Commentaire_id = Convert.ToInt32(dr["Commentaire_id"].ToString());
+                            cDao.DateCreation = Convert.ToDateTime(dr["DateCreation"].ToString());
+                            cDao.Utilisateur_id = Convert.ToInt32(dr["Utilisateur_id"].ToString());
+                            if (!String.IsNullOrEmpty(dr["DateModification"].ToString()))
+                            {
+                                cDao.DateModification = Convert.ToDateTime(dr["DateModification"].ToString());
+                            }
+
+
                         }
-                         
-                        
                     }
+                    con.Close();
+                    return cDao;
                 }
-                con.Close();
-                return cDao;
+                catch(Exception ex)
+                {
+                    con.Close();
+                    throw ex;
+                }
             }
             catch (SqlException ex)
             {
@@ -112,30 +128,38 @@ namespace ModuleBlog.DAL
             try
             {
                 con.Open();
-                da.Fill(ds);
-                List<CommentaireDao> listCDao = new List<CommentaireDao>();
-
-                foreach (DataTable table in ds.Tables)
+                try
                 {
-                    CommentaireDao cDao = new CommentaireDao();
-                    foreach (DataRow dr in table.Rows)
+                    da.Fill(ds);
+                    List<CommentaireDao> listCDao = new List<CommentaireDao>();
+
+                    foreach (DataTable table in ds.Tables)
                     {
-                        cDao.ContenuCommentaire = Convert.ToString(dr["ContenuCommentaire"].ToString());
-                        cDao.Actif = Convert.ToBoolean(dr["Actif"].ToString());
-                        cDao.Article_id = Convert.ToInt32(dr["Article_id"].ToString());
-                        cDao.Commentaire_id = Convert.ToInt32(dr["Commentaire_id"].ToString());
-                        cDao.DateCreation = Convert.ToDateTime(dr["DateCreation"].ToString());
-                        if(!String.IsNullOrEmpty(dr["DateModification"].ToString()))
+                        CommentaireDao cDao = new CommentaireDao();
+                        foreach (DataRow dr in table.Rows)
                         {
-                        cDao.DateModification = Convert.ToDateTime(dr["DateModification"].ToString());
+                            cDao.ContenuCommentaire = Convert.ToString(dr["ContenuCommentaire"].ToString());
+                            cDao.Actif = Convert.ToBoolean(dr["Actif"].ToString());
+                            cDao.Article_id = Convert.ToInt32(dr["Article_id"].ToString());
+                            cDao.Commentaire_id = Convert.ToInt32(dr["Commentaire_id"].ToString());
+                            cDao.DateCreation = Convert.ToDateTime(dr["DateCreation"].ToString());
+                            if (!String.IsNullOrEmpty(dr["DateModification"].ToString()))
+                            {
+                                cDao.DateModification = Convert.ToDateTime(dr["DateModification"].ToString());
+                            }
+                            cDao.Utilisateur_id = Convert.ToInt32(dr["Utilisateur_id"].ToString());
+                            listCDao.Add(cDao);
                         }
-                        cDao.Utilisateur_id = Convert.ToInt32(dr["Utilisateur_id"].ToString());
-                        listCDao.Add(cDao);
+
                     }
-                   
+                    con.Close();
+                    return listCDao;
                 }
-                con.Close();
-                return listCDao;
+                catch(Exception ex)
+                {
+                    con.Close();
+                    throw ex;
+                }
             }
             catch (SqlException ex)
             {
@@ -164,10 +188,17 @@ namespace ModuleBlog.DAL
             try
             {
                 con.Open();
-                da.Fill(ds);
-                con.Close();
-
-                return ds.Tables[0].Rows[0]["Resultat"].ToString();
+                try
+                {
+                    da.Fill(ds);
+                    con.Close();
+                    return ds.Tables[0].Rows[0]["Resultat"].ToString();
+                }
+                catch(Exception ex)
+                {
+                    con.Close();
+                    return ex.Message;
+                }
             }
             catch (SqlException ex)
             {
@@ -194,10 +225,17 @@ namespace ModuleBlog.DAL
             try
             {
                 con.Open();
-                da.Fill(ds);
-                con.Close();
-
-                return ds.Tables[0].Rows[0]["Resultat"].ToString();
+                try
+                {
+                    da.Fill(ds);
+                    con.Close();
+                    return ds.Tables[0].Rows[0]["Resultat"].ToString();
+                }
+                catch(Exception ex)
+                {
+                    con.Close();
+                    return ex.Message;
+                }
             }
             catch (SqlException ex)
             {
@@ -223,10 +261,17 @@ namespace ModuleBlog.DAL
             try
             {
                 con.Open();
-                da.Fill(ds);
-                con.Close();
-
-                return ds.Tables[0].Rows[0]["Resultat"].ToString();
+                try
+                {
+                    da.Fill(ds);
+                    con.Close();
+                    return ds.Tables[0].Rows[0]["Resultat"].ToString();
+                }
+                catch(Exception ex)
+                {
+                    con.Close();
+                    return ex.Message;
+                }
             }
             catch (SqlException ex)
             {
