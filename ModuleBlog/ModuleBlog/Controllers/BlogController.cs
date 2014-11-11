@@ -193,9 +193,25 @@ namespace ModuleBlog.Controllers
         /// </summary>
         /// <param name="blog">Blog à modifier</param>
         /// <returns>Réponse HTTP</returns>
-        public IHttpActionResult Put(Blog blog)
+        public IHttpActionResult Put([FromBody]Blog blog)
         {
-            return Ok();
+            if (blog != null)
+            {
+                if (blog.Categorie_id == 0 || blog.Theme_id == 0
+                    || blog.TitreBlog == string.Empty || blog.Utilisateur_id == 0)
+                    return BadRequest("parameters format is not correct.");
+                ThemeController tcontroller = new ThemeController();
+                blog.Theme = tcontroller.Get(blog.Theme_id);
+                Mapper.CreateMap<Blog, BlogBLL>();
+                Mapper.CreateMap<Theme, ThemeBLL>();
+                BlogBLL blogBll = Mapper.Map<Blog, BlogBLL>(blog);
+                if (blogBLL.UpdateBlog(blogBll))
+                    return StatusCode(HttpStatusCode.Created);
+                else
+                    return BadRequest("an error occured");
+            }
+            else
+                return BadRequest("parameter is null");
         }
 
         // PUT : api/UpdateBlog

@@ -305,7 +305,7 @@ namespace ModuleBlog.DAL
             }
         }
 
-        public string UpdateBlog(BlogDao blog)
+        public bool UpdateBlog(BlogDao blog)
         {
             ds = new DataSet();
 
@@ -327,12 +327,14 @@ namespace ModuleBlog.DAL
                 con.Open();
                 da.Fill(ds);
                 con.Close();
-
-                return ds.Tables[0].Rows[0]["Resultat"].ToString();
+                if (string.Equals(ds.Tables[0].Rows[0]["Resultat"].ToString(), "OK"))
+                    return true;
+                else
+                    return false;
             }
             catch (SqlException ex)
             {
-                return ex.Message;
+                return false;
             }
         }
 
