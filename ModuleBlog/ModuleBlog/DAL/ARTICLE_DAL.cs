@@ -40,51 +40,61 @@ namespace ModuleBlog.DAL
             try
             {
                 con.Open();
-                da.Fill(ds);
-                ArticlesDao listaDao = new ArticlesDao();
-                foreach (DataTable table in ds.Tables)
-                {
-                    foreach (DataRow dr in table.Rows)
-                    {
-                        ArticleDao aDao = new ArticleDao();
 
-                        aDao.Article_id = int.Parse(dr["Article_id"].ToString());
+               try
+               {
+                   da.Fill(ds);
+                   con.Close();
+                   ArticlesDao listaDao = new ArticlesDao();
+                   foreach (DataTable table in ds.Tables)
+                   {
+                       foreach (DataRow dr in table.Rows)
+                       {
+                           ArticleDao aDao = new ArticleDao();
 
-                        if (!listaDao.Contains(aDao))
-                        {
-                            aDao.Blog_id = int.Parse(dr["Blog_id"].ToString());
-                            aDao.TitreArticle = dr["TitreArticle"].ToString();
-                            aDao.ImageChemin = dr["ImageChemin"].ToString();
-                            aDao.ContenuArticle = dr["ContenuArticle"].ToString();
+                           aDao.Article_id = int.Parse(dr["Article_id"].ToString());
 
-                            string EvenementId = dr["Evenement_id"].ToString();
-                            if (!String.IsNullOrEmpty(EvenementId))
-                                aDao.Evenement_id = int.Parse(EvenementId); 
-                            
-                            aDao.Actif = bool.Parse(dr["Actif"].ToString());
-                            aDao.DateCreation = Convert.ToDateTime(dr["DateCreation"].ToString());
-                            
-                            string DateModification = dr["DateModification"].ToString();
-                            if (!String.IsNullOrEmpty(DateModification))
-                                aDao.DateModification = Convert.ToDateTime(DateModification); aDao.Actif = bool.Parse(dr["Actif"].ToString());
-                            
-                            aDao.IsLiked = Convert.ToBoolean(dr["IsLiked"].ToString());
-                            listaDao.Add(aDao);
-                        } else 
-                            aDao = listaDao.GetArticleDao(aDao.Article_id);
+                           if (!listaDao.Contains(aDao))
+                           {
+                               aDao.Blog_id = int.Parse(dr["Blog_id"].ToString());
+                               aDao.TitreArticle = dr["TitreArticle"].ToString();
+                               aDao.ImageChemin = dr["ImageChemin"].ToString();
+                               aDao.ContenuArticle = dr["ContenuArticle"].ToString();
 
-                        string hashTagId = dr["HashTagArticle_id"].ToString();
-                        if (!String.IsNullOrEmpty(hashTagId))
-                        {
-                            HashTagArticleDao hashTagDao = new HashTagArticleDao();
-                            hashTagDao.HashTagArticle_id = int.Parse(hashTagId);
-                            hashTagDao.Mots = dr["Mots"].ToString();
-                            aDao.ListeTags.Add(hashTagDao);
-                        }
-                    }
+                               string EvenementId = dr["Evenement_id"].ToString();
+                               if (!String.IsNullOrEmpty(EvenementId))
+                                   aDao.Evenement_id = int.Parse(EvenementId);
+
+                               aDao.Actif = bool.Parse(dr["Actif"].ToString());
+                               aDao.DateCreation = Convert.ToDateTime(dr["DateCreation"].ToString());
+
+                               string DateModification = dr["DateModification"].ToString();
+                               if (!String.IsNullOrEmpty(DateModification))
+                                   aDao.DateModification = Convert.ToDateTime(DateModification); aDao.Actif = bool.Parse(dr["Actif"].ToString());
+
+                               aDao.IsLiked = Convert.ToBoolean(dr["IsLiked"].ToString());
+                               listaDao.Add(aDao);
+                           }
+                           else
+                               aDao = listaDao.GetArticleDao(aDao.Article_id);
+
+                           string hashTagId = dr["HashTagArticle_id"].ToString();
+                           if (!String.IsNullOrEmpty(hashTagId))
+                           {
+                               HashTagArticleDao hashTagDao = new HashTagArticleDao();
+                               hashTagDao.HashTagArticle_id = int.Parse(hashTagId);
+                               hashTagDao.Mots = dr["Mots"].ToString();
+                               aDao.ListeTags.Add(hashTagDao);
+                           }
+                       }
+                   }
+                   return listaDao;
                 }
-                con.Close();
-                return listaDao;
+                catch(Exception ex)
+               {
+                   con.Close();
+                   throw ex;
+               }
             }
             catch (SqlException ex)
             {
@@ -109,49 +119,59 @@ namespace ModuleBlog.DAL
             try
             {
                 con.Open();
-                da.Fill(ds);
-                ArticlesDao listaDao = new ArticlesDao();
-                foreach (DataTable table in ds.Tables)
+                
+                try
                 {
-                    foreach (DataRow dr in table.Rows)
+                    da.Fill(ds);
+                    con.Close();
+                    ArticlesDao listaDao = new ArticlesDao();
+                    foreach (DataTable table in ds.Tables)
                     {
-                        ArticleDao aDao = new ArticleDao();
-
-                        aDao.Article_id = int.Parse(dr["Article_id"].ToString());
-
-                        if (!listaDao.Contains(aDao))
+                        foreach (DataRow dr in table.Rows)
                         {
-                            aDao.Blog_id = int.Parse(dr["Blog_id"].ToString());
-                            aDao.TitreArticle = dr["TitreArticle"].ToString();
-                            aDao.ImageChemin = dr["ImageChemin"].ToString();
-                            aDao.ContenuArticle = dr["ContenuArticle"].ToString();
+                            ArticleDao aDao = new ArticleDao();
 
-                            string EvenementId = dr["Evenement_id"].ToString();
-                            if (!String.IsNullOrEmpty(EvenementId))
-                                aDao.Evenement_id = int.Parse(EvenementId); 
+                            aDao.Article_id = int.Parse(dr["Article_id"].ToString());
 
-                            aDao.DateCreation = Convert.ToDateTime(dr["DateCreation"].ToString());
-                            string DateModification = dr["DateModification"].ToString();
-                            if(!String.IsNullOrEmpty(DateModification))
-                                aDao.DateModification = Convert.ToDateTime(DateModification);
-                            aDao.Actif = bool.Parse(dr["Actif"].ToString());
-                            aDao.IsLiked = Convert.ToBoolean(dr["IsLiked"].ToString());
-                            listaDao.Add(aDao);
-                        } else
-                            aDao = listaDao.GetArticleDao(aDao.Article_id);
+                            if (!listaDao.Contains(aDao))
+                            {
+                                aDao.Blog_id = int.Parse(dr["Blog_id"].ToString());
+                                aDao.TitreArticle = dr["TitreArticle"].ToString();
+                                aDao.ImageChemin = dr["ImageChemin"].ToString();
+                                aDao.ContenuArticle = dr["ContenuArticle"].ToString();
 
-                        string hashTagId = dr["HashTagArticle_id"].ToString();
-                        if (!String.IsNullOrEmpty(hashTagId))
-                        {
-                            HashTagArticleDao hashTagDao = new HashTagArticleDao();
-                            hashTagDao.HashTagArticle_id = int.Parse(hashTagId);
-                            hashTagDao.Mots = dr["Mots"].ToString();
-                            aDao.ListeTags.Add(hashTagDao);
+                                string EvenementId = dr["Evenement_id"].ToString();
+                                if (!String.IsNullOrEmpty(EvenementId))
+                                    aDao.Evenement_id = int.Parse(EvenementId);
+
+                                aDao.DateCreation = Convert.ToDateTime(dr["DateCreation"].ToString());
+                                string DateModification = dr["DateModification"].ToString();
+                                if (!String.IsNullOrEmpty(DateModification))
+                                    aDao.DateModification = Convert.ToDateTime(DateModification);
+                                aDao.Actif = bool.Parse(dr["Actif"].ToString());
+                                aDao.IsLiked = Convert.ToBoolean(dr["IsLiked"].ToString());
+                                listaDao.Add(aDao);
+                            }
+                            else
+                                aDao = listaDao.GetArticleDao(aDao.Article_id);
+
+                            string hashTagId = dr["HashTagArticle_id"].ToString();
+                            if (!String.IsNullOrEmpty(hashTagId))
+                            {
+                                HashTagArticleDao hashTagDao = new HashTagArticleDao();
+                                hashTagDao.HashTagArticle_id = int.Parse(hashTagId);
+                                hashTagDao.Mots = dr["Mots"].ToString();
+                                aDao.ListeTags.Add(hashTagDao);
+                            }
                         }
                     }
+                    return listaDao;
                 }
-                con.Close();
-                return listaDao;
+                catch(Exception ex)
+                {
+                    con.Close();
+                    throw ex;
+                }
             }
             catch (SqlException ex)
             {
@@ -176,10 +196,18 @@ namespace ModuleBlog.DAL
             try
             {
                 con.Open();
-                da.Fill(ds);
-                con.Close();
-
-                return ds.Tables[0].Rows[0]["Resultat"].ToString();
+                
+                try
+                {
+                    da.Fill(ds);
+                    con.Close();
+                    return ds.Tables[0].Rows[0]["Resultat"].ToString();
+                }
+                catch(Exception ex)
+                {
+                    con.Close();
+                    return ex.Message;
+                }
             }
             catch (SqlException ex)
             {
@@ -204,10 +232,18 @@ namespace ModuleBlog.DAL
             try
             {
                 con.Open();
-                da.Fill(ds);
-                con.Close();
-
-                return ds.Tables[0].Rows[0]["Resultat"].ToString();
+               
+                try
+                {
+                    da.Fill(ds);
+                    con.Close();
+                    return ds.Tables[0].Rows[0]["Resultat"].ToString();
+                }
+                catch(Exception ex)
+                {
+                    con.Close();
+                    return ex.Message;
+                }
             }
             catch (SqlException ex)
             {
@@ -235,21 +271,30 @@ namespace ModuleBlog.DAL
             try
             {
                 con.Open();
-                da.Fill(ds);
-                con.Close();
-
-                string articleUpdatedId = ds.Tables[0].Rows[0].ItemArray[0].ToString();
-
-                if (articleUpdatedId != "PAS OK")
+               
+                try
                 {
-                    foreach (HashTagArticleDao hashtag in article.ListeTags)
-                    {
-                        hashtag.Article_id = int.Parse(articleUpdatedId);
-                        AddHashTag(hashtag, con);
-                    }
-                }
+                    da.Fill(ds);
+                    con.Close();
 
-                return articleUpdatedId;
+                    string articleUpdatedId = ds.Tables[0].Rows[0].ItemArray[0].ToString();
+
+                    if (articleUpdatedId != "PAS OK")
+                    {
+                        foreach (HashTagArticleDao hashtag in article.ListeTags)
+                        {
+                            hashtag.Article_id = int.Parse(articleUpdatedId);
+                            AddHashTag(hashtag, con);
+                        }
+                    }
+
+                    return articleUpdatedId;
+                }
+                catch(Exception ex)
+                {
+                    con.Close();
+                    return ex.Message;
+                }
             }
             catch (SqlException ex)
             {
@@ -277,21 +322,30 @@ namespace ModuleBlog.DAL
             try
             {
                 con.Open();
-                da.Fill(ds);
-                con.Close();
-
-                string articleCreatedId = ds.Tables[0].Rows[0]["Resultat"].ToString();
-
-                if (articleCreatedId != "PAS OK")
+                
+                try
                 {
-                    foreach (HashTagArticleDao hashtag in article.ListeTags)
-                    {
-                        hashtag.Article_id = int.Parse(articleCreatedId);
-                        AddHashTag(hashtag, con);
-                    }
-                }
+                    da.Fill(ds);
+                    con.Close();
 
-                return articleCreatedId;
+                    string articleCreatedId = ds.Tables[0].Rows[0]["Resultat"].ToString();
+
+                    if (articleCreatedId != "PAS OK")
+                    {
+                        foreach (HashTagArticleDao hashtag in article.ListeTags)
+                        {
+                            hashtag.Article_id = int.Parse(articleCreatedId);
+                            AddHashTag(hashtag, con);
+                        }
+                    }
+
+                    return articleCreatedId;
+                }
+                catch(Exception ex)
+                {
+                    con.Close();
+                    return ex.Message;
+                }
             }
             catch (SqlException ex)
             {
@@ -315,12 +369,22 @@ namespace ModuleBlog.DAL
             try
             {
                 con.Open();
-                da.Fill(ds);
-                con.Close();
-                string articleCreatedId = ds.Tables[0].Rows[0]["Resultat"].ToString();
+                
+                try
+                {
+                    da.Fill(ds);
+                    string articleCreatedId = ds.Tables[0].Rows[0]["Resultat"].ToString();
+                }
+                catch(Exception ex)
+                {
+                    con.Close();
+                    throw ex;
+                }
             }
             catch (SqlException ex)
-            { }
+            { 
+                throw ex;
+            }
         }
 
         public string DeleteArticle(int articleId)
@@ -339,10 +403,18 @@ namespace ModuleBlog.DAL
             try
             {
                 con.Open();
-                da.Fill(ds);
-                con.Close();
-
-                return ds.Tables[0].Rows[0]["Resultat"].ToString();
+                
+                try
+                {
+                    da.Fill(ds);
+                    con.Close();
+                    return ds.Tables[0].Rows[0]["Resultat"].ToString();
+                }
+                catch(Exception ex)
+                {
+                    con.Close();
+                    return ex.Message;
+                }
             }
             catch (SqlException ex)
             {
@@ -370,10 +442,18 @@ namespace ModuleBlog.DAL
             try
             {
                 con.Open();
-                da.Fill(ds);
-                con.Close();
-
-                return ds.Tables[0].Rows[0]["Resultat"].ToString();
+               
+                try
+                {
+                    da.Fill(ds);
+                    con.Close();
+                    return ds.Tables[0].Rows[0]["Resultat"].ToString();
+                }
+                catch (Exception ex)
+                {
+                    con.Close();
+                    return ex.Message;
+                }
             }
             catch (SqlException ex)
             {

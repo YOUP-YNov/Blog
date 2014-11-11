@@ -41,22 +41,30 @@ namespace ModuleBlog.DAL
             try
             {
                 con.Open();
-                da.Fill(ds);
-                PubliciteDao pDao = new PubliciteDao();
-
-                foreach (DataTable table in ds.Tables)
+                try
                 {
-                    foreach (DataRow dr in table.Rows)
+                    da.Fill(ds);
+                    PubliciteDao pDao = new PubliciteDao();
+
+                    foreach (DataTable table in ds.Tables)
                     {
-                        pDao.Publicite_id = int.Parse(dr["Publicite_id"].ToString());
-                        pDao.Blog_id = int.Parse(dr["Blog_id"].ToString());
-                        pDao.Largeur = int.Parse(dr["Largeur"].ToString());
-                        pDao.Hauteur = int.Parse(dr["Hauteur"].ToString());
-                        pDao.ContenuPublicite = dr["ContenuPublicite"].ToString();
+                        foreach (DataRow dr in table.Rows)
+                        {
+                            pDao.Publicite_id = int.Parse(dr["Publicite_id"].ToString());
+                            pDao.Blog_id = int.Parse(dr["Blog_id"].ToString());
+                            pDao.Largeur = int.Parse(dr["Largeur"].ToString());
+                            pDao.Hauteur = int.Parse(dr["Hauteur"].ToString());
+                            pDao.ContenuPublicite = dr["ContenuPublicite"].ToString();
+                        }
                     }
+                    con.Close();
+                    return pDao;
                 }
-                con.Close();
-                return pDao;
+                catch(Exception ex)
+                {
+                    con.Close();
+                    throw ex;
+                }
             }
             catch (SqlException ex)
             {
@@ -84,10 +92,17 @@ namespace ModuleBlog.DAL
             try
             {
                 con.Open();
-                da.Fill(ds);
-                con.Close();
-                
-                return ds.Tables[0].Rows[0]["Resultat"].ToString();
+                try
+                {
+                    da.Fill(ds);
+                    con.Close();
+                    return ds.Tables[0].Rows[0]["Resultat"].ToString();
+                }
+                catch (Exception ex)
+                {
+                    con.Close();
+                    return ex.Message;
+                }
             }
             catch (SqlException ex)
             {
@@ -114,10 +129,17 @@ namespace ModuleBlog.DAL
             try
             {
                 con.Open();
-                da.Fill(ds);
-                con.Close();
-
-                return ds.Tables[0].Rows[0]["Resultat"].ToString();
+                try
+                {
+                    da.Fill(ds);
+                    con.Close();
+                    return ds.Tables[0].Rows[0]["Resultat"].ToString();
+                }
+                catch(Exception ex)
+                {
+                    con.Close();
+                    return ex.Message;
+                }
             }
             catch (SqlException ex)
             {

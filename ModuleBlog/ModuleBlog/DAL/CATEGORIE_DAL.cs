@@ -64,22 +64,30 @@ namespace ModuleBlog.DAL
             try
             {
                 con.Open();
-                da.Fill(ds);
-                List<CategorieDao> listCDao = new List<CategorieDao>();
-                CategorieDao cDao;
-                foreach (DataTable table in ds.Tables)
+                try
                 {
-                    foreach (DataRow dr in table.Rows)
+                    da.Fill(ds);
+                    con.Close();
+                    List<CategorieDao> listCDao = new List<CategorieDao>();
+                    CategorieDao cDao;
+                    foreach (DataTable table in ds.Tables)
                     {
-                        cDao = new CategorieDao();
-                        cDao.Categorie_id = int.Parse(dr["Categorie_id"].ToString());
-                        cDao.Libelle = dr["Libelle"].ToString();
-                        listCDao.Add(cDao);
+                        foreach (DataRow dr in table.Rows)
+                        {
+                            cDao = new CategorieDao();
+                            cDao.Categorie_id = int.Parse(dr["Categorie_id"].ToString());
+                            cDao.Libelle = dr["Libelle"].ToString();
+                            listCDao.Add(cDao);
+                        }
                     }
-                }
 
-                con.Close();
-                return listCDao;
+                    return listCDao;
+                }
+                catch(Exception ex)
+                {
+                    con.Close();
+                    throw ex;
+                }
             }
             catch (SqlException ex)
             {
