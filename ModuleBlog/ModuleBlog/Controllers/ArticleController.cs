@@ -43,20 +43,14 @@ namespace ModuleBlog.Controllers
 
             if (articlesToMap.Count > 0)
             {
-
                 foreach (ModuleBlog.BLL.Models.Article article in articlesToMap)
-                {
-                    Mapper.CreateMap<ModuleBlog.BLL.Models.HashTagArticle, ModuleBlog.Controllers.Models.HashTagArticle>();
+                {                    
                     List<ModuleBlog.Controllers.Models.HashTagArticle> hashTags = Mapper.Map<List<ModuleBlog.BLL.Models.HashTagArticle>, List<ModuleBlog.Controllers.Models.HashTagArticle>>(article.ListeTags);
-
-                    Mapper.CreateMap<ModuleBlog.BLL.Models.Article, ModuleBlog.Controllers.Models.Article>();
                     ModuleBlog.Controllers.Models.Article articleToAdd = Mapper.Map<ModuleBlog.BLL.Models.Article, ModuleBlog.Controllers.Models.Article>(article);
-
                     articleToAdd.ListeTags = hashTags;
                     articles.Add(articleToAdd);
                 }
             }
-
             return articles;
         }
 
@@ -66,17 +60,12 @@ namespace ModuleBlog.Controllers
 
             if (articleToMap.TitreArticle != string.Empty)
             {
-                Mapper.CreateMap<ModuleBlog.Controllers.Models.HashTagArticle, ModuleBlog.BLL.Models.HashTagArticle>();
                 List<ModuleBlog.BLL.Models.HashTagArticle> hashTags = 
                     Mapper.Map<List<ModuleBlog.Controllers.Models.HashTagArticle>, List<ModuleBlog.BLL.Models.HashTagArticle>>(articleToMap.ListeTags);
-
-                Mapper.CreateMap<ModuleBlog.Controllers.Models.Article, ModuleBlog.BLL.Models.Article>();
                 ModuleBlog.BLL.Models.Article articleToAdd = Mapper.Map<ModuleBlog.Controllers.Models.Article, ModuleBlog.BLL.Models.Article>(articleToMap);
-
                 articleToAdd.ListeTags = hashTags;
                 return articleToAdd;
             }
-
             return null;
         }
 

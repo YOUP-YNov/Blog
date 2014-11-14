@@ -37,7 +37,6 @@ namespace ModuleBlog.Controllers
         public IEnumerable<ModuleBlog.Controllers.Models.Categorie> Get()
         {
             IEnumerable<ModuleBlog.BLL.Models.Categorie> categoriesBll = categoryBLL.GetCategories();
-            Mapper.CreateMap<ModuleBlog.BLL.Models.Categorie, ModuleBlog.Controllers.Models.Categorie>();
             IEnumerable<ModuleBlog.Controllers.Models.Categorie> categories = Mapper.Map<IEnumerable<ModuleBlog.BLL.Models.Categorie>, IEnumerable<ModuleBlog.Controllers.Models.Categorie>>(categoriesBll);
             return categories;
         }
