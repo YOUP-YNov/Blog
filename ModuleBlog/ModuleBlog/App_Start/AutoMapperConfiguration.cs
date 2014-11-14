@@ -17,6 +17,14 @@ namespace ModuleBlog.App_Start
             CreateMapCommentaire();
             CreateMapCategory();
             CreateMapArticle();
+            try
+            {
+                Mapper.AssertConfigurationIsValid();
+            }
+            catch (AutoMapperConfigurationException e)
+            {
+                // TODO : mettre dans le logger
+            }
         }
         private static void CreateMapBlog()
         {
