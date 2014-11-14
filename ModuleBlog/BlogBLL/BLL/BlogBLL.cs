@@ -18,10 +18,9 @@ namespace ModuleBlog.BLL
             blogDAL = new ModuleBlog.DAL.BlogDAL();
         }
 
-        public string DeleteBlog(int userId)
+        public bool DeleteBlog(int userId)
         {
-            string resultat = blogDAL.DeleteBlog(userId);
-            return resultat;
+            return blogDAL.DeleteBlog(userId);
         }
 
         public ModuleBlog.BLL.Models.Blog GetBlogById(int idBlog, int userId)

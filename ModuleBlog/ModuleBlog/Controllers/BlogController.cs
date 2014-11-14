@@ -20,19 +20,45 @@ namespace ModuleBlog.Controllers
             blogBLL = new BlogBLL();
         }
 
-        // GET: api/ModuleBlog.Controllers.Models.Blog
+        #region Map
+        private IEnumerable<ModuleBlog.Controllers.Models.Blog> Map(IEnumerable<ModuleBlog.BLL.Models.Blog> blogsBLL)
+        {
+            if (blogsBLL != null)
+                return Mapper.Map<IEnumerable<ModuleBlog.BLL.Models.Blog>, List<ModuleBlog.Controllers.Models.Blog>>(blogsBLL);
+            else
+                return null;
+        }
+
+        private ModuleBlog.Controllers.Models.Blog Map(ModuleBlog.BLL.Models.Blog blogBLL)
+        {
+            if (blogBLL != null)
+                return Mapper.Map<ModuleBlog.BLL.Models.Blog, ModuleBlog.Controllers.Models.Blog>(blogBLL);
+            else
+                return null;
+        }
+
+        private ModuleBlog.BLL.Models.Blog Map(ModuleBlog.Controllers.Models.Blog blog)
+        {
+            if (blog != null)
+                return Mapper.Map<ModuleBlog.Controllers.Models.Blog, ModuleBlog.BLL.Models.Blog>(blog);
+            else
+                return null;
+        }
+        #endregion
+
+
+        // GET: api/Blog
         /// <summary>
         /// Récupérer la liste des blogs
         /// </summary>
         /// <returns>La liste des blogs</returns>
+        [HttpGet, Route("api/blog")]
         public IEnumerable<ModuleBlog.Controllers.Models.Blog> Get()
         {
             IEnumerable<ModuleBlog.BLL.Models.Blog> blogsBLL = blogBLL.GetBlogs();
             try
-            {
-                Mapper.CreateMap<ModuleBlog.BLL.Models.Blog, ModuleBlog.Controllers.Models.Blog>();
-                Mapper.CreateMap<ModuleBlog.BLL.Models.Theme, ModuleBlog.Controllers.Models.Theme>();    
-                List<ModuleBlog.Controllers.Models.Blog> blogs = Mapper.Map<IEnumerable<ModuleBlog.BLL.Models.Blog>, List<ModuleBlog.Controllers.Models.Blog>>(blogsBLL);
+            {    
+                IEnumerable<ModuleBlog.Controllers.Models.Blog> blogs = Map(blogsBLL);
                 return blogs;
             }
             catch(Exception)
@@ -41,7 +67,7 @@ namespace ModuleBlog.Controllers
             }
         }
 
-        // GET: api/ModuleBlog.Controllers.Models.Blog/5
+        // GET: api/Blog/5
         /// <summary>
         /// Récupérer un blog par son identifiant (et indique qu'il a été visité)
         /// </summary>
@@ -55,9 +81,7 @@ namespace ModuleBlog.Controllers
             ModuleBlog.BLL.Models.Blog blogBll = blogBLL.GetBlogById(id, userId);
             try
             {
-                Mapper.CreateMap<ModuleBlog.BLL.Models.Blog, ModuleBlog.Controllers.Models.Blog>();
-                Mapper.CreateMap<ModuleBlog.BLL.Models.Theme, ModuleBlog.Controllers.Models.Theme>();
-                ModuleBlog.Controllers.Models.Blog blog = Mapper.Map<ModuleBlog.BLL.Models.Blog, ModuleBlog.Controllers.Models.Blog>(blogBll);
+                ModuleBlog.Controllers.Models.Blog blog = Map(blogBll);
                 return blog;
             }
             catch (Exception)
@@ -66,22 +90,19 @@ namespace ModuleBlog.Controllers
             }
         }
 
-        // GET: api/ModuleBlog.Controllers.Models.Blog/5
+        // GET: api/Blog
         /// <summary>
         /// Récupérer la liste des blogs pour une catégorie
         /// </summary>
         /// <param name="categoryId">identifiant de la catégorie</param>
         /// <returns>la liste des blogs</returns>
-        [Route("api/blog/{id}")]
-        [HttpGet]
-        public IEnumerable<ModuleBlog.Controllers.Models.Blog> GetByCategory(int id, int categoryId)
+        [Route("api/blog/category/{categoryId}"), HttpGet]
+        public IEnumerable<ModuleBlog.Controllers.Models.Blog> GetByCategory(int categoryId)
         {
             IEnumerable<ModuleBlog.BLL.Models.Blog> blogsBLL = blogBLL.GetBlogsByCategory(categoryId);
             try
             {
-                Mapper.CreateMap<ModuleBlog.BLL.Models.Blog, ModuleBlog.Controllers.Models.Blog>();
-                Mapper.CreateMap<ModuleBlog.BLL.Models.Theme, ModuleBlog.Controllers.Models.Theme>();
-                List<ModuleBlog.Controllers.Models.Blog> blogs = Mapper.Map<IEnumerable<ModuleBlog.BLL.Models.Blog>, List<ModuleBlog.Controllers.Models.Blog>>(blogsBLL);
+                IEnumerable<ModuleBlog.Controllers.Models.Blog> blogs = Map(blogsBLL);
                 return blogs;
             }
             catch (Exception)
@@ -91,7 +112,7 @@ namespace ModuleBlog.Controllers
         }
 
 
-        // GET: api/ModuleBlog.Controllers.Models.Blog/Promoted
+        // GET: api/Blog/Promoted
         /// <summary>
         /// Récupérer la liste des blogs mis en avant
         /// </summary>
@@ -103,9 +124,7 @@ namespace ModuleBlog.Controllers
             IEnumerable<ModuleBlog.BLL.Models.Blog> blogsBLL = blogBLL.GetPromotedBlogs();
             try
             {
-                Mapper.CreateMap<ModuleBlog.BLL.Models.Blog, ModuleBlog.Controllers.Models.Blog>();
-                Mapper.CreateMap<ModuleBlog.BLL.Models.Theme, ModuleBlog.Controllers.Models.Theme>();
-                List<ModuleBlog.Controllers.Models.Blog> blogs = Mapper.Map<IEnumerable<ModuleBlog.BLL.Models.Blog>, List<ModuleBlog.Controllers.Models.Blog>>(blogsBLL);
+                IEnumerable<ModuleBlog.Controllers.Models.Blog> blogs = Map(blogsBLL);
                 return blogs;
             }
             catch (Exception)
@@ -114,7 +133,7 @@ namespace ModuleBlog.Controllers
             }
         }
 
-        // GET : api/ModuleBlog.Controllers.Models.Blog
+        // GET : api/Blog
         /// <summary>
         /// Effectuer une recherche de blog par noms
         /// </summary>
@@ -125,9 +144,7 @@ namespace ModuleBlog.Controllers
             IEnumerable<ModuleBlog.BLL.Models.Blog> blogsBLL = blogBLL.GetBlogsBySearch(0, keyword);
             try
             {
-                Mapper.CreateMap<ModuleBlog.BLL.Models.Blog, ModuleBlog.Controllers.Models.Blog>();
-                Mapper.CreateMap<ModuleBlog.BLL.Models.Theme, ModuleBlog.Controllers.Models.Theme>();
-                List<ModuleBlog.Controllers.Models.Blog> blogs = Mapper.Map<IEnumerable<ModuleBlog.BLL.Models.Blog>, List<ModuleBlog.Controllers.Models.Blog>>(blogsBLL);
+                IEnumerable<ModuleBlog.Controllers.Models.Blog> blogs = Map(blogsBLL);
                 return blogs;
             }
             catch (Exception)
@@ -136,7 +153,7 @@ namespace ModuleBlog.Controllers
             }
         }
 
-        // GET : api/ModuleBlog.Controllers.Models.Blog
+        // GET : api/Blog
         /// <summary>
         /// Effectuer une recherche de blog par noms pour une catégorie
         /// </summary>
@@ -148,9 +165,7 @@ namespace ModuleBlog.Controllers
             IEnumerable<ModuleBlog.BLL.Models.Blog> blogsBLL = blogBLL.GetBlogsBySearch(categoryId, keyword);
             try
             {
-                Mapper.CreateMap<ModuleBlog.BLL.Models.Blog, ModuleBlog.Controllers.Models.Blog>();
-                Mapper.CreateMap<ModuleBlog.BLL.Models.Theme, ModuleBlog.Controllers.Models.Theme>();
-                List<ModuleBlog.Controllers.Models.Blog> blogs = Mapper.Map<IEnumerable<ModuleBlog.BLL.Models.Blog>, List<ModuleBlog.Controllers.Models.Blog>>(blogsBLL);
+                IEnumerable<ModuleBlog.Controllers.Models.Blog> blogs = Map(blogsBLL);
                 return blogs;
             }
             catch (Exception)
@@ -160,7 +175,7 @@ namespace ModuleBlog.Controllers
         }
 
 
-        // POST: api/ModuleBlog.Controllers.Models.Blog
+        // POST: api/Blog
         /// <summary>
         /// Ajouter un blog
         /// </summary>
@@ -176,10 +191,7 @@ namespace ModuleBlog.Controllers
                 ThemeController tcontroller = new ThemeController();
 
                 ModuleBlog.Controllers.Models.Theme theme = tcontroller.Get(blog.Theme_id);
-                Mapper.CreateMap<ModuleBlog.Controllers.Models.Blog, ModuleBlog.BLL.Models.Blog>();
-                Mapper.CreateMap<ModuleBlog.Controllers.Models.Theme, ModuleBlog.BLL.Models.Theme>();
-                ModuleBlog.BLL.Models.Blog blogBll = Mapper.Map<ModuleBlog.Controllers.Models.Blog, ModuleBlog.BLL.Models.Blog>(blog);
-                
+                ModuleBlog.BLL.Models.Blog blogBll = Map(blog);
                 if (blogBLL.AddBlog(blogBll))
                     return StatusCode(HttpStatusCode.Created);
                 else
@@ -189,7 +201,7 @@ namespace ModuleBlog.Controllers
                 return BadRequest("parameter is null");
         }
 
-        // PUT: api/UpdateBlog
+        // PUT: api/Blog/5
         /// <summary>
         /// Mettre à jour un blog
         /// </summary>
@@ -204,9 +216,7 @@ namespace ModuleBlog.Controllers
                     return BadRequest("parameters format is not correct.");
                 ThemeController tcontroller = new ThemeController();
                 ModuleBlog.Controllers.Models.Theme theme = tcontroller.Get(blog.Theme_id);
-                Mapper.CreateMap<ModuleBlog.Controllers.Models.Blog, ModuleBlog.BLL.Models.Blog>();
-                Mapper.CreateMap<ModuleBlog.Controllers.Models.Theme, ModuleBlog.BLL.Models.Theme>();
-                ModuleBlog.BLL.Models.Blog blogBll = Mapper.Map<ModuleBlog.Controllers.Models.Blog, ModuleBlog.BLL.Models.Blog>(blog);
+                ModuleBlog.BLL.Models.Blog blogBll = Map(blog);
                 if (blogBLL.UpdateBlog(blogBll))
                     return StatusCode(HttpStatusCode.Created);
                 else
@@ -220,6 +230,7 @@ namespace ModuleBlog.Controllers
         /// <summary>
         /// Promouvoir un blog
         /// </summary>
+        /// <param name="id">identifiant du blog à promouvoir</param>
         /// <param name="userId">identifiant de l'utilisateur</param>
         /// <param name="promoted">promouvoir = 1 (vrai)</param>
         /// <returns>Réponse HTTP</returns>
@@ -228,7 +239,6 @@ namespace ModuleBlog.Controllers
         {
             if (userId != 0)
             {
-                Mapper.CreateMap<ModuleBlog.Controllers.Models.Blog, ModuleBlog.BLL.Models.Blog>();
                 if (blogBLL.PromoteBlog(userId, promoted))
                     return StatusCode(HttpStatusCode.Created);
                 else
@@ -238,15 +248,24 @@ namespace ModuleBlog.Controllers
                 return BadRequest("parameter is null");
         }
 
-        // PUT: api/DisableBlog/5
+        // PUT: api/Blog
         /// <summary>
         /// Désactiver un blog
         /// </summary>
-        /// <param name="id">identifiant du blog à désactiver</param>
+        /// <param name="userId">identifiant de l'utilisateur dont on doit désactiver le blog</param>
         /// <returns>Réponse HTTP</returns>
-        public IHttpActionResult Delete(int id)
+        [HttpPut, Route("api/Blog")]
+        public IHttpActionResult Delete(int userId)
         {
-            return Ok();
+            if (userId != 0)
+            {
+                if (blogBLL.DeleteBlog(userId))
+                    return Ok();
+                else
+                    return BadRequest("an error occured");
+            }
+            else
+                return BadRequest("parameter is null");
         }
 
         

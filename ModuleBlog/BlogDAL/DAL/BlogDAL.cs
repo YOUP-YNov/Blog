@@ -24,7 +24,7 @@ namespace ModuleBlog.DAL
         {
             con = new SqlConnection(strcon);
         }
-        public string DeleteBlog(int userId)
+        public bool DeleteBlog(int userId)
         {
             ds = new DataSet();
 
@@ -44,17 +44,17 @@ namespace ModuleBlog.DAL
                 {
                 da.Fill(ds);
                 con.Close();
-                return ds.Tables[0].Rows[0]["Resultat"].ToString();
+                return (ds.Tables[0].Rows[0]["Resultat"].ToString() == "OK");
             }
                 catch(Exception ex)
                 {
                     con.Close();
-                    return ex.Message;
+                    return false;
                 }
             }
             catch (SqlException ex)
             {
-                return ex.Message;
+                return false;
             }
         }
 
