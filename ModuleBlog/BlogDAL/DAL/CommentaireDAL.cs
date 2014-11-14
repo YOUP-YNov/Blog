@@ -30,7 +30,11 @@ namespace ModuleBlog.DAL
             DataSet ds = new DataSet();
             cmd = new SqlCommand();
             cmd.CommandText = "BLOG_DeleteCommentaire";
-            cmd.CommandTimeout = 0;
+
+
+
+
+
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Connection = con;
             da = new SqlDataAdapter(cmd);
@@ -64,7 +68,7 @@ namespace ModuleBlog.DAL
 
             cmd = new SqlCommand();
             cmd.CommandText = "BLOG_GetCommentaireById";
-            cmd.CommandTimeout = 0;
+
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Connection = con;
             cmd.Parameters.AddWithValue("@CommentaireId", commentaireId);
@@ -118,7 +122,7 @@ namespace ModuleBlog.DAL
 
             cmd = new SqlCommand();
             cmd.CommandText = "BLOG_GetCommentaires";
-            cmd.CommandTimeout = 0;
+
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Connection = con;
             cmd.Parameters.AddWithValue("@ArticleId", articleId);
@@ -174,7 +178,7 @@ namespace ModuleBlog.DAL
 
             cmd = new SqlCommand();
             cmd.CommandText = "BLOG_AddCommentaire";
-            cmd.CommandTimeout = 0;
+
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Connection = con;
             cmd.Parameters.AddWithValue("@ArticleId", commentaire.Article_id);
@@ -211,7 +215,7 @@ namespace ModuleBlog.DAL
 
             cmd = new SqlCommand();
             cmd.CommandText = "BLOG_UpdateCommentaire";
-            cmd.CommandTimeout = 0;
+
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Connection = con;
             cmd.Parameters.AddWithValue("@CommentaireId", commentaire.Commentaire_id);
@@ -247,7 +251,7 @@ namespace ModuleBlog.DAL
 
             cmd = new SqlCommand();
             cmd.CommandText = "BLOG_ReportCommentaire";
-            cmd.CommandTimeout = 0;
+
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Connection = con;
             cmd.Parameters.AddWithValue("@CommentaireId", commentId);

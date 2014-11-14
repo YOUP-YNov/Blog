@@ -30,7 +30,7 @@ namespace ModuleBlog.DAL
 
             cmd = new SqlCommand();
             cmd.CommandText = "BLOG_DeleteBlog";
-            cmd.CommandTimeout = 0;
+
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Connection = con;
             cmd.Parameters.AddWithValue("@UserId", userId);
@@ -64,7 +64,7 @@ namespace ModuleBlog.DAL
 
             cmd = new SqlCommand();
             cmd.CommandText = "BLOG_GetBlogById";
-            cmd.CommandTimeout = 0;
+
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Connection = con;
             cmd.Parameters.AddWithValue("@BlogId", idBlog);
@@ -116,7 +116,7 @@ namespace ModuleBlog.DAL
 
             cmd = new SqlCommand();
             cmd.CommandText = "BLOG_GetBlogsByCategory";
-            cmd.CommandTimeout = 0;
+
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Connection = con;
             cmd.Parameters.AddWithValue("@CategoryId", categoryId);
@@ -169,7 +169,7 @@ namespace ModuleBlog.DAL
             
             cmd = new SqlCommand();
             cmd.CommandText = "BLOG_GetBlogs";
-            cmd.CommandTimeout = 0;
+
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Connection = con;
             da = new SqlDataAdapter(cmd);
@@ -221,7 +221,7 @@ namespace ModuleBlog.DAL
 
             cmd= new SqlCommand();
             cmd.CommandText = "BLOG_GetBlogsBySearch";
-            cmd.CommandTimeout = 0;
+
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Connection = con;
             cmd.Parameters.AddWithValue("@Category", categoryId);
@@ -276,7 +276,7 @@ namespace ModuleBlog.DAL
 
             cmd = new SqlCommand();
             cmd.CommandText = "BLOG_GetPromotedBlogs";
-            cmd.CommandTimeout = 0;
+
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Connection = con;
 
@@ -330,7 +330,7 @@ namespace ModuleBlog.DAL
 
             cmd = new SqlCommand();
             cmd.CommandText = "BLOG_PromoteBlog";
-            cmd.CommandTimeout = 0;
+
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Connection = con;
             cmd.Parameters.AddWithValue("@UserId", userId);
@@ -365,7 +365,7 @@ namespace ModuleBlog.DAL
 
             cmd = new SqlCommand();
             cmd.CommandText = "BLOG_UpdateBlog";
-            cmd.CommandTimeout = 0;
+
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Connection = con;
             cmd.Parameters.AddWithValue("@UserId", blog.Utilisateur_id);
@@ -407,7 +407,7 @@ namespace ModuleBlog.DAL
 
             cmd = new SqlCommand();
             cmd.CommandText = "BLOG_AddBlog";
-            cmd.CommandTimeout = 0;
+
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Connection = con;
             cmd.Parameters.AddWithValue("@UserId", blog.Utilisateur_id);
@@ -444,7 +444,7 @@ namespace ModuleBlog.DAL
 
             cmd = new SqlCommand();
             cmd.CommandText = "BLOG_GetThemeById";
-            cmd.CommandTimeout = 0;
+
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Connection = con;
             cmd.Parameters.AddWithValue("@ThemeId", themeId);
@@ -492,7 +492,7 @@ namespace ModuleBlog.DAL
 
             cmd = new SqlCommand();
             cmd.CommandText = "BLOG_GetBlogByUserId";
-            cmd.CommandTimeout = 0;
+
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Connection = con;
             cmd.Parameters.AddWithValue("@UserId", userId);

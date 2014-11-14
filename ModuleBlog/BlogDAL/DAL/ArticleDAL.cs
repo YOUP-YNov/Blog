@@ -30,7 +30,7 @@ namespace ModuleBlog.DAL
 
             cmd = new SqlCommand();
             cmd.CommandText = "BLOG_GetArticles";
-            cmd.CommandTimeout = 0;
+
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Connection = con;
             cmd.Parameters.AddWithValue("@UtilisateurId", idUtilisateur);
@@ -109,7 +109,7 @@ namespace ModuleBlog.DAL
 
             cmd = new SqlCommand();
             cmd.CommandText = "BLOG_GetArticlesByTag";
-            cmd.CommandTimeout = 0;
+
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Connection = con;
             cmd.Parameters.AddWithValue("@Utilisateur_id", utilisateurId);
@@ -186,7 +186,7 @@ namespace ModuleBlog.DAL
 
             cmd = new SqlCommand();
             cmd.CommandText = "BLOG_LikeArticle";
-            cmd.CommandTimeout = 0;
+
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Connection = con;
             cmd.Parameters.AddWithValue("@Utilisateur_id", utilisateurId);
@@ -222,7 +222,7 @@ namespace ModuleBlog.DAL
 
             cmd = new SqlCommand();
             cmd.CommandText = "BLOG_DislikeArticle";
-            cmd.CommandTimeout = 0;
+
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Connection = con;
             cmd.Parameters.AddWithValue("@Utilisateur_id", utilisateurId);
@@ -258,7 +258,7 @@ namespace ModuleBlog.DAL
 
             cmd = new SqlCommand();
             cmd.CommandText = "BLOG_UpdateArticle";
-            cmd.CommandTimeout = 0;
+
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Connection = con;
             cmd.Parameters.AddWithValue("@Article_id", article.Article_id);
@@ -311,7 +311,7 @@ namespace ModuleBlog.DAL
 
             cmd = new SqlCommand();
             cmd.CommandText = "BLOG_AddArticle";
-            cmd.CommandTimeout = 0;
+
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Connection = con;
             cmd.Parameters.AddWithValue("@Blog_id", article.Blog_id);
@@ -360,7 +360,6 @@ namespace ModuleBlog.DAL
         {
             SqlCommand command = new SqlCommand();
             command.CommandText = "BLOG_AddHashTag";
-            command.CommandTimeout = 0;
             command.CommandType = CommandType.StoredProcedure;
             command.Connection = con;
             command.Parameters.AddWithValue("@Article_id", hashtag.Article_id);
@@ -396,7 +395,7 @@ namespace ModuleBlog.DAL
 
             cmd = new SqlCommand();
             cmd.CommandText = "BLOG_DeleteArticle";
-            cmd.CommandTimeout = 0;
+
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Connection = con;
             cmd.Parameters.AddWithValue("@ArticleId", articleId);
@@ -435,7 +434,7 @@ namespace ModuleBlog.DAL
 
             cmd = new SqlCommand();
             cmd.CommandText = "BLOG_DeleteArticleForReal";
-            cmd.CommandTimeout = 0;
+
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Connection = con;
             cmd.Parameters.AddWithValue("@Article_id", articleId);

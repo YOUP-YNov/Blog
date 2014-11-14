@@ -57,7 +57,10 @@ namespace ModuleBlog.DAL
             
             cmd = new SqlCommand();
             cmd.CommandText = "BLOG_GetCategories";
-            cmd.CommandTimeout = 0;
+
+
+
+
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Connection = con;
             da = new SqlDataAdapter(cmd);

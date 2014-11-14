@@ -30,7 +30,7 @@ namespace ModuleBlog.DAL
 
             cmd = new SqlCommand();
             cmd.CommandText = "BLOG_GetAdByBlogId";
-            cmd.CommandTimeout = 0;
+
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Connection = con;
             cmd.Parameters.AddWithValue("@BlogId", BlogId);
@@ -78,7 +78,7 @@ namespace ModuleBlog.DAL
 
             cmd = new SqlCommand();
             cmd.CommandText = "BLOG_AddAd";
-            cmd.CommandTimeout = 0;
+
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Connection = con;
             cmd.Parameters.AddWithValue("@BlogId", ad.Blog_id);
@@ -116,7 +116,7 @@ namespace ModuleBlog.DAL
 
             cmd = new SqlCommand();
             cmd.CommandText = "BLOG_UpdateAd";
-            cmd.CommandTimeout = 0;
+
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Connection = con;
             cmd.Parameters.AddWithValue("@PubliciteId", ad.Publicite_id);

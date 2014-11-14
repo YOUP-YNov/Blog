@@ -56,7 +56,11 @@ namespace ModuleBlog.DAL
             
             cmd = new SqlCommand();
             cmd.CommandText = "BLOG_GetThemeById";
-            cmd.CommandTimeout = 0;
+
+
+
+
+
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Connection = con;
             cmd.Parameters.AddWithValue("@ThemeId", themeId);
@@ -92,7 +96,6 @@ namespace ModuleBlog.DAL
 
             cmd = new SqlCommand();
             cmd.CommandText = "BLOG_GetThemes";
-            cmd.CommandTimeout = 0;
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Connection = con;
             da = new SqlDataAdapter(cmd);
