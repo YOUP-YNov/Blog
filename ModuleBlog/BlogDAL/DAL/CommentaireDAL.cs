@@ -216,6 +216,7 @@ namespace ModuleBlog.DAL
             cmd.Connection = con;
             cmd.Parameters.AddWithValue("@CommentaireId", commentaire.Commentaire_id);
             cmd.Parameters.AddWithValue("@ContenuCommentaire", commentaire.ContenuCommentaire);
+            cmd.Parameters.AddWithValue("@Actif", commentaire.Actif);
        
             da = new SqlDataAdapter(cmd);
 

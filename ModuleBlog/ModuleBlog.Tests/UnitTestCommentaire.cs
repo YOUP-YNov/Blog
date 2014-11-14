@@ -29,6 +29,7 @@ namespace ModuleBlog.Tests
             commentaire = cdal.GetCommentaireById(2);
             Assert.IsNotNull(commentaire);
             Assert.IsTrue(commentaire.Article_id==10002);
+
            
         }
        
@@ -48,9 +49,8 @@ namespace ModuleBlog.Tests
         public void TestMethodUpdateCommentaire()
         {
             ModuleBlog.DAL.Models.Commentaire commentaire;
-            commentaire = cdal.GetCommentaireById(1);
+            commentaire = cdal.GetCommentaireById(2);
             commentaire.ContenuCommentaire="Update Commentaire Test";
-            commentaire.DateModification = DateTime.Now;
             Assert.IsTrue(cdal.UpdateCommentaire(commentaire));
             
         }
@@ -69,18 +69,16 @@ namespace ModuleBlog.Tests
         [TestMethod]
         public void TestMethodDeleteCommentaire()
         {
-            Assert.IsTrue(cdal.DeleteCommentaire(1));
-            ModuleBlog.DAL.Models.Commentaire c = cdal.GetCommentaireById(1);
+            Assert.IsTrue(cdal.DeleteCommentaire(2));
+            ModuleBlog.DAL.Models.Commentaire c = cdal.GetCommentaireById(2);
             Assert.IsTrue(cdal.GetCommentaireById(c.Commentaire_id).Actif == false);
-            c.Actif = true;
-            c.DateModification = DateTime.Now;
-            cdal.UpdateCommentaire(c);
+        
         }
 
         [TestCleanup]
         public void TestCleanup()
         {
-           
+      
         }
 
 
