@@ -29,5 +29,12 @@ namespace ModuleBlog.App_Start
 
             Mapper.CreateMap<ModuleBlog.Controllers.Models.Publicite, ModuleBlog.BLL.Models.Publicite>();
         }
+
+        private static void CreateMapCommentaire()
+        {
+            Mapper.CreateMap<ModuleBlog.BLL.Models.Commentaire, ModuleBlog.Controllers.Models.Commentaire>();
+            Mapper.CreateMap<ModuleBlog.Controllers.Models.Commentaire, ModuleBlog.BLL.Models.Commentaire>();
+           
+        }
     }
 }

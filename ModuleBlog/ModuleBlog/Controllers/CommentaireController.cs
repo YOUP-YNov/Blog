@@ -32,7 +32,6 @@ namespace ModuleBlog.Controllers
         public IEnumerable<ModuleBlog.Controllers.Models.Commentaire> Get(int articleId)
         {
             IEnumerable<ModuleBlog.BLL.Models.Commentaire> commentairesBll = commentaireBLL.GetCommentaires(articleId);
-            Mapper.CreateMap<ModuleBlog.BLL.Models.Commentaire, ModuleBlog.Controllers.Models.Commentaire>();
             IEnumerable<ModuleBlog.Controllers.Models.Commentaire> commentaires = Mapper.Map<IEnumerable<ModuleBlog.BLL.Models.Commentaire>, IEnumerable<ModuleBlog.Controllers.Models.Commentaire>>(commentairesBll);
             return commentaires;
         }
@@ -46,7 +45,6 @@ namespace ModuleBlog.Controllers
         public ModuleBlog.Controllers.Models.Commentaire GetById(int id)
         {
             ModuleBlog.BLL.Models.Commentaire commentaireBll = commentaireBLL.GetCommentaireById(id);
-            Mapper.CreateMap<ModuleBlog.BLL.Models.Commentaire, ModuleBlog.Controllers.Models.Commentaire>();
             ModuleBlog.Controllers.Models.Commentaire commentaire = Mapper.Map<ModuleBlog.BLL.Models.Commentaire, ModuleBlog.Controllers.Models.Commentaire>(commentaireBll);
 
             return commentaire;
@@ -63,9 +61,8 @@ namespace ModuleBlog.Controllers
             
             if (comment != null)
             {
-                if (comment.Article_id == 0 || comment.Commentaire_id == 0 || comment.ContenuCommentaire == string.Empty)
+                if (comment.Article_id == 0 || comment.Utilisateur_id == 0 || comment.ContenuCommentaire == string.Empty)
                     return BadRequest("parameters format is not correct.");
-                Mapper.CreateMap<ModuleBlog.Controllers.Models.Commentaire, CommentaireBLL>();
                 ModuleBlog.BLL.Models.Commentaire commentaireBll = Mapper.Map<ModuleBlog.Controllers.Models.Commentaire, ModuleBlog.BLL.Models.Commentaire>(comment);
                 if (commentaireBLL.AddCommentaire(commentaireBll))
                     return StatusCode(HttpStatusCode.Created);
@@ -102,9 +99,8 @@ namespace ModuleBlog.Controllers
         {
             if (comment != null)
             {
-                if (comment.Article_id == 0 || comment.Commentaire_id == 0 || comment.ContenuCommentaire == string.Empty)
+                if (comment.Commentaire_id == 0 || comment.ContenuCommentaire == string.Empty)
                     return BadRequest("parameters format is not correct.");
-                Mapper.CreateMap<ModuleBlog.Controllers.Models.Commentaire, ModuleBlog.BLL.Models.Commentaire>();
                 ModuleBlog.BLL.Models.Commentaire commentaireBll = Mapper.Map<ModuleBlog.Controllers.Models.Commentaire, ModuleBlog.BLL.Models.Commentaire>(comment);
                 if (commentaireBLL.UpdateCommentaire(commentaireBll))
                     return StatusCode(HttpStatusCode.Created);
