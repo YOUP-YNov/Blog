@@ -58,23 +58,23 @@ namespace ModuleBlog.Controllers
         /// </summary>
         /// <param name="comment">commentaire à ajouter</param>
         /// <returns>Réponse HTTP</returns>
-        public IHttpActionResult Post(ModuleBlog.Controllers.Models.Commentaire comment)
+        public IHttpActionResult Post([FromBody]ModuleBlog.Controllers.Models.Commentaire comment)
         {
-            /*
+            
             if (comment != null)
             {
                 if (comment.Article_id == 0 || comment.Commentaire_id == 0 || comment.ContenuCommentaire == string.Empty)
                     return BadRequest("parameters format is not correct.");
-                Mapper.CreateMap<Commentaire, CommentaireBLL>();
-                CommentaireBLL commentaireBll = Mapper.Map<Commentaire, CommentaireBLL>(comment);
-                if (adBLL.AddAd(commentBll))
+                Mapper.CreateMap<ModuleBlog.Controllers.Models.Commentaire, CommentaireBLL>();
+                ModuleBlog.BLL.Models.Commentaire commentaireBll = Mapper.Map<ModuleBlog.Controllers.Models.Commentaire, ModuleBlog.BLL.Models.Commentaire>(comment);
+                if (commentaireBLL.AddCommentaire(commentaireBll))
                     return StatusCode(HttpStatusCode.Created);
                 else
                     return BadRequest("an error occured");
             }
             else
                 return BadRequest("parameter is null");
-             */
+             
             return Ok();
         }
 
@@ -98,9 +98,21 @@ namespace ModuleBlog.Controllers
         /// </summary>
         /// <param name="comment">commentaire à mettre à jour</param>
         /// <returns>Réponse HTTP</returns>
-        public IHttpActionResult Put(ModuleBlog.Controllers.Models.Commentaire comment)
+        public IHttpActionResult Put([FromBody]ModuleBlog.Controllers.Models.Commentaire comment)
         {
-            return Ok();
+            if (comment != null)
+            {
+                if (comment.Article_id == 0 || comment.Commentaire_id == 0 || comment.ContenuCommentaire == string.Empty)
+                    return BadRequest("parameters format is not correct.");
+                Mapper.CreateMap<ModuleBlog.Controllers.Models.Commentaire, ModuleBlog.BLL.Models.Commentaire>();
+                ModuleBlog.BLL.Models.Commentaire commentaireBll = Mapper.Map<ModuleBlog.Controllers.Models.Commentaire, ModuleBlog.BLL.Models.Commentaire>(comment);
+                if (commentaireBLL.UpdateCommentaire(commentaireBll))
+                    return StatusCode(HttpStatusCode.Created);
+                else
+                    return BadRequest("an error occured");
+            }
+            else
+                return BadRequest("parameter is null");          
         }
 
         // DELETE: api/Comment/5
@@ -111,7 +123,10 @@ namespace ModuleBlog.Controllers
         /// <returns></returns>
         public IHttpActionResult Delete(int id)
         {
-            return Ok();
+            if (commentaireBLL.DeleteCommentaire(id))
+                return Ok();
+            else
+                return StatusCode(HttpStatusCode.InternalServerError);
         }
 
 

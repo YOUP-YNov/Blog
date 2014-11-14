@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ModuleBlog.DAL;
 using System.Collections.Generic;
 using ModuleBlog.DAL.Models;
-
+using ModuleBlog.BLL.Models;
 
 namespace ModuleBlog.Tests
 {
@@ -23,13 +23,12 @@ namespace ModuleBlog.Tests
 
         }
         [TestMethod]
-
         public void TestMethodGetCommentaireById()
         {
             ModuleBlog.DAL.Models.Commentaire commentaire;
-            commentaire = cdal.GetCommentaireById(1);
+            commentaire = cdal.GetCommentaireById(2);
             Assert.IsNotNull(commentaire);
-            Assert.IsTrue(commentaire.Article_id==10001);
+            Assert.IsTrue(commentaire.Article_id==10002);
            
         }
        
@@ -37,10 +36,10 @@ namespace ModuleBlog.Tests
         public void TestMethodGetCommentaires()
         {
             List<ModuleBlog.DAL.Models.Commentaire> commentaireList;
-            commentaireList = cdal.GetCommentaires(10001);
+            commentaireList = cdal.GetCommentaires(10002);
 
             Assert.IsNotNull(commentaireList);
-            Assert.IsTrue(commentaireList.Count>1);
+            Assert.IsTrue(commentaireList.Count>0);
             
         }
 
@@ -64,7 +63,7 @@ namespace ModuleBlog.Tests
         [TestMethod]
         public void TestMethodAddCommentaire()
         {
-            ModuleBlog.DAL.Models.Commentaire c = cdal.GetCommentaireById(1);
+            ModuleBlog.DAL.Models.Commentaire c = cdal.GetCommentaireById(2);
             Assert.IsTrue(cdal.AddCommentaire(c));
         }
         [TestMethod]
