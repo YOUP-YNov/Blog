@@ -499,6 +499,7 @@
             <summary>
             Mettre à jour une publicité
             </summary>
+            <param name="id">identifiant de la publicité</param>
             <param name="publicite">publicité à mettre à jour</param>
             <returns>Réponse HTTP</returns>
         </member>
@@ -534,7 +535,7 @@
             <param name="articleId">identifiant de l'article qui n'est plus aimé</param>
             <returns></returns>
         </member>
-        <member name="M:ModuleBlog.Controllers.ArticleController.Add(System.Int32,System.String,System.String,System.String,System.Int32)">
+        <member name="M:ModuleBlog.Controllers.ArticleController.Add(ModuleBlog.Controllers.Models.Article)">
             <summary>
             Crée un article
             </summary>
