@@ -485,5 +485,56 @@ namespace ModuleBlog.DAL
             }
         }
 
+
+        public Blog GetBlogByUserId(int userId)
+        {
+            ds = new DataSet();
+
+            cmd = new SqlCommand();
+            cmd.CommandText = "BLOG_GetBlogByUserId";
+            cmd.CommandTimeout = 0;
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = con;
+            cmd.Parameters.AddWithValue("@UserId", userId);
+
+            da = new SqlDataAdapter(cmd);
+
+            try
+            {
+                con.Open();
+                try
+                {
+                    da.Fill(ds);
+                    Blog bDao = new Blog();
+
+                    foreach (DataTable table in ds.Tables)
+                    {
+                        foreach (DataRow dr in table.Rows)
+                        {
+                            bDao.Blog_id = int.Parse(dr["Blog_id"].ToString());
+                            bDao.Utilisateur_id = int.Parse(dr["Utilisateur_id"].ToString());
+                            bDao.Categorie_id = int.Parse(dr["Categorie_id"].ToString());
+                            bDao.TitreBlog = dr["TitreBlog"].ToString();
+                            bDao.DateCreation = DateTime.Parse(dr["DateCreation"].ToString());
+                            bDao.Actif = bool.Parse(dr["Actif"].ToString());
+                            bDao.Promotion = bool.Parse(dr["Promotion"].ToString());
+                            bDao.Theme_id = int.Parse(dr["Theme_id"].ToString());
+                            bDao.Theme = GetThemeById(bDao.Theme_id);
+                        }
+                    }
+                    con.Close();
+                    return bDao;
+                }
+                catch (Exception ex)
+                {
+                    con.Close();
+                    throw ex;
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

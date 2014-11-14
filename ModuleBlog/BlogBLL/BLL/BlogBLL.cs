@@ -121,5 +121,20 @@ namespace ModuleBlog.BLL
 
             return themeBll;
         }
+
+        public Models.Blog GetBlogByUserId(int userId)
+        {
+            ModuleBlog.DAL.Models.Blog blogDao = blogDAL.GetBlogByUserId(userId);
+            if (blogDao.DateCreation > new DateTime(1, 1, 1, 0, 0, 0))
+            {
+                Mapper.CreateMap<ModuleBlog.DAL.Models.Blog, ModuleBlog.BLL.Models.Blog>();
+                Mapper.CreateMap<ModuleBlog.DAL.Models.Theme, ModuleBlog.BLL.Models.Theme>();
+                ModuleBlog.BLL.Models.Blog blogBLL = Mapper.Map<ModuleBlog.DAL.Models.Blog, ModuleBlog.BLL.Models.Blog>(blogDao);
+
+                return blogBLL;
+            }
+            else
+                return null;
+        }
     }
 }

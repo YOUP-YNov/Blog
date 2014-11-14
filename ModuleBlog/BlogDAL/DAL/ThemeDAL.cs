@@ -85,5 +85,43 @@ namespace ModuleBlog.DAL
                 return null;
             }
         }
+
+        public List<Theme> GetThemes()
+        {
+            ds = new DataSet();
+
+            cmd = new SqlCommand();
+            cmd.CommandText = "BLOG_GetThemes";
+            cmd.CommandTimeout = 0;
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = con;
+            da = new SqlDataAdapter(cmd);
+
+            try
+            {
+                con.Open();
+                da.Fill(ds);
+                List<Theme> listDao = new List<Theme>();
+                Theme tDao;
+                foreach (DataTable table in ds.Tables)
+                {
+                    foreach (DataRow dr in table.Rows)
+                    {
+                        tDao = new Theme();
+                        tDao.Theme_id = int.Parse(dr["Theme_id"].ToString());
+                        tDao.Couleur = dr["Couleur"].ToString();
+                        tDao.ImageChemin = dr["ImageChemin"].ToString();
+                        listDao.Add(tDao);
+                    }
+                }
+
+                con.Close();
+                return listDao;
+            }
+            catch (SqlException ex)
+            {
+                return null;
+            }
+        }
     }
 }

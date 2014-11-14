@@ -90,6 +90,28 @@ namespace ModuleBlog.Controllers
             }
         }
 
+        // GET: api/Blog/User
+        /// <summary>
+        /// Récupérer un blog pour un utilisateur
+        /// </summary>
+        /// <param name="id">identifiant de l'utilisateur</param>
+        /// <returns>le blog</returns>
+        [Route("api/blog")]
+        [HttpGet]
+        public ModuleBlog.Controllers.Models.Blog GetById(int userId)
+        {
+            ModuleBlog.BLL.Models.Blog blogBll = blogBLL.GetBlogByUserId(userId);
+            try
+            {
+                ModuleBlog.Controllers.Models.Blog blog = Map(blogBll);
+                return blog;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
         // GET: api/Blog
         /// <summary>
         /// Récupérer la liste des blogs pour une catégorie
