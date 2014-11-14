@@ -654,6 +654,13 @@
             <param name="themeId">identifiant du thème</param>
             <returns>thème correspondant</returns>
         </member>
+        <member name="M:ModuleBlog.Controllers.ThemeController.Get">
+            <summary>
+            Obtenir les informations d'un thème
+            </summary>
+            <param name="themeId">identifiant du thème</param>
+            <returns>thème correspondant</returns>
+        </member>
         <member name="T:ModuleBlog.Controllers.CategorieController">
             <summary>
             Contrôleur pour les catégories de blog

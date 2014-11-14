@@ -40,8 +40,20 @@ namespace ModuleBlog.Controllers
             if (themeId == 0)
                 return null;
             ModuleBlog.BLL.Models.Theme themeBll = themeBLL.GetThemeById(themeId);
-            Mapper.CreateMap<ModuleBlog.BLL.Models.Theme, ModuleBlog.Controllers.Models.Theme>();
             ModuleBlog.Controllers.Models.Theme theme = Mapper.Map<ModuleBlog.BLL.Models.Theme, ModuleBlog.Controllers.Models.Theme>(themeBll);
+            return theme;
+        }
+
+        // GET: api/Theme
+        /// <summary>
+        /// Obtenir les informations d'un thème
+        /// </summary>
+        /// <param name="themeId">identifiant du thème</param>
+        /// <returns>thème correspondant</returns>
+        public IEnumerable<ModuleBlog.Controllers.Models.Theme> Get()
+        {
+            IEnumerable<ModuleBlog.BLL.Models.Theme> themeBll = themeBLL.GetThemes();
+            IEnumerable<ModuleBlog.Controllers.Models.Theme> theme = Mapper.Map<IEnumerable<ModuleBlog.BLL.Models.Theme>, IEnumerable<ModuleBlog.Controllers.Models.Theme>>(themeBll);
             return theme;
         }
     }
