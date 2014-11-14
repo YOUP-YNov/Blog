@@ -216,16 +216,26 @@ namespace ModuleBlog.Controllers
                 return BadRequest("parameter is null");
         }
 
-        // PUT : api/UpdateBlog
+        // PUT : api/Blog/5
         /// <summary>
         /// Promouvoir un blog
         /// </summary>
         /// <param name="userId">identifiant de l'utilisateur</param>
-        /// <param name="Promoted">promouvoir = 1 (vrai)</param>
+        /// <param name="promoted">promouvoir = 1 (vrai)</param>
         /// <returns>Réponse HTTP</returns>
-        public IHttpActionResult Put(int userId, bool Promoted)
+        [Route("api/Blog/{id}"), HttpPut]
+        public IHttpActionResult Put(int id, int userId, bool promoted)
         {
-            return Ok();
+            if (userId != 0)
+            {
+                Mapper.CreateMap<ModuleBlog.Controllers.Models.Blog, ModuleBlog.BLL.Models.Blog>();
+                if (blogBLL.PromoteBlog(userId, promoted))
+                    return StatusCode(HttpStatusCode.Created);
+                else
+                    return BadRequest("an error occured");
+            }
+            else
+                return BadRequest("parameter is null");
         }
 
         // PUT: api/DisableBlog/5

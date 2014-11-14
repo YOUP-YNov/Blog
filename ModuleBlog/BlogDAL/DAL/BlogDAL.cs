@@ -324,7 +324,7 @@ namespace ModuleBlog.DAL
 
         }
 
-        public string PromoteBlog(int userId, bool promoted)
+        public bool PromoteBlog(int userId, bool promoted)
         {
             ds = new DataSet();
 
@@ -345,17 +345,17 @@ namespace ModuleBlog.DAL
                 {
                 da.Fill(ds);
                 con.Close();
-                return ds.Tables[0].Rows[0]["Resultat"].ToString();
+                return (ds.Tables[0].Rows[0]["Resultat"].ToString() == "OK");
             }
                 catch(Exception ex)
                 {
                     con.Close();
-                    return ex.Message;
+                    return false;
                 }
             }
             catch (SqlException ex)
             {
-                return ex.Message;
+                return false;
             }
         }
 

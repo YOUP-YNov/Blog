@@ -88,10 +88,9 @@ namespace ModuleBlog.BLL
             return null;
         }
 
-        public string PromoteBlog(int userId, bool promoted)
+        public bool PromoteBlog(int userId, bool promoted)
         {
-            string resultat = blogDAL.PromoteBlog(userId,promoted);
-            return resultat;
+            return blogDAL.PromoteBlog(userId,promoted);
         }
         
         public bool UpdateBlog(ModuleBlog.BLL.Models.Blog blog)

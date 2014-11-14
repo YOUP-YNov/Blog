@@ -609,12 +609,12 @@
             <param name="blog">ModuleBlog.Controllers.Models.Blog à modifier</param>
             <returns>Réponse HTTP</returns>
         </member>
-        <member name="M:ModuleBlog.Controllers.BlogController.Put(System.Int32,System.Boolean)">
+        <member name="M:ModuleBlog.Controllers.BlogController.Put(System.Int32,System.Int32,System.Boolean)">
             <summary>
             Promouvoir un blog
             </summary>
             <param name="userId">identifiant de l'utilisateur</param>
-            <param name="Promoted">promouvoir = 1 (vrai)</param>
+            <param name="promoted">promouvoir = 1 (vrai)</param>
             <returns>Réponse HTTP</returns>
         </member>
         <member name="M:ModuleBlog.Controllers.BlogController.Delete(System.Int32)">
