@@ -20,11 +20,12 @@ namespace ModuleBlog.Controllers
             blogBLL = new BlogBLL();
         }
 
-        // GET: api/ModuleBlog.Controllers.Models.Blog
+        // GET: api/Blog
         /// <summary>
         /// Récupérer la liste des blogs
         /// </summary>
         /// <returns>La liste des blogs</returns>
+        [HttpGet, Route("api/blog")]
         public IEnumerable<ModuleBlog.Controllers.Models.Blog> Get()
         {
             IEnumerable<ModuleBlog.BLL.Models.Blog> blogsBLL = blogBLL.GetBlogs();
@@ -41,7 +42,7 @@ namespace ModuleBlog.Controllers
             }
         }
 
-        // GET: api/ModuleBlog.Controllers.Models.Blog/5
+        // GET: api/Blog/5
         /// <summary>
         /// Récupérer un blog par son identifiant (et indique qu'il a été visité)
         /// </summary>
@@ -66,15 +67,14 @@ namespace ModuleBlog.Controllers
             }
         }
 
-        // GET: api/ModuleBlog.Controllers.Models.Blog/5
+        // GET: api/Blog
         /// <summary>
         /// Récupérer la liste des blogs pour une catégorie
         /// </summary>
         /// <param name="categoryId">identifiant de la catégorie</param>
         /// <returns>la liste des blogs</returns>
-        [Route("api/blog/{id}")]
-        [HttpGet]
-        public IEnumerable<ModuleBlog.Controllers.Models.Blog> GetByCategory(int id, int categoryId)
+        [Route("api/blog/category/{categoryId}"), HttpGet]
+        public IEnumerable<ModuleBlog.Controllers.Models.Blog> GetByCategory(int categoryId)
         {
             IEnumerable<ModuleBlog.BLL.Models.Blog> blogsBLL = blogBLL.GetBlogsByCategory(categoryId);
             try
@@ -91,7 +91,7 @@ namespace ModuleBlog.Controllers
         }
 
 
-        // GET: api/ModuleBlog.Controllers.Models.Blog/Promoted
+        // GET: api/Blog/Promoted
         /// <summary>
         /// Récupérer la liste des blogs mis en avant
         /// </summary>
@@ -114,7 +114,7 @@ namespace ModuleBlog.Controllers
             }
         }
 
-        // GET : api/ModuleBlog.Controllers.Models.Blog
+        // GET : api/Blog
         /// <summary>
         /// Effectuer une recherche de blog par noms
         /// </summary>
@@ -136,7 +136,7 @@ namespace ModuleBlog.Controllers
             }
         }
 
-        // GET : api/ModuleBlog.Controllers.Models.Blog
+        // GET : api/Blog
         /// <summary>
         /// Effectuer une recherche de blog par noms pour une catégorie
         /// </summary>
@@ -160,7 +160,7 @@ namespace ModuleBlog.Controllers
         }
 
 
-        // POST: api/ModuleBlog.Controllers.Models.Blog
+        // POST: api/Blog
         /// <summary>
         /// Ajouter un blog
         /// </summary>
@@ -189,7 +189,7 @@ namespace ModuleBlog.Controllers
                 return BadRequest("parameter is null");
         }
 
-        // PUT: api/UpdateBlog
+        // PUT: api/Blog/5
         /// <summary>
         /// Mettre à jour un blog
         /// </summary>
@@ -220,6 +220,7 @@ namespace ModuleBlog.Controllers
         /// <summary>
         /// Promouvoir un blog
         /// </summary>
+        /// <param name="id">identifiant du blog à promouvoir</param>
         /// <param name="userId">identifiant de l'utilisateur</param>
         /// <param name="promoted">promouvoir = 1 (vrai)</param>
         /// <returns>Réponse HTTP</returns>
@@ -228,7 +229,6 @@ namespace ModuleBlog.Controllers
         {
             if (userId != 0)
             {
-                Mapper.CreateMap<ModuleBlog.Controllers.Models.Blog, ModuleBlog.BLL.Models.Blog>();
                 if (blogBLL.PromoteBlog(userId, promoted))
                     return StatusCode(HttpStatusCode.Created);
                 else
@@ -238,15 +238,24 @@ namespace ModuleBlog.Controllers
                 return BadRequest("parameter is null");
         }
 
-        // PUT: api/DisableBlog/5
+        // PUT: api/Blog
         /// <summary>
         /// Désactiver un blog
         /// </summary>
-        /// <param name="id">identifiant du blog à désactiver</param>
+        /// <param name="userId">identifiant de l'utilisateur dont on doit désactiver le blog</param>
         /// <returns>Réponse HTTP</returns>
-        public IHttpActionResult Delete(int id)
+        [HttpPut, Route("api/Blog")]
+        public IHttpActionResult Delete(int userId)
         {
-            return Ok();
+            if (userId != 0)
+            {
+                if (blogBLL.DeleteBlog(userId))
+                    return Ok();
+                else
+                    return BadRequest("an error occured");
+            }
+            else
+                return BadRequest("parameter is null");
         }
 
         
