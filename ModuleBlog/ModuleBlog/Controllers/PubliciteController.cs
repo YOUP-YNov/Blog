@@ -21,6 +21,8 @@ namespace ModuleBlog.Controllers
             adBLL = new PubliciteBLL();
         }
 
+
+
         // GET: api/Ad
         /// <summary>
         /// Récupérer la publicité associée à un blog
@@ -30,7 +32,6 @@ namespace ModuleBlog.Controllers
         public ModuleBlog.Controllers.Models.Publicite Get(int blogId)
         {
             ModuleBlog.BLL.Models.Publicite adBll = adBLL.GetAdByBlogId(blogId);
-            Mapper.CreateMap<ModuleBlog.BLL.Models.Publicite, ModuleBlog.Controllers.Models.Publicite>();
             ModuleBlog.Controllers.Models.Publicite ad = Mapper.Map<ModuleBlog.BLL.Models.Publicite, ModuleBlog.Controllers.Models.Publicite>(adBll);
 
             return ad;
@@ -49,7 +50,6 @@ namespace ModuleBlog.Controllers
                 if (publicite.Publicite_id == 0 || publicite.Blog_id == 0 || publicite.Largeur == 0
                     || publicite.Hauteur == 0 || publicite.ContenuPublicite == string.Empty)
                     return BadRequest("parameters format is not correct.");
-                Mapper.CreateMap<ModuleBlog.Controllers.Models.Publicite, ModuleBlog.BLL.Models.Publicite>();
                 ModuleBlog.BLL.Models.Publicite adBll = Mapper.Map<ModuleBlog.Controllers.Models.Publicite, ModuleBlog.BLL.Models.Publicite>(publicite);
                 if (adBLL.AddAd(adBll))
                     return StatusCode(HttpStatusCode.Created);
@@ -64,8 +64,10 @@ namespace ModuleBlog.Controllers
         /// <summary>
         /// Mettre à jour une publicité
         /// </summary>
+        /// <param name="id">identifiant de la publicité</param>
         /// <param name="publicite">publicité à mettre à jour</param>
         /// <returns>Réponse HTTP</returns>
+        [HttpPut, Route("api/ad/{id}")]
         public IHttpActionResult Put(int id, [FromBody]ModuleBlog.Controllers.Models.Publicite publicite)
         {
             if (publicite != null)
@@ -74,7 +76,6 @@ namespace ModuleBlog.Controllers
                     || publicite.Hauteur == 0 || publicite.ContenuPublicite == string.Empty)
                     return BadRequest("parameters format is not correct.");
                 publicite.Publicite_id = id;
-                Mapper.CreateMap<ModuleBlog.Controllers.Models.Publicite, ModuleBlog.BLL.Models.Publicite>();
                 ModuleBlog.BLL.Models.Publicite adBll = Mapper.Map<ModuleBlog.Controllers.Models.Publicite, ModuleBlog.BLL.Models.Publicite>(publicite);
                 if (adBLL.UpdateAdd(adBll))
                     return StatusCode(HttpStatusCode.Created);

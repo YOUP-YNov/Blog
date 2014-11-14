@@ -499,6 +499,7 @@
             <summary>
             Mettre à jour une publicité
             </summary>
+            <param name="id">identifiant de la publicité</param>
             <param name="publicite">publicité à mettre à jour</param>
             <returns>Réponse HTTP</returns>
         </member>
@@ -534,15 +535,18 @@
             <param name="articleId">identifiant de l'article qui n'est plus aimé</param>
             <returns></returns>
         </member>
-        <member name="M:ModuleBlog.Controllers.ArticleController.Add(System.Int32,System.String,System.String,System.String,System.Int32)">
+        <member name="M:ModuleBlog.Controllers.ArticleController.Add(ModuleBlog.Controllers.Models.Article)">
             <summary>
-            Crée un article
+            Créer un article
             </summary>
-            <param name="blogId">id du blog auquel appartient l'article</param>
-            <param name="titre">titre de l'article</param>
-            <param name="imageChemin">url de l'image de l'article</param>
-            <param name="contenu">contenu de l'article</param>
-            <param name="evenementId">id auquel appartient l'article</param>
+            <param name="article">Article à ajouter</param>
+            <returns></returns>
+        </member>
+        <member name="M:ModuleBlog.Controllers.ArticleController.UpdateArticle(System.Int32,ModuleBlog.Controllers.Models.Article)">
+            <summary>
+            Mettre à jour un article
+            </summary>
+            <param name="article">Article à mettre à jour</param>
             <returns></returns>
         </member>
         <member name="M:ModuleBlog.Controllers.ArticleController.Disable(System.Int32)">
@@ -613,7 +617,7 @@
             <summary>
             Mettre à jour un blog
             </summary>
-            <param name="blog">ModuleBlog.Controllers.Models.Blog à modifier</param>
+            <param name="blog">Blog à modifier</param>
             <returns>Réponse HTTP</returns>
         </member>
         <member name="M:ModuleBlog.Controllers.BlogController.Put(System.Int32,System.Int32,System.Boolean)">
