@@ -18,5 +18,12 @@ namespace ModuleBlog.App_Start
             Mapper.CreateMap<ModuleBlog.BLL.Models.Blog, ModuleBlog.Controllers.Models.Blog>();
             Mapper.CreateMap<ModuleBlog.BLL.Models.Theme, ModuleBlog.Controllers.Models.Theme>();
         }
+
+        private static void CreateMapCommentaire()
+        {
+            Mapper.CreateMap<ModuleBlog.BLL.Models.Commentaire, ModuleBlog.Controllers.Models.Commentaire>();
+            Mapper.CreateMap<ModuleBlog.Controllers.Models.Commentaire, ModuleBlog.BLL.Models.Commentaire>();
+           
+        }
     }
 }
