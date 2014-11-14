@@ -179,7 +179,6 @@ namespace ModuleBlog.DAL
             cmd.Connection = con;
             cmd.Parameters.AddWithValue("@ArticleId", commentaire.Article_id);
             cmd.Parameters.AddWithValue("@UtilisateurId", commentaire.Utilisateur_id);
-            cmd.Parameters.AddWithValue("@CreationDate", commentaire.DateCreation);
             cmd.Parameters.AddWithValue("@ContenuCommentaire", commentaire.ContenuCommentaire);
            
 
@@ -217,9 +216,7 @@ namespace ModuleBlog.DAL
             cmd.Connection = con;
             cmd.Parameters.AddWithValue("@CommentaireId", commentaire.Commentaire_id);
             cmd.Parameters.AddWithValue("@ContenuCommentaire", commentaire.ContenuCommentaire);
-            cmd.Parameters.AddWithValue("@ModificationDate", commentaire.DateModification);
        
-
             da = new SqlDataAdapter(cmd);
 
             try
