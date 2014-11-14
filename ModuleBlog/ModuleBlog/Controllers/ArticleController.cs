@@ -133,13 +133,9 @@ namespace ModuleBlog.Controllers
         }
 
         /// <summary>
-        /// Crée un article
+        /// Créer un article
         /// </summary>
-        /// <param name="blogId">id du blog auquel appartient l'article</param>
-        /// <param name="titre">titre de l'article</param>
-        /// <param name="imageChemin">url de l'image de l'article</param>
-        /// <param name="contenu">contenu de l'article</param>
-        /// <param name="evenementId">id auquel appartient l'article</param>
+        /// <param name="article">Article à ajouter</param>
         /// <returns></returns>
         [Route("api/article")]
         [HttpPost]
@@ -149,13 +145,37 @@ namespace ModuleBlog.Controllers
             {
                 if (article.Blog_id == 0 || article.ContenuArticle == string.Empty || article.TitreArticle == string.Empty)
                     return BadRequest("parameters format is not correct.");
-                //ThemeController tcontroller = new ThemeController();
 
                 ModuleBlog.BLL.Models.Article articleBll = Map(article);
                 string result = articleBLL.AddArticle(articleBll);
-                return Ok(result);
-                //else
-                //    return BadRequest("an error occured");
+                if(Convert.ToInt32(result) > 0)
+                    return Ok(result);
+                else
+                    return BadRequest("an error occured");
+            }
+            else
+                return BadRequest("parameter is null");
+        }
+
+        /// <summary>
+        /// Mettre à jour un article
+        /// </summary>
+        /// <param name="article">Article à mettre à jour</param>
+        /// <returns></returns>
+        [Route("api/article/{id}"), HttpPut]
+        public IHttpActionResult UpdateArticle(int id, [FromBody]ModuleBlog.Controllers.Models.Article article)
+        {
+            if (article != null || id <= 0)
+            {
+                if (article.Blog_id == 0 || article.ContenuArticle == string.Empty || article.TitreArticle == string.Empty)
+                    return BadRequest("parameters format is not correct.");
+                if (article.Article_id == 0)
+                    article.Article_id = id;
+                ModuleBlog.BLL.Models.Article articleBll = Map(article);
+                if (articleBLL.UpdateArticle(articleBll))
+                    return StatusCode(HttpStatusCode.Created);
+                else
+                    return BadRequest("an error occured");
             }
             else
                 return BadRequest("parameter is null");

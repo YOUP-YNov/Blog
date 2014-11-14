@@ -79,7 +79,12 @@ namespace ModuleBlog.BLL
             return articleDal.AddArticle(articleDao);
         }
 
-        //TODO FAIRE LE UPDATE
+        public bool UpdateArticle(ModuleBlog.BLL.Models.Article article)
+        {
+            Mapper.CreateMap<ModuleBlog.BLL.Models.Article, ModuleBlog.DAL.Models.Article>();
+            ModuleBlog.DAL.Models.Article articleDao = Mapper.Map<ModuleBlog.BLL.Models.Article, ModuleBlog.DAL.Models.Article>(article);
+            return articleDal.UpdateArticle(articleDao);
+        }
 
         public bool DeleteArticle(int idArticle)
         {

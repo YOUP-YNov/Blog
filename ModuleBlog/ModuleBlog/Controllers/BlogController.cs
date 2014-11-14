@@ -227,7 +227,7 @@ namespace ModuleBlog.Controllers
         /// <summary>
         /// Mettre à jour un blog
         /// </summary>
-        /// <param name="blog">ModuleBlog.Controllers.Models.Blog à modifier</param>
+        /// <param name="blog">Blog à modifier</param>
         /// <returns>Réponse HTTP</returns>
         public IHttpActionResult Put([FromBody]ModuleBlog.Controllers.Models.Blog blog)
         {
