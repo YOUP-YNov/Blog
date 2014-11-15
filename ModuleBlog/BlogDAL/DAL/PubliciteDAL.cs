@@ -29,11 +29,7 @@ namespace ModuleBlog.DAL
         {
             try
             {
-                cmd.CommandText = "BLOG_GetAdByBlogId";
-                cmd.Parameters.AddWithValue("@BlogId", BlogId);
-                da = new SqlDataAdapter(cmd);
-                con.Open();
-                da.Fill(ds);
+                FillData("BLOG_GetAdByBlogId", ref ds, new Dictionary<string, object>() { {"@BlogId", BlogId} });
                 Publicite pDao = new Publicite();
                 foreach (DataTable table in ds.Tables)
                 {
@@ -71,15 +67,12 @@ namespace ModuleBlog.DAL
         {           
             try
             {
-                cmd.CommandText = "BLOG_AddAd";            
-                cmd.Parameters.AddWithValue("@BlogId", ad.Blog_id);
-                cmd.Parameters.AddWithValue("@Largeur", ad.Largeur);
-                cmd.Parameters.AddWithValue("@Hauteur", ad.Hauteur);
-                cmd.Parameters.AddWithValue("@ContenuPublicite", ad.ContenuPublicite);
-                da = new SqlDataAdapter(cmd);
-                con.Open();
-                da.Fill(ds);
-
+                Dictionary<string, object> listParam = new Dictionary<string, object>();
+                listParam.Add("@BlogId", ad.Blog_id);
+                listParam.Add("@Largeur", ad.Largeur);
+                listParam.Add("@Hauteur", ad.Hauteur);
+                listParam.Add("@ContenuPublicite", ad.ContenuPublicite);
+                FillData("BLOG_AddAd", ref ds, listParam);            
                 return (Convert.ToBoolean(ds.Tables[0].Rows[0][0]));
             }
             catch (SqlException ex)
@@ -105,14 +98,12 @@ namespace ModuleBlog.DAL
         {
             try
             {
-                cmd.CommandText = "BLOG_UpdateAd";
-                cmd.Parameters.AddWithValue("@PubliciteId", ad.Publicite_id);
-                cmd.Parameters.AddWithValue("@Largeur", ad.Largeur);
-                cmd.Parameters.AddWithValue("@Hauteur", ad.Hauteur);
-                cmd.Parameters.AddWithValue("@ContenuPublicite", ad.ContenuPublicite);
-                da = new SqlDataAdapter(cmd);
-                con.Open();
-                da.Fill(ds);
+                Dictionary<string, object> listParam = new Dictionary<string, object>();
+                listParam.Add("@PubliciteId", ad.Publicite_id);
+                listParam.Add("@Largeur", ad.Largeur);
+                listParam.Add("@Hauteur", ad.Hauteur);
+                listParam.Add("@ContenuPublicite", ad.ContenuPublicite);
+                FillData("BLOG_UpdateAd", ref ds, listParam);
                 return (Convert.ToBoolean(ds.Tables[0].Rows[0][0]));
             }
             catch (SqlException ex)

@@ -24,11 +24,7 @@ namespace ModuleBlog.DAL
         {
             try
             {                
-                cmd.CommandText = "BLOG_GetCategories";                
-                da = new SqlDataAdapter(cmd);
-                con.Open();
-                da.Fill(ds);
-
+                FillData("BLOG_GetCategories", ref ds);                
                 List<Categorie> listCDao = new List<Categorie>();
                 Categorie cDao;
                 foreach (DataTable table in ds.Tables)

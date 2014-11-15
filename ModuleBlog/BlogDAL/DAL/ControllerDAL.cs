@@ -26,5 +26,16 @@ namespace BlogDAL.DAL
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Connection = con;
         }
+
+        public void FillData(string psText, ref DataSet ds, Dictionary<string, object> listParameters = null)
+        {
+            cmd.CommandText = psText;
+            if (listParameters != null)
+                for (int i = 0; i < listParameters.Count; i++)
+                    cmd.Parameters.AddWithValue(listParameters.ElementAt(i).Key, listParameters.ElementAt(i).Value);
+            da = new SqlDataAdapter(cmd);
+            con.Open();
+            da.Fill(ds);
+        }
     }
 }
