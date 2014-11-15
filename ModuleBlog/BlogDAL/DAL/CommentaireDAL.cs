@@ -10,278 +10,179 @@ using BlogDAL.DAL;
 
 namespace ModuleBlog.DAL
 {
-    public class CommentaireDAL
+    public class CommentaireDAL : ControllerDAL
     {
-
-        SqlCommand cmd;
-        SqlConnection con;
-        SqlDataAdapter da;
-        DataSet ds;
-        string strcon = Connector.ConnectionString;
-
-
-        public CommentaireDAL()
+        public List<Commentaire> GetCommentaires(int articleId)
         {
-            con = new SqlConnection(strcon);
-        }
-
-        public bool DeleteCommentaire(int commentaireId)
-        {
-            DataSet ds = new DataSet();
-            cmd = new SqlCommand();
-            cmd.CommandText = "BLOG_DeleteCommentaire";
-
-
-
-
-
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Connection = con;
-            da = new SqlDataAdapter(cmd);
-            cmd.Parameters.AddWithValue("@CommentaireId", commentaireId);
-
             try
             {
-                con.Open();
-                try
+                FillData("BLOG_GetCommentaires", ref ds, new Dictionary<string, object>() { { "@ArticleId", articleId } });
+                List<Commentaire> listCDao = new List<Commentaire>();
+                foreach (DataTable table in ds.Tables)
                 {
-                    da.Fill(ds);
-                    con.Close();
-                    return (ds.Tables[0].Rows[0]["Resultat"].ToString() == "OK");
+                    Commentaire cDao = new Commentaire();
+                    foreach (DataRow dr in table.Rows)
+                    {
+                        cDao.ContenuCommentaire = Convert.ToString(dr["ContenuCommentaire"].ToString());
+                        cDao.Actif = Convert.ToBoolean(dr["Actif"].ToString());
+                        cDao.Article_id = Convert.ToInt32(dr["Article_id"].ToString());
+                        cDao.Commentaire_id = Convert.ToInt32(dr["Commentaire_id"].ToString());
+                        cDao.DateCreation = Convert.ToDateTime(dr["DateCreation"].ToString());
+                        if (!String.IsNullOrEmpty(dr["DateModification"].ToString()))
+                        {
+                            cDao.DateModification = Convert.ToDateTime(dr["DateModification"].ToString());
+                        }
+                        cDao.Utilisateur_id = Convert.ToInt32(dr["Utilisateur_id"].ToString());
+                        listCDao.Add(cDao);
+                    }
+
                 }
-                catch(Exception ex)
-                {
-                    con.Close();
-                    return false;
-                }
+                return listCDao;
             }
             catch (SqlException ex)
             {
-                return false;
+                return null;
             }
-        }
+            catch(Exception ex)
+            {
+                return null;
+            }
+            finally
+            {
+                con.Close();
+            }
 
+        }
 
         public Commentaire GetCommentaireById(int commentaireId)
         {
-            ds = new DataSet();
-
-            cmd = new SqlCommand();
-            cmd.CommandText = "BLOG_GetCommentaireById";
-
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Connection = con;
-            cmd.Parameters.AddWithValue("@CommentaireId", commentaireId);
-
-            da = new SqlDataAdapter(cmd);
-
             try
             {
-                con.Open();
-                try
+                FillData("BLOG_GetCommentaireById", ref ds, new Dictionary<string, object>() { { "@CommentaireId", commentaireId } });         
+                Commentaire cDao = new Commentaire();
+                foreach (DataTable table in ds.Tables)
                 {
-                    da.Fill(ds);
-                    Commentaire cDao = new Commentaire();
-
-                    foreach (DataTable table in ds.Tables)
+                    foreach (DataRow dr in table.Rows)
                     {
-                        foreach (DataRow dr in table.Rows)
+                        cDao.ContenuCommentaire = Convert.ToString(dr["ContenuCommentaire"].ToString());
+                        cDao.Actif = Convert.ToBoolean(dr["Actif"].ToString());
+                        cDao.Article_id = Convert.ToInt32(dr["Article_id"].ToString());
+                        cDao.Commentaire_id = Convert.ToInt32(dr["Commentaire_id"].ToString());
+                        cDao.DateCreation = Convert.ToDateTime(dr["DateCreation"].ToString());
+                        cDao.Utilisateur_id = Convert.ToInt32(dr["Utilisateur_id"].ToString());
+                        if (!String.IsNullOrEmpty(dr["DateModification"].ToString()))
                         {
-                            cDao.ContenuCommentaire = Convert.ToString(dr["ContenuCommentaire"].ToString());
-                            cDao.Actif = Convert.ToBoolean(dr["Actif"].ToString());
-                            cDao.Article_id = Convert.ToInt32(dr["Article_id"].ToString());
-                            cDao.Commentaire_id = Convert.ToInt32(dr["Commentaire_id"].ToString());
-                            cDao.DateCreation = Convert.ToDateTime(dr["DateCreation"].ToString());
-                            cDao.Utilisateur_id = Convert.ToInt32(dr["Utilisateur_id"].ToString());
-                            if (!String.IsNullOrEmpty(dr["DateModification"].ToString()))
-                            {
-                                cDao.DateModification = Convert.ToDateTime(dr["DateModification"].ToString());
-                            }
-
-
+                            cDao.DateModification = Convert.ToDateTime(dr["DateModification"].ToString());
                         }
                     }
-                    con.Close();
-                    return cDao;
                 }
-                catch(Exception ex)
-                {
-                    con.Close();
-                    throw ex;
-                }
+                return cDao;
             }
             catch (SqlException ex)
             {
-                throw ex;
+                return null;
             }
-        }
-
-        public List<Commentaire> GetCommentaires(int articleId)
-        {
-            ds = new DataSet();
-
-            cmd = new SqlCommand();
-            cmd.CommandText = "BLOG_GetCommentaires";
-
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Connection = con;
-            cmd.Parameters.AddWithValue("@ArticleId", articleId);
-           
-            da = new SqlDataAdapter(cmd);
-
-            try
+            catch(Exception ex)
             {
-                con.Open();
-                try
-                {
-                    da.Fill(ds);
-                    List<Commentaire> listCDao = new List<Commentaire>();
-
-                    foreach (DataTable table in ds.Tables)
-                    {
-                        Commentaire cDao = new Commentaire();
-                        foreach (DataRow dr in table.Rows)
-                        {
-                            cDao.ContenuCommentaire = Convert.ToString(dr["ContenuCommentaire"].ToString());
-                            cDao.Actif = Convert.ToBoolean(dr["Actif"].ToString());
-                            cDao.Article_id = Convert.ToInt32(dr["Article_id"].ToString());
-                            cDao.Commentaire_id = Convert.ToInt32(dr["Commentaire_id"].ToString());
-                            cDao.DateCreation = Convert.ToDateTime(dr["DateCreation"].ToString());
-                            if (!String.IsNullOrEmpty(dr["DateModification"].ToString()))
-                            {
-                                cDao.DateModification = Convert.ToDateTime(dr["DateModification"].ToString());
-                            }
-                            cDao.Utilisateur_id = Convert.ToInt32(dr["Utilisateur_id"].ToString());
-                            listCDao.Add(cDao);
-                        }
-
-                    }
-                    con.Close();
-                    return listCDao;
-                }
-                catch(Exception ex)
-                {
-                    con.Close();
-                    throw ex;
-                }
+                return null;
             }
-            catch (SqlException ex)
+            finally
             {
-                throw ex;
+                con.Close();
             }
-
         }
 
         public bool AddCommentaire(Commentaire commentaire)
         {
-            ds = new DataSet();
-
-            cmd = new SqlCommand();
-            cmd.CommandText = "BLOG_AddCommentaire";
-
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Connection = con;
-            cmd.Parameters.AddWithValue("@ArticleId", commentaire.Article_id);
-            cmd.Parameters.AddWithValue("@UtilisateurId", commentaire.Utilisateur_id);
-            cmd.Parameters.AddWithValue("@ContenuCommentaire", commentaire.ContenuCommentaire);
-           
-
-            da = new SqlDataAdapter(cmd);
-
             try
             {
-                con.Open();
-                try
-                {
-                    da.Fill(ds);
-                    con.Close();
-                    return (ds.Tables[0].Rows[0]["Resultat"].ToString() == "OK");
-                }
-                catch(Exception ex)
-                {
-                    con.Close();
-                    return false;
-                }
+                Dictionary<string, object> listParams = new Dictionary<string, object>();
+                listParams.Add("@ArticleId", commentaire.Article_id);
+                listParams.Add("@UtilisateurId", commentaire.Utilisateur_id);
+                listParams.Add("@ContenuCommentaire", commentaire.ContenuCommentaire);
+                FillData("BLOG_AddCommentaire", ref ds, listParams);
+                return (ds.Tables[0].Rows[0]["Resultat"].ToString() == "OK");
             }
             catch (SqlException ex)
             {
                 return false;
+            }
+            catch(Exception ex)
+            {
+                return false;
+            }
+            finally
+            {
+                con.Close();
             }
         }
 
         public bool UpdateCommentaire(Commentaire commentaire)
         {
-            ds = new DataSet();
-
-            cmd = new SqlCommand();
-            cmd.CommandText = "BLOG_UpdateCommentaire";
-
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Connection = con;
-            cmd.Parameters.AddWithValue("@CommentaireId", commentaire.Commentaire_id);
-            cmd.Parameters.AddWithValue("@ContenuCommentaire", commentaire.ContenuCommentaire);
-            cmd.Parameters.AddWithValue("@Actif", commentaire.Actif);
-       
-            da = new SqlDataAdapter(cmd);
-
             try
             {
-                con.Open();
-                try
-                {
-                    da.Fill(ds);
-                    con.Close();
-                    return (ds.Tables[0].Rows[0]["Resultat"].ToString() == "OK");
-                }
-                catch(Exception ex)
-                {
-                    con.Close();
-                    return false;
-                }
+                Dictionary<string, object> listParams = new Dictionary<string, object>();
+                listParams.Add("@CommentaireId", commentaire.Commentaire_id);
+                listParams.Add("@ContenuCommentaire", commentaire.ContenuCommentaire);
+                listParams.Add("@Actif", commentaire.Actif);
+                FillData("BLOG_UpdateCommentaire", ref ds, listParams);
+                return (ds.Tables[0].Rows[0]["Resultat"].ToString() == "OK");
             }
             catch (SqlException ex)
             {
                 return false;
+            }
+            catch(Exception ex)
+            {
+                return false;
+            }
+            finally
+            {
+                con.Close();
             }
         }
 
         public bool ReportCommentaire(int commentId,int userId )
         {
-            ds = new DataSet();
-
-            cmd = new SqlCommand();
-            cmd.CommandText = "BLOG_ReportCommentaire";
-
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Connection = con;
-            cmd.Parameters.AddWithValue("@CommentaireId", commentId);
-            cmd.Parameters.AddWithValue("@UserId", userId);
-            
-
-            da = new SqlDataAdapter(cmd);
-
             try
             {
-                con.Open();
-                try
-                {
-                    da.Fill(ds);
-                    con.Close();
-                    return (ds.Tables[0].Rows[0]["Resultat"].ToString() == "OK");
-                }
-                catch(Exception ex)
-                {
-                    con.Close();
-                    return false;
-                }
+                FillData("BLOG_ReportCommentaire", ref ds, 
+                    new Dictionary<string, object>() { { "@CommentaireId", commentId }, { "@UserId", userId } });
+                return (ds.Tables[0].Rows[0]["Resultat"].ToString() == "OK");
             }
             catch (SqlException ex)
             {
                 return false;
             }
-        }
-
+            catch(Exception ex)
+            {
+                return false;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }        
         
-
+        public bool DeleteCommentaire(int commentaireId)
+        {
+            try
+            {
+                FillData("BLOG_DeleteCommentaire", ref ds, new Dictionary<string, object>() { {"@CommentaireId", commentaireId} });
+                return (ds.Tables[0].Rows[0]["Resultat"].ToString() == "OK");
+            }
+            catch (SqlException ex)
+            {
+                return false;
+            }
+            catch(Exception ex)
+            {
+                return false;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
     }
 }
