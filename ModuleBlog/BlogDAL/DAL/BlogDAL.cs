@@ -41,10 +41,12 @@ namespace ModuleBlog.DAL
             }
             catch (SqlException ex)
             {
+                LogException(ex, "Blog/BlogDAL/GetBlogs", "SqlException", 1);
                 return null;
             }
             catch(Exception ex)
             {
+                LogException(ex, "Blog/BlogDAL/GetBlogs", "Exception", 1);
                 return null;
             }
             finally
@@ -79,10 +81,12 @@ namespace ModuleBlog.DAL
             }
             catch (SqlException ex)
             {
+                LogException(ex, "Blog/BlogDAL/GetBlogById", "SqlException", 1);
                 return null;
             }
             catch(Exception ex)
             {
+                LogException(ex, "Blog/BlogDAL/GetBlogById", "Exception", 1);
                 return null;
             }
             finally
@@ -117,10 +121,12 @@ namespace ModuleBlog.DAL
             }
             catch (SqlException ex)
             {
+                LogException(ex, "Blog/BlogDAL/GetBlogByUserId", "SqlException", 1);
                 return null;
             }
             catch (Exception ex)
             {
+                LogException(ex, "Blog/BlogDAL/GetBlogByUserId", "Exception", 1);
                 return null;
             }
             finally
@@ -158,10 +164,12 @@ namespace ModuleBlog.DAL
             }
             catch (SqlException ex)
             {
+                LogException(ex, "Blog/BlogDAL/GetBlogsByCategory", "SqlException", 1);
                 return null;
             }
             catch(Exception ex)
             {
+                LogException(ex, "Blog/BlogDAL/GetBlogsByCategory", "Exception", 1);
                 return null;
             }
             finally
@@ -197,10 +205,12 @@ namespace ModuleBlog.DAL
             }
             catch (SqlException ex)
             {
+                LogException(ex, "Blog/BlogDAL/GetPromotedBlogs", "SqlException", 1);
                 return null;
             }
             catch(Exception ex)
             {
+                LogException(ex, "Blog/BlogDAL/GetPromotedBlogs", "Exception", 1);
                 return null;
             }
             finally
@@ -239,10 +249,12 @@ namespace ModuleBlog.DAL
             }
             catch (SqlException ex)
             {
+                LogException(ex, "Blog/BlogDAL/GetBlogsBySearch", "SqlException", 1);
                 return null;
             }
             catch(Exception ex)
             {
+                LogException(ex, "Blog/BlogDAL/GetBlogsBySearch", "Exception", 1);
                 return null;
             }
             finally
@@ -266,10 +278,12 @@ namespace ModuleBlog.DAL
             }
             catch (SqlException ex)
             {
+                LogException(ex, "Blog/BlogDAL/AddBlog", "SqlException", 1);
                 return false;
             }
             catch(Exception ex)
             {
+                LogException(ex, "Blog/BlogDAL/AdBlog", "Exception", 1);
                 return false;
             }
             finally
@@ -296,10 +310,12 @@ namespace ModuleBlog.DAL
             }
             catch (SqlException ex)
             {
+                LogException(ex, "Blog/BlogDAL/UpdateBLog", "SqlException", 1);
                 return false;
             }
             catch(Exception ex)
             {
+                LogException(ex, "Blog/BlogDAL/UpdateBLog", "Exception", 1);
                 return false;
             }
             finally
@@ -320,10 +336,12 @@ namespace ModuleBlog.DAL
             }
             catch (SqlException ex)
             {
+                LogException(ex, "Blog/BlogDAL/PromoteBlog", "SqlException", 1);
                 return false;
             }
             catch(Exception ex)
             {
+                LogException(ex, "Blog/BlogDAL/PromoteBlog", "Exception", 1);
                 con.Close();
                 return false;
             }
@@ -342,10 +360,12 @@ namespace ModuleBlog.DAL
             }
             catch (SqlException ex)
             {
+                LogException(ex, "Blog/BlogDAL/DeleteBlog", "SqlException", 1);
                 return false;
             }
             catch(Exception ex)
             {
+                LogException(ex, "Blog/BlogDAL/DeleteBlog", "Exception", 1);
                 con.Close();
                 return false;
             }

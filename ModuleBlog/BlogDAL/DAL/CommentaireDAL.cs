@@ -41,10 +41,12 @@ namespace ModuleBlog.DAL
             }
             catch (SqlException ex)
             {
+                LogException(ex, "Blog/CommentaireDAL/GetCommentaires", "SqlException", 1);
                 return null;
             }
             catch(Exception ex)
             {
+                LogException(ex, "Blog/CommentaireDAL/GetCommentaires", "Exception", 1);
                 return null;
             }
             finally
@@ -80,10 +82,12 @@ namespace ModuleBlog.DAL
             }
             catch (SqlException ex)
             {
+                LogException(ex, "Blog/CommentaireDAL/GetCommentaireById", "SqlException", 1);
                 return null;
             }
             catch(Exception ex)
             {
+                LogException(ex, "Blog/CommentaireDAL/GetCommentaireById", "Exception", 1);
                 return null;
             }
             finally
@@ -105,10 +109,12 @@ namespace ModuleBlog.DAL
             }
             catch (SqlException ex)
             {
+                LogException(ex, "Blog/CommentaireDAL/AddCommentaire", "SqlException", 1);
                 return false;
             }
             catch(Exception ex)
             {
+                LogException(ex, "Blog/CommentaireDAL/AddCommentaire", "Exception", 1);
                 return false;
             }
             finally
@@ -130,10 +136,12 @@ namespace ModuleBlog.DAL
             }
             catch (SqlException ex)
             {
+                LogException(ex, "Blog/CommentaireDAL/UpdateCommentaire", "SqlException", 1);
                 return false;
             }
             catch(Exception ex)
             {
+                LogException(ex, "Blog/CommentaireDAL/UpdateCommentaire", "Exception", 1);
                 return false;
             }
             finally
@@ -152,10 +160,12 @@ namespace ModuleBlog.DAL
             }
             catch (SqlException ex)
             {
+                LogException(ex, "Blog/CommentaireDAL/ReportCommentaire", "SqlException", 1);
                 return false;
             }
             catch(Exception ex)
             {
+                LogException(ex, "Blog/CommentaireDAL/ReportCommentaire", "Exception", 1);
                 return false;
             }
             finally
@@ -173,10 +183,12 @@ namespace ModuleBlog.DAL
             }
             catch (SqlException ex)
             {
+                LogException(ex, "Blog/CommentaireDAL/DeleteCommentaire", "SqlException", 1);
                 return false;
             }
             catch(Exception ex)
             {
+                LogException(ex, "Blog/CommentaireDAL/DeleteCommentaire", "Exception", 1);
                 return false;
             }
             finally

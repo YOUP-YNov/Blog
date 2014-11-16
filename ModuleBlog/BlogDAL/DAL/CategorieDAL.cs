@@ -41,14 +41,17 @@ namespace ModuleBlog.DAL
             }
             catch (SqlException SqlE)
             {
+                LogException(SqlE, "Blog/CategorieDAL/GetCategories", "SqlException", 1);
                 return null;
             }
             catch (FormatException formatE)
             {
+                LogException(formatE, "Blog/CategorieDAL/GetCategories", "FormatException", 1);
                 return null;
             }
             catch (Exception ex)
             {
+                LogException(ex, "Blog/CategorieDAL/GetCategories", "Exception", 1);
                 return null;
             }
             finally

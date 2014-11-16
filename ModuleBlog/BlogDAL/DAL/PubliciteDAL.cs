@@ -46,10 +46,12 @@ namespace ModuleBlog.DAL
             }
             catch (SqlException ex)
             {
+                LogException(ex, "Blog/PubliciteDAL/GetAdByBlogId", "SqlException", 1);
                 return null;
             }
             catch(Exception ex)
             {
+                LogException(ex, "Blog/PubliciteDAL/GetAdByBlogId", "Exception", 1);
                 return null;
             }
             finally
@@ -77,10 +79,12 @@ namespace ModuleBlog.DAL
             }
             catch (SqlException ex)
             {
+                LogException(ex, "Blog/PubliciteDAL/AddAd", "SqlException", 1);
                 return false;
             }
             catch (Exception ex)
             {
+                LogException(ex, "Blog/PubliciteDAL/AddAd", "Exception", 1);
                 return false;
             }
             finally
@@ -108,10 +112,12 @@ namespace ModuleBlog.DAL
             }
             catch (SqlException ex)
             {
+                LogException(ex, "Blog/PubliciteDAL/UpdateAd", "SqlException", 1);
                 return false;
             }
             catch(Exception ex)
             {
+                LogException(ex, "Blog/PubliciteDAL/UpdateAd", "Exception", 1);
                 return false;
             }
             finally

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Logger;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -15,6 +16,7 @@ namespace BlogDAL.DAL
         internal SqlDataAdapter da;
         internal DataSet ds;
         internal string strcon = Connector.ConnectionString;
+        internal string loggerUrl = "http://loggerasp.azurewebsites.net/";
 
         public ControllerDAL()
         {
@@ -36,6 +38,11 @@ namespace BlogDAL.DAL
             da = new SqlDataAdapter(cmd);
             con.Open();
             da.Fill(ds);
+        }
+
+        public void LogException(Exception ex, string path, string message, int priority)
+        {
+            new LErreur(ex, path, message, priority).Save(loggerUrl);
         }
     }
 }
