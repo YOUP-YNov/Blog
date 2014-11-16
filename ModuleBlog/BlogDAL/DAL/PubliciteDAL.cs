@@ -1,4 +1,5 @@
 ﻿using BlogDAL.DAL;
+using Logger;
 using ModuleBlog.DAL.Models;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,7 @@ namespace ModuleBlog.DAL
         SqlDataAdapter da;
         DataSet ds;
         string strcon = Connector.ConnectionString;
+        string loggerUrl = "http://loggerasp.azurewebsites.net/";
 
         public PubliciteDAL()
         {
@@ -63,12 +65,14 @@ namespace ModuleBlog.DAL
                 catch(Exception ex)
                 {
                     con.Close();
-                    throw ex;
+                    new LErreur(ex, "Blog/PubliciteDAL/GetAdById", "Interraction avec la BDD", 1).Save(loggerUrl);
+                    return null;
                 }
             }
             catch (SqlException ex)
             {
-                throw ex;
+                new LErreur(ex, "Blog/PubliciteDAL/GetAdById", "Connexion à la BDD", 3).Save(loggerUrl);
+                return null;
             }
         }
 
@@ -101,11 +105,13 @@ namespace ModuleBlog.DAL
                 catch (Exception ex)
                 {
                     con.Close();
+                    new LErreur(ex, "Blog/PubliciteDAL/AddAd", "Interraction avec la BDD", 1).Save(loggerUrl);
                     return false;
                 }
             }
             catch (SqlException ex)
             {
+                new LErreur(ex, "Blog/PubliciteDAL/AddAd", "Connexion à la BDD", 3).Save(loggerUrl);
                 return false;
             }
         }
@@ -138,11 +144,13 @@ namespace ModuleBlog.DAL
                 catch(Exception ex)
                 {
                     con.Close();
+                    new LErreur(ex, "Blog/PubliciteDAL/UpdateAd", "Interraction avec la BDD", 1).Save(loggerUrl);
                     return false;
                 }
             }
             catch (SqlException ex)
             {
+                new LErreur(ex, "Blog/PubliciteDAL/UpdateAd", "Connexion à la BDD", 3).Save(loggerUrl);
                 return false;
             }
         }

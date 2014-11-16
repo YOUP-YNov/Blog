@@ -7,6 +7,7 @@ using System.Data.SqlClient;
 using System.Configuration;
 using ModuleBlog.DAL.Models;
 using BlogDAL.DAL;
+using Logger;
 
 
 namespace ModuleBlog.DAL
@@ -14,6 +15,7 @@ namespace ModuleBlog.DAL
     public class ArticleDAL
     {
         string strcon = Connector.ConnectionString;
+        string loggerUrl = "http://loggerasp.azurewebsites.net/";
         SqlCommand cmd;
         SqlConnection con;
         SqlDataAdapter da;
@@ -93,13 +95,15 @@ namespace ModuleBlog.DAL
                 }
                 catch(Exception ex)
                {
-                   con.Close();
-                   throw ex;
+                    con.Close();
+                    new LErreur(ex, "Blog/ArticleDAL/GetArticles", "Interraction avec la BDD", 1).Save(loggerUrl);
+                    return null;
                }
             }
             catch (SqlException ex)
             {
-                throw ex;
+                new LErreur(ex, "Blog/ArticleDAL/GetArticles", "Ouverture de la connexion à la BDD", 3).Save(loggerUrl);
+                return null;
             }
         }
 
@@ -171,12 +175,14 @@ namespace ModuleBlog.DAL
                 catch(Exception ex)
                 {
                     con.Close();
-                    throw ex;
+                    new LErreur(ex, "Blog/ArticleDAL/GetArticleById", "Interraction avec la BDD", 1).Save(loggerUrl);
+                    return null;
                 }
             }
             catch (SqlException ex)
             {
-                throw ex;
+                new LErreur(ex, "Blog/ArticleDAL/GetArticleById", "Connexion à la BDD", 3).Save(loggerUrl);
+                return null;
             }
         }
 
@@ -207,11 +213,13 @@ namespace ModuleBlog.DAL
                 catch(Exception ex)
                 {
                     con.Close();
+                    new LErreur(ex, "Blog/ArticleDAL/LikeArticle", "Interraction avec la BDD", 1).Save(loggerUrl);
                     return false;
                 }
             }
             catch (SqlException ex)
             {
+                new LErreur(ex, "Blog/ArticleDAL/LikeArticle", "Connexion à la BDD", 3).Save(loggerUrl);
                 return false;
             }
         }
@@ -243,11 +251,13 @@ namespace ModuleBlog.DAL
                 catch(Exception ex)
                 {
                     con.Close();
+                    new LErreur(ex, "Blog/ArticleDAL/DislikeArticle", "Interraction avec la BDD", 1).Save(loggerUrl);
                     return false;
                 }
             }
             catch (SqlException ex)
             {
+                new LErreur(ex, "Blog/ArticleDAL/DislikeArticle", "Connexion à la BDD", 3).Save(loggerUrl);
                 return false;
             }
         }
@@ -296,11 +306,13 @@ namespace ModuleBlog.DAL
                 catch(Exception ex)
                 {
                     con.Close();
+                    new LErreur(ex, "Blog/ArticleDAL/UpdateArticle", "Interraction avec la BDD", 1).Save(loggerUrl);
                     return false;
                 }
             }
             catch (SqlException ex)
             {
+                new LErreur(ex, "Blog/ArticleDAL/UpdateArticle", "Connexion à la BDD", 1).Save(loggerUrl);
                 return false;
             }
         }
@@ -347,11 +359,13 @@ namespace ModuleBlog.DAL
                 catch(Exception ex)
                 {
                     con.Close();
+                    new LErreur(ex, "Blog/ArticleDAL/AddArticle", "Interraction avec la BDD", 1).Save(loggerUrl);
                     return ex.Message;
                 }
             }
             catch (SqlException ex)
             {
+                new LErreur(ex, "Blog/ArticleDAL/AddArticle", "Connexion à la BDD", 3).Save(loggerUrl);
                 return ex.Message;
             }
         }
@@ -381,11 +395,13 @@ namespace ModuleBlog.DAL
                 catch(Exception ex)
                 {
                     con.Close();
+                    new LErreur(ex, "Blog/ArticleDAL/AddHashTag", "Interraction avec la BDD", 1).Save(loggerUrl);
                     throw ex;
                 }
             }
             catch (SqlException ex)
-            { 
+            {
+                new LErreur(ex, "Blog/ArticleDAL/AddHashTag", "Connexion à la BDD", 3).Save(loggerUrl);
                 throw ex;
             }
         }
@@ -416,11 +432,13 @@ namespace ModuleBlog.DAL
                 catch(Exception ex)
                 {
                     con.Close();
+                    new LErreur(ex, "Blog/ArticleDAL/DeleteArticle", "Interraction avec la BDD", 1).Save(loggerUrl);
                     return false;
                 }
             }
             catch (SqlException ex)
             {
+                new LErreur(ex, "Blog/ArticleDAL/DeleteArticle", "Connexion à la BDD", 3).Save(loggerUrl);
                 return false;
             }
         }
@@ -455,11 +473,13 @@ namespace ModuleBlog.DAL
                 catch (Exception ex)
                 {
                     con.Close();
+                    new LErreur(ex, "Blog/ArticleDAL/DeleteArticleForReal", "Interraction avec la BDD", 1).Save(loggerUrl);
                     return ex.Message;
                 }
             }
             catch (SqlException ex)
             {
+                new LErreur(ex, "Blog/ArticleDAL/DeleteArticleForReal", "Connexion à la BDD", 3).Save(loggerUrl);
                 return ex.Message;
             }
         }

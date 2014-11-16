@@ -13,6 +13,7 @@ namespace ModuleBlog.App_Start
         {
             CreateMapBlog();
             CreateMapPublicite();
+            CreateMapCommentaire();
         }
         private static void CreateMapBlog()
         {

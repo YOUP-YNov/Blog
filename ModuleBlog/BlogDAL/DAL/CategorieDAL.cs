@@ -7,6 +7,7 @@ using System.Data.SqlClient;
 using System.Configuration;
 using ModuleBlog.DAL.Models;
 using BlogDAL.DAL;
+using Logger;
 
 
 namespace ModuleBlog.DAL
@@ -37,6 +38,7 @@ namespace ModuleBlog.DAL
         #endregion
 
         string strcon = Connector.ConnectionString;
+        string loggerUrl = "http://loggerasp.azurewebsites.net/";
         /// <summary>
         /// Constructeur de la classe
         /// </summary>
@@ -87,12 +89,14 @@ namespace ModuleBlog.DAL
                 catch(Exception ex)
                 {
                     con.Close();
-                    throw ex;
+                    new LErreur(ex, "Blog/CategorieDAL/GetCategories", "Interraction avec la BDD", 1).Save(loggerUrl);
+                    return null;
                 }
             }
             catch (SqlException ex)
             {
-                throw ex;
+                new LErreur(ex, "Blog/CategorieDAL/GetCategories", "Connexion à la BDD", 3).Save(loggerUrl);
+                return null;
             }
         }
     }

@@ -7,6 +7,7 @@ using System.Data.SqlClient;
 using System.Configuration;
 using ModuleBlog.DAL.Models;
 using BlogDAL.DAL;
+using Logger;
 
 
 namespace ModuleBlog.DAL
@@ -35,6 +36,8 @@ namespace ModuleBlog.DAL
         /// </summary>
         DataSet ds; 
         #endregion
+
+        string loggerUrl = "http://loggerasp.azurewebsites.net/";
 
         /// <summary>
         /// Constructeur de la classe
@@ -65,23 +68,33 @@ namespace ModuleBlog.DAL
             try
             {
                 con.Open();
-                da.Fill(ds);
-                Theme tDao = new Theme();
-                foreach (DataTable table in ds.Tables)
+                try
                 {
-                    foreach (DataRow dr in table.Rows)
+                    da.Fill(ds);
+                    Theme tDao = new Theme();
+                    foreach (DataTable table in ds.Tables)
                     {
-                        tDao.Theme_id = int.Parse(dr["Theme_id"].ToString());
-                        tDao.Couleur = dr["Couleur"].ToString();
-                        tDao.ImageChemin = dr["ImageChemin"].ToString();
+                        foreach (DataRow dr in table.Rows)
+                        {
+                            tDao.Theme_id = int.Parse(dr["Theme_id"].ToString());
+                            tDao.Couleur = dr["Couleur"].ToString();
+                            tDao.ImageChemin = dr["ImageChemin"].ToString();
+                        }
                     }
-                }
 
-                con.Close();
-                return tDao;
+                    con.Close();
+                    return tDao;
+                }
+                catch(Exception ex)
+                {
+                    con.Close();
+                    new LErreur(ex, "Blog/ThemeDAL/GetThemeById", "Interraction avec la BDD", 1).Save(loggerUrl);
+                    return null;
+                }
             }
             catch (SqlException ex)
             {
+                new LErreur(ex, "Blog/ThemeDAL/GetThemeById", "Connexion à la BDD", 3).Save(loggerUrl);
                 return null;
             }
         }
@@ -100,26 +113,36 @@ namespace ModuleBlog.DAL
             try
             {
                 con.Open();
-                da.Fill(ds);
-                List<Theme> listDao = new List<Theme>();
-                Theme tDao;
-                foreach (DataTable table in ds.Tables)
+                try
                 {
-                    foreach (DataRow dr in table.Rows)
+                    da.Fill(ds);
+                    List<Theme> listDao = new List<Theme>();
+                    Theme tDao;
+                    foreach (DataTable table in ds.Tables)
                     {
-                        tDao = new Theme();
-                        tDao.Theme_id = int.Parse(dr["Theme_id"].ToString());
-                        tDao.Couleur = dr["Couleur"].ToString();
-                        tDao.ImageChemin = dr["ImageChemin"].ToString();
-                        listDao.Add(tDao);
+                        foreach (DataRow dr in table.Rows)
+                        {
+                            tDao = new Theme();
+                            tDao.Theme_id = int.Parse(dr["Theme_id"].ToString());
+                            tDao.Couleur = dr["Couleur"].ToString();
+                            tDao.ImageChemin = dr["ImageChemin"].ToString();
+                            listDao.Add(tDao);
+                        }
                     }
-                }
 
-                con.Close();
-                return listDao;
+                    con.Close();
+                    return listDao;
+                }
+                catch(Exception ex)
+                {
+                    con.Close();
+                    new LErreur(ex, "Blog/ThemeDAL/GetThemes", "Interraction avec la BDD", 1).Save(loggerUrl);
+                    return null;
+                }
             }
             catch (SqlException ex)
             {
+                new LErreur(ex, "Blog/ThemeDAL/GetThemes", "Connexion à la BDD", 3).Save(loggerUrl);
                 return null;
             }
         }

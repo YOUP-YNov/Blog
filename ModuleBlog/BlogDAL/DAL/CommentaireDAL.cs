@@ -7,6 +7,7 @@ using System.Data.SqlClient;
 using System.Configuration;
 using ModuleBlog.DAL.Models;
 using BlogDAL.DAL;
+using Logger;
 
 namespace ModuleBlog.DAL
 {
@@ -18,6 +19,7 @@ namespace ModuleBlog.DAL
         SqlDataAdapter da;
         DataSet ds;
         string strcon = Connector.ConnectionString;
+        string loggerUrl = "http://loggerasp.azurewebsites.net/";
 
 
         public CommentaireDAL()
@@ -48,11 +50,13 @@ namespace ModuleBlog.DAL
                 catch(Exception ex)
                 {
                     con.Close();
+                    new LErreur(ex, "Blog/CommentaireDAL/DeleteCommentaire", "Interraction avec la BDD", 1).Save(loggerUrl);
                     return false;
                 }
             }
             catch (SqlException ex)
             {
+                new LErreur(ex, "Blog/CommentaireDAL/DeleteCommentaire", "Connexion à la BDD", 3).Save(loggerUrl);
                 return false;
             }
         }
@@ -103,11 +107,13 @@ namespace ModuleBlog.DAL
                 catch(Exception ex)
                 {
                     con.Close();
-                    throw ex;
+                    new LErreur(ex, "Blog/CommentaireDAL/GetCommentaireById", "Interraction avec la BDD", 1).Save(loggerUrl);
+                    return null;
                 }
             }
             catch (SqlException ex)
             {
+                new LErreur(ex, "Blog/CommentaireDAL/GetCommentaireById", "Connexion à la BDD", 3).Save(loggerUrl);
                 throw ex;
             }
         }
@@ -158,12 +164,14 @@ namespace ModuleBlog.DAL
                 catch(Exception ex)
                 {
                     con.Close();
-                    throw ex;
+                    new LErreur(ex, "Blog/CommentaireDAL/GetCommentaires", "Interraction avec la BDD", 1).Save(loggerUrl);
+                    return null;
                 }
             }
             catch (SqlException ex)
             {
-                throw ex;
+                new LErreur(ex, "Blog/CommentaireDAL/GetCommentaires", "Connexion à la BDD", 3).Save(loggerUrl);
+                return null;
             }
 
         }
@@ -196,11 +204,13 @@ namespace ModuleBlog.DAL
                 catch(Exception ex)
                 {
                     con.Close();
+                    new LErreur(ex, "Blog/CommentaireDAL/AddCommentaire", "Interraction avec la BDD", 1).Save(loggerUrl);
                     return false;
                 }
             }
             catch (SqlException ex)
             {
+                new LErreur(ex, "Blog/CommentaireDAL/AddCommentaire", "Connexion à la BDD", 3).Save(loggerUrl);
                 return false;
             }
         }
@@ -231,11 +241,13 @@ namespace ModuleBlog.DAL
                 catch(Exception ex)
                 {
                     con.Close();
+                    new LErreur(ex, "Blog/CommentaireDAL/UpdateCommentaire", "Interraction avec la BDD", 1).Save(loggerUrl);
                     return false;
                 }
             }
             catch (SqlException ex)
             {
+                new LErreur(ex, "Blog/CommentaireDAL/UpdateCommentaire", "Connexion à la BDD", 3).Save(loggerUrl);
                 return false;
             }
         }
@@ -267,11 +279,13 @@ namespace ModuleBlog.DAL
                 catch(Exception ex)
                 {
                     con.Close();
+                    new LErreur(ex, "Blog/CommentaireDAL/ReportCommentaire", "Interraction avec la BDD", 1).Save(loggerUrl);
                     return false;
                 }
             }
             catch (SqlException ex)
             {
+                new LErreur(ex, "Blog/CommentaireDAL/ReportCommentaire", "Connexion à la BDD", 3).Save(loggerUrl);
                 return false;
             }
         }

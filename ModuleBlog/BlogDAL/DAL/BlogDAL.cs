@@ -7,6 +7,7 @@ using System.Data.SqlClient;
 using System.Configuration;
 using ModuleBlog.DAL.Models;
 using BlogDAL.DAL;
+using Logger;
 
 
 namespace ModuleBlog.DAL
@@ -15,6 +16,7 @@ namespace ModuleBlog.DAL
     {
 
         string strcon = Connector.ConnectionString;
+        string loggerUrl = "http://loggerasp.azurewebsites.net/";
         SqlCommand cmd;
         SqlConnection con;
         SqlDataAdapter da;
@@ -42,18 +44,20 @@ namespace ModuleBlog.DAL
                 con.Open();
                 try
                 {
-                da.Fill(ds);
-                con.Close();
-                return (ds.Tables[0].Rows[0]["Resultat"].ToString() == "OK");
-            }
+                    da.Fill(ds);
+                    con.Close();
+                    return (ds.Tables[0].Rows[0]["Resultat"].ToString() == "OK");
+                }
                 catch(Exception ex)
                 {
                     con.Close();
+                    new LErreur(ex, "Blog/BlogDAL/DeleteBlog", "Interraction avec la BDD", 1).Save(loggerUrl);
                     return false;
                 }
             }
             catch (SqlException ex)
             {
+                new LErreur(ex, "Blog/BlogDAL/DeleteBlog", "Connexion à la BDD", 3).Save(loggerUrl);
                 return false;
             }
         }
@@ -101,12 +105,14 @@ namespace ModuleBlog.DAL
                 catch(Exception ex)
                 {
                     con.Close();
-                    throw ex;
+                    new LErreur(ex, "Blog/BlogDAL/GetBlogById", "Interraction avec la BDD", 1).Save(loggerUrl);
+                    return null;
                 }
             }
             catch (SqlException ex)
             {
-                throw ex;
+                new LErreur(ex, "Blog/BlogDAL/GetBlogById", "Connexion à la BDD", 3).Save(loggerUrl);
+                return null;
             }
         }
 
@@ -128,39 +134,41 @@ namespace ModuleBlog.DAL
                 con.Open();
                 try
                 {
-                da.Fill(ds);
-                List<Blog> listBDao = new List<Blog>();
-                Blog bDao;
+                    da.Fill(ds);
+                    List<Blog> listBDao = new List<Blog>();
+                    Blog bDao;
 
-                foreach (DataTable table in ds.Tables)
-                {
-                    foreach (DataRow dr in table.Rows)
+                    foreach (DataTable table in ds.Tables)
                     {
-                        bDao = new Blog();
-                        bDao.Blog_id = int.Parse(dr["Blog_id"].ToString());
-                        bDao.Utilisateur_id = int.Parse(dr["Utilisateur_id"].ToString());
-                        bDao.Categorie_id = int.Parse(dr["Categorie_id"].ToString());
-                        bDao.TitreBlog = dr["TitreBlog"].ToString();
-                        bDao.DateCreation = DateTime.Parse(dr["DateCreation"].ToString());
-                        bDao.Actif = bool.Parse(dr["Actif"].ToString());
-                        bDao.Promotion = bool.Parse(dr["Promotion"].ToString());
-                        bDao.Theme_id = int.Parse(dr["Theme_id"].ToString());
-                        bDao.Theme = GetThemeById(bDao.Theme_id);
-                        listBDao.Add(bDao);
+                        foreach (DataRow dr in table.Rows)
+                        {
+                            bDao = new Blog();
+                            bDao.Blog_id = int.Parse(dr["Blog_id"].ToString());
+                            bDao.Utilisateur_id = int.Parse(dr["Utilisateur_id"].ToString());
+                            bDao.Categorie_id = int.Parse(dr["Categorie_id"].ToString());
+                            bDao.TitreBlog = dr["TitreBlog"].ToString();
+                            bDao.DateCreation = DateTime.Parse(dr["DateCreation"].ToString());
+                            bDao.Actif = bool.Parse(dr["Actif"].ToString());
+                            bDao.Promotion = bool.Parse(dr["Promotion"].ToString());
+                            bDao.Theme_id = int.Parse(dr["Theme_id"].ToString());
+                            bDao.Theme = GetThemeById(bDao.Theme_id);
+                            listBDao.Add(bDao);
+                        }
                     }
+                    con.Close();
+                    return listBDao;
                 }
-                con.Close();
-                return listBDao;
-            }
                 catch(Exception ex)
                 {
                     con.Close();
-                    throw ex;
+                    new LErreur(ex, "Blog/BlogDAL/GetBlogsByCategory", "Interraction avec la BDD", 1).Save(loggerUrl);
+                    return null;
                 }
             }
             catch (SqlException ex)
             {
-                throw ex;
+                new LErreur(ex, "Blog/BlogDAL/GetBlogsByCategory", "Connexion à la BDD", 3).Save(loggerUrl);
+                return null;
             }
         }
         public List<Blog> GetBlogs()
@@ -179,39 +187,41 @@ namespace ModuleBlog.DAL
                 con.Open();
                 try
                 {
-                da.Fill(ds);
-                List<Blog> listBDao = new List<Blog>();
-                Blog bDao;
-                foreach (DataTable table in ds.Tables)
-                {
-                    foreach (DataRow dr in table.Rows)
+                    da.Fill(ds);
+                    List<Blog> listBDao = new List<Blog>();
+                    Blog bDao;
+                    foreach (DataTable table in ds.Tables)
                     {
-                        bDao = new Blog();
-                        bDao.Blog_id = int.Parse(dr["Blog_id"].ToString());
-                        bDao.Utilisateur_id = int.Parse(dr["Utilisateur_id"].ToString());
-                        bDao.Categorie_id = int.Parse(dr["Categorie_id"].ToString());
-                        bDao.TitreBlog = dr["TitreBlog"].ToString();
-                        bDao.DateCreation = DateTime.Parse(dr["DateCreation"].ToString());
-                        bDao.Actif = bool.Parse(dr["Actif"].ToString());
-                        bDao.Promotion = bool.Parse(dr["Promotion"].ToString());
-                        bDao.Theme_id = int.Parse(dr["Theme_id"].ToString());
-                        bDao.Theme = GetThemeById(bDao.Theme_id);
-                        listBDao.Add(bDao);
+                        foreach (DataRow dr in table.Rows)
+                        {
+                            bDao = new Blog();
+                            bDao.Blog_id = int.Parse(dr["Blog_id"].ToString());
+                            bDao.Utilisateur_id = int.Parse(dr["Utilisateur_id"].ToString());
+                            bDao.Categorie_id = int.Parse(dr["Categorie_id"].ToString());
+                            bDao.TitreBlog = dr["TitreBlog"].ToString();
+                            bDao.DateCreation = DateTime.Parse(dr["DateCreation"].ToString());
+                            bDao.Actif = bool.Parse(dr["Actif"].ToString());
+                            bDao.Promotion = bool.Parse(dr["Promotion"].ToString());
+                            bDao.Theme_id = int.Parse(dr["Theme_id"].ToString());
+                            bDao.Theme = GetThemeById(bDao.Theme_id);
+                            listBDao.Add(bDao);
+                        }
                     }
-                }
 
-                con.Close();
-                return listBDao;
-            }
+                    con.Close();
+                    return listBDao;
+                }
                 catch(Exception ex)
                 {
                     con.Close();
-                    throw ex;
+                    new LErreur(ex, "Blog/BlogDAL/GetBlogs", "Interraction avec la BDD", 1).Save(loggerUrl);
+                    return null;
                 }
             }
             catch (SqlException ex)
             {
-                throw ex;
+                new LErreur(ex, "Blog/BlogDAL/GetBlogs", "Connexion à la BDD", 3).Save(loggerUrl);
+                return null;
             }
         }
 
@@ -234,38 +244,40 @@ namespace ModuleBlog.DAL
                 con.Open();
                 try
                 {
-                da.Fill(ds);
-                List<Blog> listBDao = new List<Blog>();
-                Blog bDao;
+                    da.Fill(ds);
+                    List<Blog> listBDao = new List<Blog>();
+                    Blog bDao;
 
-                foreach (DataTable table in ds.Tables)
-                {
-                    foreach (DataRow dr in table.Rows)
+                    foreach (DataTable table in ds.Tables)
                     {
-                        bDao = new Blog();
-                        bDao.Blog_id = int.Parse(dr["Blog_id"].ToString());
-                        bDao.Utilisateur_id = int.Parse(dr["Utilisateur_id"].ToString());
-                        bDao.Categorie_id = int.Parse(dr["Categorie_id"].ToString());
-                        bDao.TitreBlog = dr["TitreBlog"].ToString();
-                        bDao.DateCreation = DateTime.Parse(dr["DateCreation"].ToString());
-                        bDao.Actif = bool.Parse(dr["Actif"].ToString());
-                        bDao.Promotion = bool.Parse(dr["Promotion"].ToString());
-                        bDao.Theme_id = int.Parse(dr["Theme_id"].ToString());
-                        listBDao.Add(bDao);
+                        foreach (DataRow dr in table.Rows)
+                        {
+                            bDao = new Blog();
+                            bDao.Blog_id = int.Parse(dr["Blog_id"].ToString());
+                            bDao.Utilisateur_id = int.Parse(dr["Utilisateur_id"].ToString());
+                            bDao.Categorie_id = int.Parse(dr["Categorie_id"].ToString());
+                            bDao.TitreBlog = dr["TitreBlog"].ToString();
+                            bDao.DateCreation = DateTime.Parse(dr["DateCreation"].ToString());
+                            bDao.Actif = bool.Parse(dr["Actif"].ToString());
+                            bDao.Promotion = bool.Parse(dr["Promotion"].ToString());
+                            bDao.Theme_id = int.Parse(dr["Theme_id"].ToString());
+                            listBDao.Add(bDao);
+                        }
                     }
+                    con.Close();
+                    return listBDao;
                 }
-                con.Close();
-                return listBDao;
-            }
                 catch(Exception ex)
                 {
                     con.Close();
-                    throw ex;
+                    new LErreur(ex, "Blog/BlogDAL/GetBlogsBySearch", "Interraction avec la BDD", 1).Save(loggerUrl);
+                    return null;
                 }
             }
             catch (SqlException ex)
             {
-                throw ex;
+                new LErreur(ex, "Blog/BlogDAL/GetBlogsBySearch", "Connexion à la BDD", 3).Save(loggerUrl);
+                return null;
             }
            
         }
@@ -287,38 +299,40 @@ namespace ModuleBlog.DAL
                 con.Open();
                 try
                 {
-                da.Fill(ds);
-                List<Blog> listBDao = new List<Blog>();
-                Blog bDao;
+                    da.Fill(ds);
+                    List<Blog> listBDao = new List<Blog>();
+                    Blog bDao;
 
-                foreach (DataTable table in ds.Tables)
-                {
-                    foreach (DataRow dr in table.Rows)
+                    foreach (DataTable table in ds.Tables)
                     {
-                        bDao = new Blog();
-                        bDao.Blog_id = int.Parse(dr["Blog_id"].ToString());
-                        bDao.Utilisateur_id = int.Parse(dr["Utilisateur_id"].ToString());
-                        bDao.Categorie_id = int.Parse(dr["Categorie_id"].ToString());
-                        bDao.TitreBlog = dr["TitreBlog"].ToString();
-                        bDao.DateCreation = DateTime.Parse(dr["DateCreation"].ToString());
-                        bDao.Actif = bool.Parse(dr["Actif"].ToString());
-                        bDao.Promotion = bool.Parse(dr["Promotion"].ToString());
-                        bDao.Theme_id = int.Parse(dr["Theme_id"].ToString());
-                        listBDao.Add(bDao);
+                        foreach (DataRow dr in table.Rows)
+                        {
+                            bDao = new Blog();
+                            bDao.Blog_id = int.Parse(dr["Blog_id"].ToString());
+                            bDao.Utilisateur_id = int.Parse(dr["Utilisateur_id"].ToString());
+                            bDao.Categorie_id = int.Parse(dr["Categorie_id"].ToString());
+                            bDao.TitreBlog = dr["TitreBlog"].ToString();
+                            bDao.DateCreation = DateTime.Parse(dr["DateCreation"].ToString());
+                            bDao.Actif = bool.Parse(dr["Actif"].ToString());
+                            bDao.Promotion = bool.Parse(dr["Promotion"].ToString());
+                            bDao.Theme_id = int.Parse(dr["Theme_id"].ToString());
+                            listBDao.Add(bDao);
+                        }
                     }
+                    con.Close();
+                    return listBDao;
                 }
-                con.Close();
-                return listBDao;
-            }
                 catch(Exception ex)
                 {
                     con.Close();
-                    throw ex;
+                    new LErreur(ex, "Blog/BlogDAL/GetPromotedBlogs", "Interraction avec la BDD", 1).Save(loggerUrl);
+                    return null;
                 }
             }
             catch (SqlException ex)
             {
-                throw ex;
+                new LErreur(ex, "Blog/BlogDAL/GetPromotedBlogs", "Connexion à la BDD", 3).Save(loggerUrl);
+                return null;
             }
             
 
@@ -343,18 +357,20 @@ namespace ModuleBlog.DAL
                 con.Open();
                 try
                 {
-                da.Fill(ds);
-                con.Close();
-                return (ds.Tables[0].Rows[0]["Resultat"].ToString() == "OK");
-            }
+                    da.Fill(ds);
+                    con.Close();
+                    return (ds.Tables[0].Rows[0]["Resultat"].ToString() == "OK");
+                }
                 catch(Exception ex)
                 {
                     con.Close();
+                    new LErreur(ex, "Blog/BlogDAL/PromoteBlog", "Interraction avec la BDD", 1).Save(loggerUrl);
                     return false;
                 }
             }
             catch (SqlException ex)
             {
+                new LErreur(ex, "Blog/BlogDAL/PromoteBlog", "Connexion à la BDD", 3).Save(loggerUrl);
                 return false;
             }
         }
@@ -381,21 +397,23 @@ namespace ModuleBlog.DAL
                 con.Open();
                 try
                 {
-                da.Fill(ds);
-                con.Close();
-                if (string.Equals(ds.Tables[0].Rows[0]["Resultat"].ToString(), "OK"))
-                    return true;
-                else
-                    return false;
-            }
+                    da.Fill(ds);
+                    con.Close();
+                    if (string.Equals(ds.Tables[0].Rows[0]["Resultat"].ToString(), "OK"))
+                        return true;
+                    else
+                        return false;
+                }
                 catch(Exception ex)
                 {
                     con.Close();
+                    new LErreur(ex, "Blog/BlogDAL/UpdateBlog", "Interraction avec la BDD", 1).Save(loggerUrl);
                     return false;
                 }
             }
             catch (SqlException ex)
             {
+                new LErreur(ex, "Blog/BlogDAL/UpdateBlog", "Connexion à la BDD", 3).Save(loggerUrl);
                 return false;
             }
         }
@@ -422,18 +440,20 @@ namespace ModuleBlog.DAL
                 con.Open();
                 try
                 {
-                da.Fill(ds);
-                con.Close();
-                return (ds.Tables[0].Rows[0]["Resultat"].ToString() == "OK");
-            }
+                    da.Fill(ds);
+                    con.Close();
+                    return (ds.Tables[0].Rows[0]["Resultat"].ToString() == "OK");
+                }
                 catch(Exception ex)
                 {
                     con.Close();
+                    new LErreur(ex, "Blog/BlogDAL/AddBlog", "Interraction avec la BDD", 1).Save(loggerUrl);
                     return false;
                 }
             }
             catch (SqlException ex)
             {
+                new LErreur(ex, "Blog/BlogDAL/AddBlog", "Connexion à la BDD", 3).Save(loggerUrl);
                 return false;
             }
         }
@@ -458,30 +478,32 @@ namespace ModuleBlog.DAL
                     con.Open();
                 try
                 {
-                da.Fill(ds);
-                Theme tDao = new Theme();
+                    da.Fill(ds);
+                    Theme tDao = new Theme();
 
-                foreach (DataTable table in ds.Tables)
-                {
-                    foreach (DataRow dr in table.Rows)
+                    foreach (DataTable table in ds.Tables)
                     {
-                        tDao.Theme_id = int.Parse(dr["Theme_id"].ToString());
-                        tDao.Couleur = dr["Couleur"].ToString();
-                        tDao.ImageChemin = dr["ImageChemin"].ToString();
+                        foreach (DataRow dr in table.Rows)
+                        {
+                            tDao.Theme_id = int.Parse(dr["Theme_id"].ToString());
+                            tDao.Couleur = dr["Couleur"].ToString();
+                            tDao.ImageChemin = dr["ImageChemin"].ToString();
+                        }
                     }
+                    con.Close();
+                    return tDao;
                 }
-                con.Close();
-                return tDao;
-            }
                 catch(Exception ex)
                 {
                     con.Close();
-                    throw ex;
+                    new LErreur(ex, "Blog/BlogDAL/GetThemeById", "Interraction avec la BDD", 1).Save(loggerUrl);
+                    return null;
                 }
             }
             catch (SqlException ex)
             {
-                throw ex;
+                new LErreur(ex, "Blog/BlogDAL/GetThemeById", "Connexion à la BDD", 3).Save(loggerUrl);
+                return null;
             }
         }
 
@@ -528,12 +550,14 @@ namespace ModuleBlog.DAL
                 catch (Exception ex)
                 {
                     con.Close();
-                    throw ex;
+                    new LErreur(ex, "Blog/BlogDAL/GetBlogByUserId", "Interraction avec la BDD", 1).Save(loggerUrl);
+                    return null;
                 }
             }
             catch (SqlException ex)
             {
-                throw ex;
+                new LErreur(ex, "Blog/BlogDAL/GetBlogByUserId", "Connexion à la BDD", 3).Save(loggerUrl);
+                return null;
             }
         }
     }
