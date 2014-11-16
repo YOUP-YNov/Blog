@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using ModuleBlog.BLL;
-using ModuleBlog.BLL.Models;
-using ModuleBlog.Controllers.Models;
+using BLLModels = ModuleBlog.BLL.Models;
+using ControllersModels = ModuleBlog.Controllers.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +14,7 @@ namespace ModuleBlog.Controllers
     /// <summary>
     /// Contrôleur pour les catégories de blog
     /// </summary>
-    public class CategorieController : ApiController
+    public class CategorieController : MapperConverter
     {
         /// <summary>
         /// instance de la couche métiers des catégories
@@ -34,11 +34,11 @@ namespace ModuleBlog.Controllers
         /// Récupérer la liste des catégories
         /// </summary>
         /// <returns>liste des catégories</returns>
-        public IEnumerable<ModuleBlog.Controllers.Models.Categorie> Get()
+        [HttpGet, Route("api/Category")]
+        public IEnumerable<ControllersModels.Categorie> Get()
         {
-            IEnumerable<ModuleBlog.BLL.Models.Categorie> categoriesBll = categoryBLL.GetCategories();
-            Mapper.CreateMap<ModuleBlog.BLL.Models.Categorie, ModuleBlog.Controllers.Models.Categorie>();
-            IEnumerable<ModuleBlog.Controllers.Models.Categorie> categories = Mapper.Map<IEnumerable<ModuleBlog.BLL.Models.Categorie>, IEnumerable<ModuleBlog.Controllers.Models.Categorie>>(categoriesBll);
+            IEnumerable<BLLModels.Categorie> categoriesBll = categoryBLL.GetCategories();
+            IEnumerable<ControllersModels.Categorie> categories = Convert<IEnumerable<BLLModels.Categorie>, IEnumerable<ControllersModels.Categorie>>(categoriesBll);
             return categories;
         }
     }

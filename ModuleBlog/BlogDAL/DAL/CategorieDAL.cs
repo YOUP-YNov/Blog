@@ -7,7 +7,6 @@ using System.Data.SqlClient;
 using System.Configuration;
 using ModuleBlog.DAL.Models;
 using BlogDAL.DAL;
-using Logger;
 
 
 namespace ModuleBlog.DAL
@@ -15,88 +14,46 @@ namespace ModuleBlog.DAL
     /// <summary>
     /// Couche DAL des catégories des blogs
     /// </summary>
-    public class CategorieDAL
-    {
-        #region propriétés
-        //string strcon = Connector.ConnectionString;
-        /// <summary>
-        /// Objet permettant d'effecture des requêtes à la BDD
-        /// </summary>
-        SqlCommand cmd;
-        /// <summary>
-        /// Objet de gestion de la connexion à la BDD
-        /// </summary>
-        SqlConnection con;
-        /// <summary>
-        /// Objet Tableau recevant les données récupérées par la requête
-        /// </summary>
-        SqlDataAdapter da;
-        /// <summary>
-        /// Dataset que l'on rempli grâce au SqlDataAdapter permettant de naviguer entre les lignes et colonnes
-        /// </summary>
-        DataSet ds; 
-        #endregion
-
-        string strcon = Connector.ConnectionString;
-        string loggerUrl = "http://loggerasp.azurewebsites.net/";
-        /// <summary>
-        /// Constructeur de la classe
-        /// </summary>
-        public CategorieDAL()
-        {
-            //string strcon = @"User id =YoupDev;Password=youpD3VASP*;" +
-            //       @"Server=avip9np4yy.database.windows.net,1433;Database=YoupDev";
-            con = new SqlConnection(strcon);
-        }
-        
+    public class CategorieDAL : ControllerDAL
+    { 
         /// <summary>
         /// Récupération de la liste des catégories
         /// </summary>
         /// <returns></returns>
         public List<Categorie> GetCategories()
         {
-            ds = new DataSet();
-            
-            cmd = new SqlCommand();
-            cmd.CommandText = "BLOG_GetCategories";
-            cmd.CommandTimeout = 0;
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Connection = con;
-            da = new SqlDataAdapter(cmd);
-
             try
-            {
-                con.Open();
-                try
+            {                
+                FillData("BLOG_GetCategories", ref ds);                
+                List<Categorie> listCDao = new List<Categorie>();
+                Categorie cDao;
+                foreach (DataTable table in ds.Tables)
                 {
-                    da.Fill(ds);
-                    con.Close();
-                    List<Categorie> listCDao = new List<Categorie>();
-                    Categorie cDao;
-                    foreach (DataTable table in ds.Tables)
+                    foreach (DataRow dr in table.Rows)
                     {
-                        foreach (DataRow dr in table.Rows)
-                        {
-                            cDao = new Categorie();
-                            cDao.Categorie_id = int.Parse(dr["Categorie_id"].ToString());
-                            cDao.Libelle = dr["Libelle"].ToString();
-                            listCDao.Add(cDao);
-                        }
+                        cDao = new Categorie();
+                        cDao.Categorie_id = int.Parse(dr["Categorie_id"].ToString());
+                        cDao.Libelle = dr["Libelle"].ToString();
+                        listCDao.Add(cDao);
                     }
-
-                    return listCDao;
                 }
-                catch(Exception ex)
-                {
-                    con.Close();
-                    new LErreur(ex, "Blog/CategorieDAL/GetCategories", "Interraction avec la BDD", 1).Save(loggerUrl);
-                    return null;
-                }
+                return listCDao;
             }
-            catch (SqlException ex)
+            catch (SqlException SqlE)
             {
-                new LErreur(ex, "Blog/CategorieDAL/GetCategories", "Connexion à la BDD", 3).Save(loggerUrl);
                 return null;
+            }
+            catch (FormatException formatE)
+            {
+                return null;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+            finally
+            {
+                con.Close();
             }
         }
     }

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using ModuleBlog.BLL;
-using ModuleBlog.BLL.Models;
-using ModuleBlog.Controllers.Models;
+using BLLModels = ModuleBlog.BLL.Models;
+using ControllersModels = ModuleBlog.Controllers.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +14,7 @@ namespace ModuleBlog.Controllers
     /// <summary>
     /// Contrôleur pour les themes de blog
     /// </summary>
-    public class ThemeController : ApiController
+    public class ThemeController : MapperConverter
     {
         /// <summary>
         /// instance de la couche métiers des thèmes
@@ -35,12 +35,12 @@ namespace ModuleBlog.Controllers
         /// </summary>
         /// <param name="themeId">identifiant du thème</param>
         /// <returns>thème correspondant</returns>
-        public ModuleBlog.Controllers.Models.Theme Get(int themeId)
+        public ControllersModels.Theme Get(int themeId)
         {
             if (themeId == 0)
                 return null;
-            ModuleBlog.BLL.Models.Theme themeBll = themeBLL.GetThemeById(themeId);
-            ModuleBlog.Controllers.Models.Theme theme = Mapper.Map<ModuleBlog.BLL.Models.Theme, ModuleBlog.Controllers.Models.Theme>(themeBll);
+            BLLModels.Theme themeBll = themeBLL.GetThemeById(themeId);
+            ControllersModels.Theme theme = Convert<BLLModels.Theme, ControllersModels.Theme>(themeBll);
             return theme;
         }
 
@@ -50,10 +50,10 @@ namespace ModuleBlog.Controllers
         /// </summary>
         /// <param name="themeId">identifiant du thème</param>
         /// <returns>thème correspondant</returns>
-        public IEnumerable<ModuleBlog.Controllers.Models.Theme> Get()
+        public IEnumerable<ControllersModels.Theme> Get()
         {
-            IEnumerable<ModuleBlog.BLL.Models.Theme> themeBll = themeBLL.GetThemes();
-            IEnumerable<ModuleBlog.Controllers.Models.Theme> theme = Mapper.Map<IEnumerable<ModuleBlog.BLL.Models.Theme>, IEnumerable<ModuleBlog.Controllers.Models.Theme>>(themeBll);
+            IEnumerable<BLLModels.Theme> themeBll = themeBLL.GetThemes();
+            IEnumerable<ControllersModels.Theme> theme = Convert<IEnumerable<BLLModels.Theme>, IEnumerable<ControllersModels.Theme>>(themeBll);
             return theme;
         }
     }

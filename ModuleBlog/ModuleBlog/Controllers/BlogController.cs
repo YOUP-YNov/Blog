@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using ModuleBlog.BLL;
-using ModuleBlog.BLL.Models;
-using ModuleBlog.Controllers.Models;
+using BLLModels = ModuleBlog.BLL.Models;
+using ControllersModels = ModuleBlog.Controllers.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +11,7 @@ using System.Web.Http;
 
 namespace ModuleBlog.Controllers
 {
-    public class BlogController : ApiController
+    public class BlogController : MapperConverter
     {
         private BlogBLL blogBLL;
 
@@ -20,45 +20,18 @@ namespace ModuleBlog.Controllers
             blogBLL = new BlogBLL();
         }
 
-        #region Map
-        private IEnumerable<ModuleBlog.Controllers.Models.Blog> Map(IEnumerable<ModuleBlog.BLL.Models.Blog> blogsBLL)
-        {
-            if (blogsBLL != null)
-                return Mapper.Map<IEnumerable<ModuleBlog.BLL.Models.Blog>, List<ModuleBlog.Controllers.Models.Blog>>(blogsBLL);
-            else
-                return null;
-        }
-
-        private ModuleBlog.Controllers.Models.Blog Map(ModuleBlog.BLL.Models.Blog blogBLL)
-        {
-            if (blogBLL != null)
-                return Mapper.Map<ModuleBlog.BLL.Models.Blog, ModuleBlog.Controllers.Models.Blog>(blogBLL);
-            else
-                return null;
-        }
-
-        private ModuleBlog.BLL.Models.Blog Map(ModuleBlog.Controllers.Models.Blog blog)
-        {
-            if (blog != null)
-                return Mapper.Map<ModuleBlog.Controllers.Models.Blog, ModuleBlog.BLL.Models.Blog>(blog);
-            else
-                return null;
-        }
-        #endregion
-
-
         // GET: api/Blog
         /// <summary>
         /// Récupérer la liste des blogs
         /// </summary>
         /// <returns>La liste des blogs</returns>
         [HttpGet, Route("api/blog")]
-        public IEnumerable<ModuleBlog.Controllers.Models.Blog> Get()
+        public IEnumerable<ControllersModels.Blog> Get()
         {
-            IEnumerable<ModuleBlog.BLL.Models.Blog> blogsBLL = blogBLL.GetBlogs();
+            IEnumerable<BLLModels.Blog> blogsBLL = blogBLL.GetBlogs();
             try
             {    
-                IEnumerable<ModuleBlog.Controllers.Models.Blog> blogs = Map(blogsBLL);
+                IEnumerable<ControllersModels.Blog> blogs = Convert<IEnumerable<BLLModels.Blog>, IEnumerable<ControllersModels.Blog>>(blogsBLL);
                 return blogs;
             }
             catch(Exception)
@@ -76,12 +49,12 @@ namespace ModuleBlog.Controllers
         /// <returns>le blog</returns>
         [Route("api/blog/{id}")]
         [HttpGet]
-        public ModuleBlog.Controllers.Models.Blog GetById(int id, int userId)
+        public ControllersModels.Blog GetById(int id, int userId)
         {
-            ModuleBlog.BLL.Models.Blog blogBll = blogBLL.GetBlogById(id, userId);
+            BLLModels.Blog blogBll = blogBLL.GetBlogById(id, userId);
             try
             {
-                ModuleBlog.Controllers.Models.Blog blog = Map(blogBll);
+                ControllersModels.Blog blog = Convert<BLLModels.Blog, ControllersModels.Blog>(blogBll);
                 return blog;
             }
             catch (Exception)
@@ -98,12 +71,12 @@ namespace ModuleBlog.Controllers
         /// <returns>le blog</returns>
         [Route("api/blog")]
         [HttpGet]
-        public ModuleBlog.Controllers.Models.Blog GetById(int userId)
+        public ControllersModels.Blog GetById(int userId)
         {
-            ModuleBlog.BLL.Models.Blog blogBll = blogBLL.GetBlogByUserId(userId);
+            BLLModels.Blog blogBll = blogBLL.GetBlogByUserId(userId);
             try
             {
-                ModuleBlog.Controllers.Models.Blog blog = Map(blogBll);
+                ControllersModels.Blog blog = Convert<BLLModels.Blog, ControllersModels.Blog>(blogBll);
                 return blog;
             }
             catch (Exception)
@@ -119,12 +92,12 @@ namespace ModuleBlog.Controllers
         /// <param name="categoryId">identifiant de la catégorie</param>
         /// <returns>la liste des blogs</returns>
         [Route("api/blog/category/{categoryId}"), HttpGet]
-        public IEnumerable<ModuleBlog.Controllers.Models.Blog> GetByCategory(int categoryId)
+        public IEnumerable<ControllersModels.Blog> GetByCategory(int categoryId)
         {
-            IEnumerable<ModuleBlog.BLL.Models.Blog> blogsBLL = blogBLL.GetBlogsByCategory(categoryId);
+            IEnumerable<BLLModels.Blog> blogsBLL = blogBLL.GetBlogsByCategory(categoryId);
             try
             {
-                IEnumerable<ModuleBlog.Controllers.Models.Blog> blogs = Map(blogsBLL);
+                IEnumerable<ControllersModels.Blog> blogs = Convert<IEnumerable<BLLModels.Blog>, IEnumerable<ControllersModels.Blog>>(blogsBLL);
                 return blogs;
             }
             catch (Exception)
@@ -133,7 +106,6 @@ namespace ModuleBlog.Controllers
             }
         }
 
-
         // GET: api/Blog/Promoted
         /// <summary>
         /// Récupérer la liste des blogs mis en avant
@@ -141,12 +113,12 @@ namespace ModuleBlog.Controllers
         /// <returns>Liste des blogs</returns>
         [Route("api/blog/promoted")]
         [HttpGet]
-        public IEnumerable<ModuleBlog.Controllers.Models.Blog> GetPromoted()
+        public IEnumerable<ControllersModels.Blog> GetPromoted()
         {
-            IEnumerable<ModuleBlog.BLL.Models.Blog> blogsBLL = blogBLL.GetPromotedBlogs();
+            IEnumerable<BLLModels.Blog> blogsBLL = blogBLL.GetPromotedBlogs();
             try
             {
-                IEnumerable<ModuleBlog.Controllers.Models.Blog> blogs = Map(blogsBLL);
+                IEnumerable<ControllersModels.Blog> blogs = Convert<IEnumerable<BLLModels.Blog>, IEnumerable<ControllersModels.Blog>>(blogsBLL);
                 return blogs;
             }
             catch (Exception)
@@ -161,12 +133,13 @@ namespace ModuleBlog.Controllers
         /// </summary>
         /// <param name="keyword">chaine de caractère à chercher</param>
         /// <returns>Liste des blogs</returns>
-        public IEnumerable<ModuleBlog.Controllers.Models.Blog> Get(string keyword)
+        [HttpGet, Route("api/blog")]
+        public IEnumerable<ControllersModels.Blog> Get(string keyword)
         {
-            IEnumerable<ModuleBlog.BLL.Models.Blog> blogsBLL = blogBLL.GetBlogsBySearch(0, keyword);
+            IEnumerable<BLLModels.Blog> blogsBLL = blogBLL.GetBlogsBySearch(0, keyword);
             try
             {
-                IEnumerable<ModuleBlog.Controllers.Models.Blog> blogs = Map(blogsBLL);
+                IEnumerable<ControllersModels.Blog> blogs = Convert<IEnumerable<BLLModels.Blog>, IEnumerable<ControllersModels.Blog>>(blogsBLL);
                 return blogs;
             }
             catch (Exception)
@@ -182,12 +155,13 @@ namespace ModuleBlog.Controllers
         /// <param name="keyword">chaine de caractère à chercher</param>
         /// <param name="categoryId">identifiant de la catégorie</param>
         /// <returns>Liste des blogs</returns>
-        public IEnumerable<ModuleBlog.Controllers.Models.Blog> Get(string keyword, int categoryId)
+        [HttpGet, Route("api/blog")]
+        public IEnumerable<ControllersModels.Blog> Get(string keyword, int categoryId)
         {
-            IEnumerable<ModuleBlog.BLL.Models.Blog> blogsBLL = blogBLL.GetBlogsBySearch(categoryId, keyword);
+            IEnumerable<BLLModels.Blog> blogsBLL = blogBLL.GetBlogsBySearch(categoryId, keyword);
             try
             {
-                IEnumerable<ModuleBlog.Controllers.Models.Blog> blogs = Map(blogsBLL);
+                IEnumerable<ControllersModels.Blog> blogs = Convert<IEnumerable<BLLModels.Blog>, IEnumerable<ControllersModels.Blog>>(blogsBLL);
                 return blogs;
             }
             catch (Exception)
@@ -203,7 +177,8 @@ namespace ModuleBlog.Controllers
         /// </summary>
         /// <param name="blog">le blog à ajouter</param>
         /// <returns>Réponse HTTP</returns>
-        public IHttpActionResult Post([FromBody]ModuleBlog.Controllers.Models.Blog blog)
+        [HttpPost, Route("api/blog")]
+        public IHttpActionResult Post([FromBody]ControllersModels.Blog blog)
         {
             if (blog != null)
             {
@@ -212,8 +187,8 @@ namespace ModuleBlog.Controllers
                     return BadRequest("parameters format is not correct.");
                 ThemeController tcontroller = new ThemeController();
 
-                ModuleBlog.Controllers.Models.Theme theme = tcontroller.Get(blog.Theme_id);
-                ModuleBlog.BLL.Models.Blog blogBll = Map(blog);
+                ControllersModels.Theme theme = tcontroller.Get(blog.Theme_id);
+                BLLModels.Blog blogBll = Convert<ControllersModels.Blog, BLLModels.Blog>(blog);
                 if (blogBLL.AddBlog(blogBll))
                     return StatusCode(HttpStatusCode.Created);
                 else
@@ -229,7 +204,8 @@ namespace ModuleBlog.Controllers
         /// </summary>
         /// <param name="blog">Blog à modifier</param>
         /// <returns>Réponse HTTP</returns>
-        public IHttpActionResult Put([FromBody]ModuleBlog.Controllers.Models.Blog blog)
+        [HttpPut, Route("api/blog/{id}")]
+        public IHttpActionResult Put([FromBody]ControllersModels.Blog blog)
         {
             if (blog != null)
             {
@@ -237,8 +213,8 @@ namespace ModuleBlog.Controllers
                     || blog.TitreBlog == string.Empty || blog.Utilisateur_id == 0)
                     return BadRequest("parameters format is not correct.");
                 ThemeController tcontroller = new ThemeController();
-                ModuleBlog.Controllers.Models.Theme theme = tcontroller.Get(blog.Theme_id);
-                ModuleBlog.BLL.Models.Blog blogBll = Map(blog);
+                ControllersModels.Theme theme = tcontroller.Get(blog.Theme_id);
+                BLLModels.Blog blogBll = Convert<ControllersModels.Blog, BLLModels.Blog>(blog);
                 if (blogBLL.UpdateBlog(blogBll))
                     return StatusCode(HttpStatusCode.Created);
                 else
@@ -256,7 +232,7 @@ namespace ModuleBlog.Controllers
         /// <param name="userId">identifiant de l'utilisateur</param>
         /// <param name="promoted">promouvoir = 1 (vrai)</param>
         /// <returns>Réponse HTTP</returns>
-        [Route("api/Blog/{id}"), HttpPut]
+        [Route("api/blog/promoted/{id}"), HttpPut]
         public IHttpActionResult Put(int id, int userId, bool promoted)
         {
             if (userId != 0)
@@ -276,7 +252,7 @@ namespace ModuleBlog.Controllers
         /// </summary>
         /// <param name="userId">identifiant de l'utilisateur dont on doit désactiver le blog</param>
         /// <returns>Réponse HTTP</returns>
-        [HttpPut, Route("api/Blog")]
+        [HttpPut, Route("api/blog")]
         public IHttpActionResult Delete(int userId)
         {
             if (userId != 0)
@@ -289,7 +265,5 @@ namespace ModuleBlog.Controllers
             else
                 return BadRequest("parameter is null");
         }
-
-        
     }
 }

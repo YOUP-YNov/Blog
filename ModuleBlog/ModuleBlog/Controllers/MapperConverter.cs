@@ -4,19 +4,36 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Http;
 
 namespace ModuleBlog.Controllers
 {
-    class MapperConverter
+    public class MapperConverter : ApiController
     {
-        public IEnumerable<U> Convert<T, U>(IEnumerable<T> element)
+        public IEnumerable<TDest> Convert<TSource, TDest>(IEnumerable<TSource> element)
         {
-            return Mapper.Map<IEnumerable<T>, IEnumerable<U>>(element);
+            try
+            {
+                return Mapper.Map<IEnumerable<TSource>, IEnumerable<TDest>>(element);
+            }
+            catch(AutoMapperMappingException)
+            {
+                // TODO LOGGER
+                return default(IEnumerable<TDest>);
+            }
         }
 
-        public U Convert<T, U>(T element)
+        public TDest Convert<TSource, TDest>(TSource element)
         {
-            return Mapper.Map<T, U>(element);
+            try
+            {
+                return Mapper.Map<TSource, TDest>(element);
+            }
+            catch (AutoMapperMappingException)
+            {
+                // TODO LOGGER
+                return default(TDest);
+            }
         }
     }
 }

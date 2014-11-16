@@ -114,7 +114,7 @@ namespace ModuleBlog.BLL
 
         public ModuleBlog.BLL.Models.Theme GetThemeById(int themeId)
         {
-            ModuleBlog.DAL.Models.Theme themeDao = blogDAL.GetThemeById(themeId);
+            ModuleBlog.DAL.Models.Theme themeDao = new ThemeDAL().GetThemeById(themeId);
 
             Mapper.CreateMap<ModuleBlog.DAL.Models.Theme, ModuleBlog.BLL.Models.Theme>();
             ModuleBlog.BLL.Models.Theme themeBll = Mapper.Map<ModuleBlog.DAL.Models.Theme, ModuleBlog.BLL.Models.Theme>(themeDao);

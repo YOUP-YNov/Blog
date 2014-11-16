@@ -29,6 +29,7 @@ namespace ModuleBlog.Controllers
         /// </summary>
         /// <param name="articleId">identifiant de l'article</param>
         /// <returns>Liste des commentaires</returns>
+        //[Route("api/article/comment/{articleId}")]
         public IEnumerable<ModuleBlog.Controllers.Models.Commentaire> Get(int articleId)
         {
             IEnumerable<ModuleBlog.BLL.Models.Commentaire> commentairesBll = commentaireBLL.GetCommentaires(articleId);
@@ -42,6 +43,7 @@ namespace ModuleBlog.Controllers
         /// </summary>
         /// <param name="id">identifiant du commentaire</param>
         /// <returns>le commentaire</returns>
+        //[Route("api/comment/{id}")]
         public ModuleBlog.Controllers.Models.Commentaire GetById(int id)
         {
             ModuleBlog.BLL.Models.Commentaire commentaireBll = commentaireBLL.GetCommentaireById(id);
