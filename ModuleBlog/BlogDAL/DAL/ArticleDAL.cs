@@ -67,12 +67,12 @@ namespace ModuleBlog.DAL
             }
             catch (SqlException ex)
             {
-                new LErreur(ex, "Blog/ArticleDAL/GetArticles", "Ouverture de la connexion à la BDD", 3).Save(loggerUrl);
+                LogException(ex, "Blog/ArticleDAL/GetArticles", "SqlException", 1);
                 return null;
             }
             catch (Exception ex)
             {
-                new LErreur(ex, "Blog/ArticleDAL/GetArticles", "Interraction avec la BDD", 1).Save(loggerUrl);
+                LogException(ex, "Blog/ArticleDAL/GetArticles", "Exception", 1);
                 return null;
             }
             finally
@@ -131,12 +131,12 @@ namespace ModuleBlog.DAL
             }
             catch (SqlException ex)
             {
-                new LErreur(ex, "Blog/ArticleDAL/GetArticleById", "Connexion à la BDD", 3).Save(loggerUrl);
+                LogException(ex, "Blog/ArticleDAL/GetArticlesByTag", "SqlException", 1);
                 return null;
             }
             catch(Exception ex)
             {
-                new LErreur(ex, "Blog/ArticleDAL/GetArticleById", "Interraction avec la BDD", 1).Save(loggerUrl);
+                LogException(ex, "Blog/ArticleDAL/GetArticlesByTag", "Exception", 1);
                 return null;
             }
             finally
@@ -154,12 +154,12 @@ namespace ModuleBlog.DAL
             }
             catch (SqlException ex)
             {
-                new LErreur(ex, "Blog/ArticleDAL/LikeArticle", "Connexion à la BDD", 3).Save(loggerUrl);
+                LogException(ex, "Blog/ArticleDAL/LikeArticle", "SqlException", 1);
                 return false;
             }
             catch(Exception ex)
             {
-                new LErreur(ex, "Blog/ArticleDAL/LikeArticle", "Interraction avec la BDD", 1).Save(loggerUrl);
+                LogException(ex, "Blog/ArticleDAL/LikeArticle", "Exception", 1);
                 return false;
             }
             finally
@@ -178,12 +178,12 @@ namespace ModuleBlog.DAL
             }
             catch (SqlException ex)
             {
-                new LErreur(ex, "Blog/ArticleDAL/DislikeArticle", "Connexion à la BDD", 3).Save(loggerUrl);
+                LogException(ex, "Blog/ArticleDAL/DislikeArticle", "SqlException", 1);
                 return false;
             }
             catch(Exception ex)
             {
-                new LErreur(ex, "Blog/ArticleDAL/DislikeArticle", "Interraction avec la BDD", 1).Save(loggerUrl);
+                LogException(ex, "Blog/ArticleDAL/DislikeArticle", "Exception", 1);
                 return false;
             }
             finally
@@ -218,12 +218,12 @@ namespace ModuleBlog.DAL
             }
             catch (SqlException ex)
             {
-                new LErreur(ex, "Blog/ArticleDAL/UpdateArticle", "Connexion à la BDD", 1).Save(loggerUrl);
+                LogException(ex, "Blog/ArticleDAL/UpdateArticle", "SqlException", 1);
                 return false;
             }
             catch(Exception ex)
             {
-                new LErreur(ex, "Blog/ArticleDAL/UpdateArticle", "Interraction avec la BDD", 1).Save(loggerUrl);
+                LogException(ex, "Blog/ArticleDAL/UpdateArticle", "Exception", 1);
                 return false;
             }
             finally
@@ -258,12 +258,12 @@ namespace ModuleBlog.DAL
             }
             catch (SqlException ex)
             {
-                new LErreur(ex, "Blog/ArticleDAL/AddArticle", "Connexion à la BDD", 3).Save(loggerUrl);
+                LogException(ex, "Blog/ArticleDAL/AddArticle", "SqlException", 1);
                 return ex.Message;
             }
             catch(Exception ex)
             {
-                new LErreur(ex, "Blog/ArticleDAL/AddArticle", "Interraction avec la BDD", 1).Save(loggerUrl);
+                LogException(ex, "Blog/ArticleDAL/AddArticle", "Exception", 1);
                 return ex.Message;
             }
             finally
@@ -281,12 +281,12 @@ namespace ModuleBlog.DAL
             }
             catch (SqlException ex)
             {
-                new LErreur(ex, "Blog/ArticleDAL/AddHashTag", "Connexion à la BDD", 3).Save(loggerUrl);
+                LogException(ex, "Blog/ArticleDAL/AddHashTag", "SqlException", 1);
                 throw ex;
             }
             catch(Exception ex)
             {
-                new LErreur(ex, "Blog/ArticleDAL/AddHashTag", "Interraction avec la BDD", 1).Save(loggerUrl);
+                LogException(ex, "Blog/ArticleDAL/AddHashTag", "Exception", 1);
                 throw ex;
             }
             finally
@@ -304,12 +304,12 @@ namespace ModuleBlog.DAL
             }
             catch (SqlException ex)
             {
-                new LErreur(ex, "Blog/ArticleDAL/DeleteArticle", "Connexion à la BDD", 3).Save(loggerUrl);
+                LogException(ex, "Blog/ArticleDAL/DeleteArticle", "SqlException", 1);
                 return false;
             }
             catch(Exception ex)
             {
-                new LErreur(ex, "Blog/ArticleDAL/DeleteArticle", "Interraction avec la BDD", 1).Save(loggerUrl);
+                LogException(ex, "Blog/ArticleDAL/DeleteArticle", "Exception", 1);
                 return false;
             }
             finally
@@ -326,17 +326,17 @@ namespace ModuleBlog.DAL
         {
             try
             {
-                FillData("BLOG_DeleteArticleForReal", ref ds, new Dictionary<string,object>(){ {"@Article_id", articleId} })
+                FillData("BLOG_DeleteArticleForReal", ref ds, new Dictionary<string, object>() { { "@Article_id", articleId } });
                 return ds.Tables[0].Rows[0]["Resultat"].ToString();
             }
             catch (SqlException ex)
             {
-                new LErreur(ex, "Blog/ArticleDAL/DeleteArticleForReal", "Connexion à la BDD", 3).Save(loggerUrl);
+                LogException(ex, "Blog/ArticleDAL/DeleteArticleForReal", "SqlException", 1);
                 return ex.Message;
             }
             catch (Exception ex)
             {
-                new LErreur(ex, "Blog/ArticleDAL/DeleteArticleForReal", "Interraction avec la BDD", 1).Save(loggerUrl);
+                LogException(ex, "Blog/ArticleDAL/DeleteArticleForReal", "Exception", 1);
                 return ex.Message;
             }
             finally
