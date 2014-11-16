@@ -31,7 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Logger">
-      <HintPath>..\..\..\Logger\Logger.dll</HintPath>
+      <HintPath>C:\Users\Simon\Documents\DLL Logger\Logger.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
