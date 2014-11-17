@@ -67,12 +67,12 @@ namespace ModuleBlog.DAL
             }
             catch (SqlException ex)
             {
-                LogException(ex, "Blog/ArticleDAL/GetArticles", "SqlException", 1);
+                LogException(ex, "Blog/ArticleDAL/GetArticles", ex.Message, 1);
                 return null;
             }
             catch (Exception ex)
             {
-                LogException(ex, "Blog/ArticleDAL/GetArticles", "Exception", 1);
+                LogException(ex, "Blog/ArticleDAL/GetArticles", ex.Message, 1);
                 return null;
             }
             finally
@@ -131,12 +131,12 @@ namespace ModuleBlog.DAL
             }
             catch (SqlException ex)
             {
-                LogException(ex, "Blog/ArticleDAL/GetArticlesByTag", "SqlException", 1);
+                LogException(ex, "Blog/ArticleDAL/GetArticlesByTag", ex.Message, 1);
                 return null;
             }
             catch(Exception ex)
             {
-                LogException(ex, "Blog/ArticleDAL/GetArticlesByTag", "Exception", 1);
+                LogException(ex, "Blog/ArticleDAL/GetArticlesByTag", ex.Message, 1);
                 return null;
             }
             finally
@@ -154,12 +154,12 @@ namespace ModuleBlog.DAL
             }
             catch (SqlException ex)
             {
-                LogException(ex, "Blog/ArticleDAL/LikeArticle", "SqlException", 1);
+                LogException(ex, "Blog/ArticleDAL/LikeArticle", ex.Message, 1);
                 return false;
             }
             catch(Exception ex)
             {
-                LogException(ex, "Blog/ArticleDAL/LikeArticle", "Exception", 1);
+                LogException(ex, "Blog/ArticleDAL/LikeArticle", ex.Message, 1);
                 return false;
             }
             finally
@@ -178,12 +178,12 @@ namespace ModuleBlog.DAL
             }
             catch (SqlException ex)
             {
-                LogException(ex, "Blog/ArticleDAL/DislikeArticle", "SqlException", 1);
+                LogException(ex, "Blog/ArticleDAL/DislikeArticle", ex.Message, 1);
                 return false;
             }
             catch(Exception ex)
             {
-                LogException(ex, "Blog/ArticleDAL/DislikeArticle", "Exception", 1);
+                LogException(ex, "Blog/ArticleDAL/DislikeArticle", ex.Message, 1);
                 return false;
             }
             finally
@@ -218,12 +218,12 @@ namespace ModuleBlog.DAL
             }
             catch (SqlException ex)
             {
-                LogException(ex, "Blog/ArticleDAL/UpdateArticle", "SqlException", 1);
+                LogException(ex, "Blog/ArticleDAL/UpdateArticle", ex.Message, 1);
                 return false;
             }
             catch(Exception ex)
             {
-                LogException(ex, "Blog/ArticleDAL/UpdateArticle", "Exception", 1);
+                LogException(ex, "Blog/ArticleDAL/UpdateArticle", ex.Message, 1);
                 return false;
             }
             finally
@@ -258,12 +258,12 @@ namespace ModuleBlog.DAL
             }
             catch (SqlException ex)
             {
-                LogException(ex, "Blog/ArticleDAL/AddArticle", "SqlException", 1);
+                LogException(ex, "Blog/ArticleDAL/AddArticle", ex.Message, 1);
                 return ex.Message;
             }
             catch(Exception ex)
             {
-                LogException(ex, "Blog/ArticleDAL/AddArticle", "Exception", 1);
+                LogException(ex, "Blog/ArticleDAL/AddArticle", ex.Message, 1);
                 return ex.Message;
             }
             finally
@@ -281,12 +281,12 @@ namespace ModuleBlog.DAL
             }
             catch (SqlException ex)
             {
-                LogException(ex, "Blog/ArticleDAL/AddHashTag", "SqlException", 1);
+                LogException(ex, "Blog/ArticleDAL/AddHashTag", ex.Message, 1);
                 throw ex;
             }
             catch(Exception ex)
             {
-                LogException(ex, "Blog/ArticleDAL/AddHashTag", "Exception", 1);
+                LogException(ex, "Blog/ArticleDAL/AddHashTag", ex.Message, 1);
                 throw ex;
             }
             finally
@@ -304,12 +304,12 @@ namespace ModuleBlog.DAL
             }
             catch (SqlException ex)
             {
-                LogException(ex, "Blog/ArticleDAL/DeleteArticle", "SqlException", 1);
+                LogException(ex, "Blog/ArticleDAL/DeleteArticle", ex.Message, 1);
                 return false;
             }
             catch(Exception ex)
             {
-                LogException(ex, "Blog/ArticleDAL/DeleteArticle", "Exception", 1);
+                LogException(ex, "Blog/ArticleDAL/DeleteArticle", ex.Message, 1);
                 return false;
             }
             finally
@@ -331,12 +331,12 @@ namespace ModuleBlog.DAL
             }
             catch (SqlException ex)
             {
-                LogException(ex, "Blog/ArticleDAL/DeleteArticleForReal", "SqlException", 1);
+                LogException(ex, "Blog/ArticleDAL/DeleteArticleForReal", ex.Message, 1);
                 return ex.Message;
             }
             catch (Exception ex)
             {
-                LogException(ex, "Blog/ArticleDAL/DeleteArticleForReal", "Exception", 1);
+                LogException(ex, "Blog/ArticleDAL/DeleteArticleForReal", ex.Message, 1);
                 return ex.Message;
             }
             finally

@@ -40,7 +40,7 @@ namespace ModuleBlog.DAL
             }
             catch (SqlException ex)
             {
-                LogException(ex, "Blog/ThemeDAL/GetThemeById", "SqlException", 1);
+                LogException(ex, "Blog/ThemeDAL/GetThemeById", ex.Message, 1);
                 return null;
             }
             finally
@@ -75,7 +75,7 @@ namespace ModuleBlog.DAL
             }
             catch (SqlException ex)
             {
-                LogException(ex, "Blog/ThemeDAL/GetThemes", "SqlException", 1);
+                LogException(ex, "Blog/ThemeDAL/GetThemes", ex.Message, 1);
                 return null;
             }
             finally
