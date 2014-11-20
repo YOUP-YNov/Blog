@@ -12,7 +12,7 @@ using ModuleBlog.Controllers.Models;
 
 namespace ModuleBlog.Controllers
 {
-    public class CommentaireController : ApiController
+    public class CommentaireController : MapperConverter
     {
        
         private CommentaireBLL commentaireBLL;
@@ -29,11 +29,11 @@ namespace ModuleBlog.Controllers
         /// </summary>
         /// <param name="articleId">identifiant de l'article</param>
         /// <returns>Liste des commentaires</returns>
-        //[Route("api/article/comment/{articleId}")]
+        [Route("api/article/comment/{articleId}")]
         public IEnumerable<ModuleBlog.Controllers.Models.Commentaire> Get(int articleId)
         {
             IEnumerable<ModuleBlog.BLL.Models.Commentaire> commentairesBll = commentaireBLL.GetCommentaires(articleId);
-            IEnumerable<ModuleBlog.Controllers.Models.Commentaire> commentaires = Mapper.Map<IEnumerable<ModuleBlog.BLL.Models.Commentaire>, IEnumerable<ModuleBlog.Controllers.Models.Commentaire>>(commentairesBll);
+            IEnumerable<ModuleBlog.Controllers.Models.Commentaire> commentaires = Convert<IEnumerable<ModuleBlog.BLL.Models.Commentaire>, IEnumerable<ModuleBlog.Controllers.Models.Commentaire>>(commentairesBll);
             return commentaires;
         }
 
@@ -43,11 +43,11 @@ namespace ModuleBlog.Controllers
         /// </summary>
         /// <param name="id">identifiant du commentaire</param>
         /// <returns>le commentaire</returns>
-        //[Route("api/comment/{id}")]
+        [Route("api/comment/{id}")]
         public ModuleBlog.Controllers.Models.Commentaire GetById(int id)
         {
             ModuleBlog.BLL.Models.Commentaire commentaireBll = commentaireBLL.GetCommentaireById(id);
-            ModuleBlog.Controllers.Models.Commentaire commentaire = Mapper.Map<ModuleBlog.BLL.Models.Commentaire, ModuleBlog.Controllers.Models.Commentaire>(commentaireBll);
+            ModuleBlog.Controllers.Models.Commentaire commentaire = Convert<ModuleBlog.BLL.Models.Commentaire, ModuleBlog.Controllers.Models.Commentaire>(commentaireBll);
 
             return commentaire;
         }
@@ -65,7 +65,7 @@ namespace ModuleBlog.Controllers
             {
                 if (comment.Article_id == 0 || comment.Utilisateur_id == 0 || comment.ContenuCommentaire == string.Empty)
                     return BadRequest("parameters format is not correct.");
-                ModuleBlog.BLL.Models.Commentaire commentaireBll = Mapper.Map<ModuleBlog.Controllers.Models.Commentaire, ModuleBlog.BLL.Models.Commentaire>(comment);
+                ModuleBlog.BLL.Models.Commentaire commentaireBll = Convert<ModuleBlog.Controllers.Models.Commentaire, ModuleBlog.BLL.Models.Commentaire>(comment);
                 if (commentaireBLL.AddCommentaire(commentaireBll))
                     return StatusCode(HttpStatusCode.Created);
                 else
@@ -103,7 +103,7 @@ namespace ModuleBlog.Controllers
             {
                 if (comment.Commentaire_id == 0 || comment.ContenuCommentaire == string.Empty)
                     return BadRequest("parameters format is not correct.");
-                ModuleBlog.BLL.Models.Commentaire commentaireBll = Mapper.Map<ModuleBlog.Controllers.Models.Commentaire, ModuleBlog.BLL.Models.Commentaire>(comment);
+                ModuleBlog.BLL.Models.Commentaire commentaireBll = Convert<ModuleBlog.Controllers.Models.Commentaire, ModuleBlog.BLL.Models.Commentaire>(comment);
                 if (commentaireBLL.UpdateCommentaire(commentaireBll))
                     return StatusCode(HttpStatusCode.Created);
                 else

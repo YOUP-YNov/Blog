@@ -30,7 +30,7 @@ namespace ModuleBlog.DAL
             DataSet ds = new DataSet();
             cmd = new SqlCommand();
             cmd.CommandText = "BLOG_DeleteCommentaire";
-            cmd.CommandTimeout = 0;
+            cmd.CommandTimeout = 5;
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Connection = con;
             da = new SqlDataAdapter(cmd);
