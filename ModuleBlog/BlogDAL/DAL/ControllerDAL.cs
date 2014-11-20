@@ -31,6 +31,8 @@ namespace BlogDAL.DAL
 
         public void FillData(string psText, ref DataSet ds, Dictionary<string, object> listParameters = null)
         {
+            cmd.Parameters.Clear();
+            ds.Clear();
             cmd.CommandText = psText;
             if (listParameters != null)
                 for (int i = 0; i < listParameters.Count; i++)
@@ -42,7 +44,7 @@ namespace BlogDAL.DAL
 
         public void LogException(Exception ex, string path, string message, int priority)
         {
-            new LErreur(ex, path, message, priority).Save(loggerUrl);
+            //new LErreur(ex, path, message, priority).Save(loggerUrl);
         }
     }
 }

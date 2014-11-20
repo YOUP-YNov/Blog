@@ -53,6 +53,9 @@ namespace ModuleBlog.DAL
                             aDao = listaDao.Search(aDao.Article_id);
 
                         string hashTagId = dr["HashTagArticle_id"].ToString();
+
+                        con.Close();
+
                         if (!String.IsNullOrEmpty(hashTagId))
                         {
                             HashTagArticle hashTagDao = new HashTagArticle();
@@ -118,6 +121,9 @@ namespace ModuleBlog.DAL
                             aDao = listaDao.Search(aDao.Article_id);
 
                         string hashTagId = dr["HashTagArticle_id"].ToString();
+
+                        con.Close();
+
                         if (!String.IsNullOrEmpty(hashTagId))
                         {
                             HashTagArticle hashTagDao = new HashTagArticle();
@@ -204,6 +210,9 @@ namespace ModuleBlog.DAL
                 listParams.Add("@Evenement_id", article.Evenement_id);
                 FillData("BLOG_UpdateArticle", ref ds, listParams);
                 string articleUpdatedId = ds.Tables[0].Rows[0].ItemArray[0].ToString();
+
+                con.Close();
+
                 if (articleUpdatedId != "PAS OK")
                 {
                     foreach (HashTagArticle hashtag in article.ListeTags)
@@ -245,6 +254,8 @@ namespace ModuleBlog.DAL
                 FillData("BLOG_AddArticle", ref ds, listParams);
                 string articleCreatedId = ds.Tables[0].Rows[0]["Resultat"].ToString();
 
+                con.Close();
+
                 if (articleCreatedId != "PAS OK")
                 {
                     foreach (HashTagArticle hashtag in article.ListeTags)
@@ -277,7 +288,6 @@ namespace ModuleBlog.DAL
             try
             {
                 FillData("BLOG_AddHashTag", ref ds, new Dictionary<string,object>(){ {"@Article_id", hashtag.Article_id}, {"@Mots", hashtag.Mots} });                
-                string articleCreatedId = ds.Tables[0].Rows[0]["Resultat"].ToString();
             }
             catch (SqlException ex)
             {

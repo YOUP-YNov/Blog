@@ -137,6 +137,12 @@ namespace ModuleBlog.Areas.HelpPage
         private static string GetTypeName(Type type)
         {
             string name = type.FullName;
+
+            if (name == null)
+            {
+                String a = "h";
+            }
+
             if (type.IsGenericType)
             {
                 // Format the generic type name to something like: Generic{System.Int32,System.String}

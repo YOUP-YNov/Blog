@@ -98,7 +98,7 @@ namespace ModuleBlog.Tests
         public void TestAddBlog()
         {
             //Utilisateur_id 119 à 127 n'ont pas de plog on peut les utiliser pour les test
-            Assert.IsTrue(blogDAL.AddBlog(new Blog { Utilisateur_id = 118, TitreBlog = "Blog de l'utilisateur Test", Categorie_id = 3, Promotion = false, Actif = true, Theme_id = 4 }), "Blog existe déjà");
+            Assert.IsTrue(blogDAL.AddBlog(new Blog { Utilisateur_id = 120, TitreBlog = "Blog de l'utilisateur Test", Categorie_id = 3, Theme_id = 4 }), "Blog existe déjà");
         }
 
 
