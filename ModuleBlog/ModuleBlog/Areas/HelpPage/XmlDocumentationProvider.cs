@@ -155,7 +155,7 @@ namespace ModuleBlog.Areas.HelpPage
                 string[] argumentTypeNames = genericArguments.Select(t => GetTypeName(t)).ToArray();
                 name = String.Format(CultureInfo.InvariantCulture, "{0}{{{1}}}", genericTypeName, String.Join(",", argumentTypeNames));
             }
-            if (type.IsNested)
+            if (type.IsNested && !string.IsNullOrEmpty(name))
             {
                 // Changing the nested type name from OuterType+InnerType to OuterType.InnerType to match the XML documentation syntax.
                 name = name.Replace("+", ".");
