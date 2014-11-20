@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using ModuleBlog.BLL;
-using ModuleBlog.BLL.Models;
-using ModuleBlog.Controllers.Models;
+using BLLModels = ModuleBlog.BLL.Models;
+using ControllersModels = ModuleBlog.Controllers.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +11,7 @@ using System.Web.Http;
 
 namespace ModuleBlog.Controllers
 {
-    public class ArticleController : ApiController
+    public class ArticleController : MapperConverter
     {
 
         private ArticleBLL articleBLL;
@@ -19,6 +19,38 @@ namespace ModuleBlog.Controllers
         public ArticleController()
         {
             articleBLL = new ArticleBLL();
+        }
+
+        private ControllersModels.Articles Map(BLLModels.Articles articlesToMap)
+        {
+            ControllersModels.Articles articles = new ControllersModels.Articles();
+
+            if (articlesToMap.Count > 0)
+            {
+                foreach (BLLModels.Article article in articlesToMap)
+                {
+                    List<ControllersModels.HashTagArticle> hashTags = Convert<List<BLLModels.HashTagArticle>, List<ControllersModels.HashTagArticle>>(article.ListeTags);
+                    ControllersModels.Article articleToAdd = Convert<BLLModels.Article, ControllersModels.Article>(article);
+                    articleToAdd.ListeTags = hashTags;
+                    articles.Add(articleToAdd);
+                }
+            }
+            return articles;
+        }
+
+        private BLLModels.Article Map(ControllersModels.Article articleToMap)
+        {
+            BLLModels.Article article = new BLLModels.Article();
+
+            if (articleToMap.TitreArticle != string.Empty)
+            {
+                List<BLLModels.HashTagArticle> hashTags =
+                    Convert<List<ControllersModels.HashTagArticle>, List<BLLModels.HashTagArticle>>(articleToMap.ListeTags);
+                BLLModels.Article articleToAdd = Convert<ControllersModels.Article, BLLModels.Article>(articleToMap);
+                articleToAdd.ListeTags = hashTags;
+                return articleToAdd;
+            }
+            return null;
         }
 
         // GET: api/Article
@@ -30,44 +62,11 @@ namespace ModuleBlog.Controllers
         /// <returns>Liste des articles du blog</returns>
         [Route ("api/article")]
         [HttpGet]
-        public IEnumerable<ModuleBlog.Controllers.Models.Article> Get(int utilisateurId, int blogId)
+        public IEnumerable<ControllersModels.Article> Get(int utilisateurId, int blogId)
         {
-            ModuleBlog.BLL.Models.Articles articlesBLL = articleBLL.GetArticles(utilisateurId, blogId);
-
+            BLLModels.Articles articlesBLL = articleBLL.GetArticles(utilisateurId, blogId);
             return Map(articlesBLL);
-        }
-
-        private ModuleBlog.Controllers.Models.Articles Map(ModuleBlog.BLL.Models.Articles articlesToMap)
-        {
-            ModuleBlog.Controllers.Models.Articles articles = new ModuleBlog.Controllers.Models.Articles();
-
-            if (articlesToMap.Count > 0)
-            {
-                foreach (ModuleBlog.BLL.Models.Article article in articlesToMap)
-                {                    
-                    List<ModuleBlog.Controllers.Models.HashTagArticle> hashTags = Mapper.Map<List<ModuleBlog.BLL.Models.HashTagArticle>, List<ModuleBlog.Controllers.Models.HashTagArticle>>(article.ListeTags);
-                    ModuleBlog.Controllers.Models.Article articleToAdd = Mapper.Map<ModuleBlog.BLL.Models.Article, ModuleBlog.Controllers.Models.Article>(article);
-                    articleToAdd.ListeTags = hashTags;
-                    articles.Add(articleToAdd);
-                }
-            }
-            return articles;
-        }
-
-        private ModuleBlog.BLL.Models.Article Map(ModuleBlog.Controllers.Models.Article articleToMap)
-        {
-            ModuleBlog.BLL.Models.Article article = new ModuleBlog.BLL.Models.Article();
-
-            if (articleToMap.TitreArticle != string.Empty)
-            {
-                List<ModuleBlog.BLL.Models.HashTagArticle> hashTags = 
-                    Mapper.Map<List<ModuleBlog.Controllers.Models.HashTagArticle>, List<ModuleBlog.BLL.Models.HashTagArticle>>(articleToMap.ListeTags);
-                ModuleBlog.BLL.Models.Article articleToAdd = Mapper.Map<ModuleBlog.Controllers.Models.Article, ModuleBlog.BLL.Models.Article>(articleToMap);
-                articleToAdd.ListeTags = hashTags;
-                return articleToAdd;
-            }
-            return null;
-        }
+        }        
 
         // GET: api/Article/
         /// <summary>
@@ -78,9 +77,9 @@ namespace ModuleBlog.Controllers
         /// <returns>Liste des blogs</returns>
         [Route("api/article")]
         [HttpGet]
-        public IEnumerable<ModuleBlog.Controllers.Models.Article> GetByTag(int utilisateurId, string tag)
+        public IEnumerable<ControllersModels.Article> GetByTag(int utilisateurId, string tag)
         {
-            ModuleBlog.BLL.Models.Articles articlesBLL = articleBLL.GetArticlesByTag(utilisateurId, tag);
+            BLLModels.Articles articlesBLL = articleBLL.GetArticlesByTag(utilisateurId, tag);
 
             return Map(articlesBLL);
         }
@@ -128,16 +127,16 @@ namespace ModuleBlog.Controllers
         /// <returns></returns>
         [Route("api/article")]
         [HttpPost]
-        public IHttpActionResult Add([FromBody]ModuleBlog.Controllers.Models.Article article)//int blogId = -1, string titre = "", string imageChemin = "", string contenu = "", int evenementId = - 1)
+        public IHttpActionResult Add([FromBody]ControllersModels.Article article)//int blogId = -1, string titre = "", string imageChemin = "", string contenu = "", int evenementId = - 1)
         {
             if (article != null)
             {
                 if (article.Blog_id == 0 || article.ContenuArticle == string.Empty || article.TitreArticle == string.Empty)
                     return BadRequest("parameters format is not correct.");
 
-                ModuleBlog.BLL.Models.Article articleBll = Map(article);
+                BLLModels.Article articleBll = Map(article);
                 string result = articleBLL.AddArticle(articleBll);
-                if(Convert.ToInt32(result) > 0)
+                if(int.Parse(result) > 0)
                     return Ok(result);
                 else
                     return BadRequest("an error occured");
@@ -152,7 +151,7 @@ namespace ModuleBlog.Controllers
         /// <param name="article">Article à mettre à jour</param>
         /// <returns></returns>
         [Route("api/article/{id}"), HttpPut]
-        public IHttpActionResult UpdateArticle(int id, [FromBody]ModuleBlog.Controllers.Models.Article article)
+        public IHttpActionResult UpdateArticle(int id, [FromBody]ControllersModels.Article article)
         {
             if (article != null || id <= 0)
             {
@@ -160,7 +159,7 @@ namespace ModuleBlog.Controllers
                     return BadRequest("parameters format is not correct.");
                 if (article.Article_id == 0)
                     article.Article_id = id;
-                ModuleBlog.BLL.Models.Article articleBll = Map(article);
+                BLLModels.Article articleBll = Map(article);
                 if (articleBLL.UpdateArticle(articleBll))
                     return StatusCode(HttpStatusCode.Created);
                 else

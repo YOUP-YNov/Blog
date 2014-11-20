@@ -133,6 +133,7 @@ namespace ModuleBlog.Controllers
         /// </summary>
         /// <param name="keyword">chaine de caractère à chercher</param>
         /// <returns>Liste des blogs</returns>
+        [HttpGet, Route("api/blog")]
         public IEnumerable<ControllersModels.Blog> Get(string keyword)
         {
             IEnumerable<BLLModels.Blog> blogsBLL = blogBLL.GetBlogsBySearch(0, keyword);
@@ -154,6 +155,7 @@ namespace ModuleBlog.Controllers
         /// <param name="keyword">chaine de caractère à chercher</param>
         /// <param name="categoryId">identifiant de la catégorie</param>
         /// <returns>Liste des blogs</returns>
+        [HttpGet, Route("api/blog")]
         public IEnumerable<ControllersModels.Blog> Get(string keyword, int categoryId)
         {
             IEnumerable<BLLModels.Blog> blogsBLL = blogBLL.GetBlogsBySearch(categoryId, keyword);
@@ -175,6 +177,7 @@ namespace ModuleBlog.Controllers
         /// </summary>
         /// <param name="blog">le blog à ajouter</param>
         /// <returns>Réponse HTTP</returns>
+        [HttpPost, Route("api/blog")]
         public IHttpActionResult Post([FromBody]ControllersModels.Blog blog)
         {
             if (blog != null)
@@ -201,6 +204,7 @@ namespace ModuleBlog.Controllers
         /// </summary>
         /// <param name="blog">Blog à modifier</param>
         /// <returns>Réponse HTTP</returns>
+        [HttpPut, Route("api/blog/{id}")]
         public IHttpActionResult Put([FromBody]ControllersModels.Blog blog)
         {
             if (blog != null)
@@ -228,7 +232,7 @@ namespace ModuleBlog.Controllers
         /// <param name="userId">identifiant de l'utilisateur</param>
         /// <param name="promoted">promouvoir = 1 (vrai)</param>
         /// <returns>Réponse HTTP</returns>
-        [Route("api/Blog/{id}"), HttpPut]
+        [Route("api/blog/promoted/{id}"), HttpPut]
         public IHttpActionResult Put(int id, int userId, bool promoted)
         {
             if (userId != 0)
@@ -248,7 +252,7 @@ namespace ModuleBlog.Controllers
         /// </summary>
         /// <param name="userId">identifiant de l'utilisateur dont on doit désactiver le blog</param>
         /// <returns>Réponse HTTP</returns>
-        [HttpPut, Route("api/Blog")]
+        [HttpPut, Route("api/blog")]
         public IHttpActionResult Delete(int userId)
         {
             if (userId != 0)

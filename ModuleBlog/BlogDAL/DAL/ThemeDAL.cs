@@ -14,37 +14,8 @@ namespace ModuleBlog.DAL
     /// <summary>
     /// Couche DAL des catégories des blogs
     /// </summary>
-    public class ThemeDAL
-    {
-        #region propriétés
-        //string strcon = Connector.ConnectionString;
-        /// <summary>
-        /// Objet permettant d'effecture des requêtes à la BDD
-        /// </summary>
-        SqlCommand cmd;
-        /// <summary>
-        /// Objet de gestion de la connexion à la BDD
-        /// </summary>
-        SqlConnection con;
-        /// <summary>
-        /// Objet Tableau recevant les données récupérées par la requête
-        /// </summary>
-        SqlDataAdapter da;
-        /// <summary>
-        /// Dataset que l'on rempli grâce au SqlDataAdapter permettant de naviguer entre les lignes et colonnes
-        /// </summary>
-        DataSet ds; 
-        #endregion
-
-        /// <summary>
-        /// Constructeur de la classe
-        /// </summary>
-        public ThemeDAL()
-        {
-            string strcon = Connector.ConnectionString;
-            con = new SqlConnection(strcon);
-        }
-        
+    public class ThemeDAL : ControllerDAL
+    {        
         /// <summary>
         /// Récupérer les informations d'un thème
         /// </summary>
@@ -52,20 +23,9 @@ namespace ModuleBlog.DAL
         /// <returns>Thème</returns>
         public Theme GetThemeById(int themeId)
         {
-            ds = new DataSet();
-            
-            cmd = new SqlCommand();
-            cmd.CommandText = "BLOG_GetThemeById";
-            cmd.CommandTimeout = 0;
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Connection = con;
-            cmd.Parameters.AddWithValue("@ThemeId", themeId);
-            da = new SqlDataAdapter(cmd);
-
             try
             {
-                con.Open();
-                da.Fill(ds);
+                FillData("BLOG_GetThemeById", ref ds, new Dictionary<string, object>() { {"@ThemeId", themeId} });
                 Theme tDao = new Theme();
                 foreach (DataTable table in ds.Tables)
                 {
@@ -76,31 +36,28 @@ namespace ModuleBlog.DAL
                         tDao.ImageChemin = dr["ImageChemin"].ToString();
                     }
                 }
-
-                con.Close();
                 return tDao;
             }
             catch (SqlException ex)
             {
+                LogException(ex, "Blog/ThemeDAL/GetThemeById", ex.Message, 1);
                 return null;
+            }
+            finally
+            {
+                con.Close();
             }
         }
 
+        /// <summary>
+        /// Récupérer la liste des thèmes
+        /// </summary>
+        /// <returns>Liste des thèmes</returns>
         public List<Theme> GetThemes()
         {
-            ds = new DataSet();
-
-            cmd = new SqlCommand();
-            cmd.CommandText = "BLOG_GetThemes";
-            cmd.CommandTimeout = 0;
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Connection = con;
-            da = new SqlDataAdapter(cmd);
-
             try
             {
-                con.Open();
-                da.Fill(ds);
+                FillData("BLOG_GetThemes", ref ds);
                 List<Theme> listDao = new List<Theme>();
                 Theme tDao;
                 foreach (DataTable table in ds.Tables)
@@ -114,13 +71,16 @@ namespace ModuleBlog.DAL
                         listDao.Add(tDao);
                     }
                 }
-
-                con.Close();
                 return listDao;
             }
             catch (SqlException ex)
             {
+                LogException(ex, "Blog/ThemeDAL/GetThemes", ex.Message, 1);
                 return null;
+            }
+            finally
+            {
+                con.Close();
             }
         }
     }

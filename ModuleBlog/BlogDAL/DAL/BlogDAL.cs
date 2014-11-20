@@ -11,73 +11,95 @@ using BlogDAL.DAL;
 
 namespace ModuleBlog.DAL
 {
-    public class BlogDAL
+    public class BlogDAL : ControllerDAL
     {
-
-        string strcon = Connector.ConnectionString;
-        SqlCommand cmd;
-        SqlConnection con;
-        SqlDataAdapter da;
-        DataSet ds;
-
-        public BlogDAL()
+        public List<Blog> GetBlogs()
         {
-            con = new SqlConnection(strcon);
-        }
-        public bool DeleteBlog(int userId)
-        {
-            ds = new DataSet();
-
-            cmd = new SqlCommand();
-            cmd.CommandText = "BLOG_DeleteBlog";
-            cmd.CommandTimeout = 0;
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Connection = con;
-            cmd.Parameters.AddWithValue("@UserId", userId);
-
-            da = new SqlDataAdapter(cmd);
-
             try
-            {
-                con.Open();
-                try
+            {           
+                FillData("BLOG_GetBlogs", ref ds);
+                List<Blog> listBDao = new List<Blog>();
+                Blog bDao;
+                foreach (DataTable table in ds.Tables)
                 {
-                da.Fill(ds);
-                con.Close();
-                return (ds.Tables[0].Rows[0]["Resultat"].ToString() == "OK");
-            }
-                catch(Exception ex)
-                {
-                    con.Close();
-                    return false;
+                    foreach (DataRow dr in table.Rows)
+                    {
+                        bDao = new Blog();
+                        bDao.Blog_id = int.Parse(dr["Blog_id"].ToString());
+                        bDao.Utilisateur_id = int.Parse(dr["Utilisateur_id"].ToString());
+                        bDao.Categorie_id = int.Parse(dr["Categorie_id"].ToString());
+                        bDao.TitreBlog = dr["TitreBlog"].ToString();
+                        bDao.DateCreation = DateTime.Parse(dr["DateCreation"].ToString());
+                        bDao.Actif = bool.Parse(dr["Actif"].ToString());
+                        bDao.Promotion = bool.Parse(dr["Promotion"].ToString());
+                        bDao.Theme_id = int.Parse(dr["Theme_id"].ToString());
+                        bDao.Theme = new ThemeDAL().GetThemeById(bDao.Theme_id);
+                        listBDao.Add(bDao);
+                    }
                 }
+                return listBDao;
             }
             catch (SqlException ex)
             {
-                return false;
+                LogException(ex, "Blog/BlogDAL/GetBlogs", ex.Message, 1);
+                return null;
+            }
+            catch(Exception ex)
+            {
+                LogException(ex, "Blog/BlogDAL/GetBlogs", ex.Message, 1);
+                return null;
+            }
+            finally
+            {
+                con.Close();
             }
         }
-
+        
         public Blog GetBlogById(int idBlog, int userId)
         {
-            ds = new DataSet();
-
-            cmd = new SqlCommand();
-            cmd.CommandText = "BLOG_GetBlogById";
-            cmd.CommandTimeout = 0;
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Connection = con;
-            cmd.Parameters.AddWithValue("@BlogId", idBlog);
-            cmd.Parameters.AddWithValue("@UserId", userId);
-
-            da = new SqlDataAdapter(cmd);
-
             try
             {
-                con.Open();
-                try
+                FillData("BLOG_GetBlogById", ref ds, 
+                    new Dictionary<string, object>() { {"@BlogId", idBlog}, {"@UserId", userId} });
+                Blog bDao = new Blog();
+                foreach (DataTable table in ds.Tables)
                 {
-                da.Fill(ds);
+                    foreach (DataRow dr in table.Rows)
+                    {
+                        bDao.Blog_id = int.Parse(dr["Blog_id"].ToString());
+                        bDao.Utilisateur_id = int.Parse(dr["Utilisateur_id"].ToString());
+                        bDao.Categorie_id = int.Parse(dr["Categorie_id"].ToString());
+                        bDao.TitreBlog = dr["TitreBlog"].ToString();
+                        bDao.DateCreation = DateTime.Parse(dr["DateCreation"].ToString());
+                        bDao.Actif = bool.Parse(dr["Actif"].ToString());
+                        bDao.Promotion = bool.Parse(dr["Promotion"].ToString());
+                        bDao.Theme_id = int.Parse(dr["Theme_id"].ToString());
+                        bDao.Theme = new ThemeDAL().GetThemeById(bDao.Theme_id);
+                    }
+                }
+                return bDao;
+            }
+            catch (SqlException ex)
+            {
+                LogException(ex, "Blog/BlogDAL/GetBlogById", ex.Message, 1);
+                return null;
+            }
+            catch(Exception ex)
+            {
+                LogException(ex, "Blog/BlogDAL/GetBlogById", ex.Message, 1);
+                return null;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+        
+        public Blog GetBlogByUserId(int userId)
+        {
+            try
+            {
+                FillData("BLOG_GetBlogByUserId", ref ds, new Dictionary<string,object>(){ {"@UserId", userId} });
                 Blog bDao = new Blog();
 
                 foreach (DataTable table in ds.Tables)
@@ -92,94 +114,32 @@ namespace ModuleBlog.DAL
                         bDao.Actif = bool.Parse(dr["Actif"].ToString());
                         bDao.Promotion = bool.Parse(dr["Promotion"].ToString());
                         bDao.Theme_id = int.Parse(dr["Theme_id"].ToString());
-                        bDao.Theme = GetThemeById(bDao.Theme_id);
+                        bDao.Theme = new ThemeDAL().GetThemeById(bDao.Theme_id);
                     }
                 }
-                con.Close();
                 return bDao;
             }
-                catch(Exception ex)
-                {
-                    con.Close();
-                    throw ex;
-                }
-            }
             catch (SqlException ex)
             {
-                throw ex;
+                LogException(ex, "Blog/BlogDAL/GetBlogByUserId", ex.Message, 1);
+                return null;
+            }
+            catch (Exception ex)
+            {
+                LogException(ex, "Blog/BlogDAL/GetBlogByUserId", ex.Message, 1);
+                return null;
+            }
+            finally
+            {
+                con.Close();
             }
         }
-
+        
         public List<Blog> GetBlogsByCategory(int categoryId)
         {
-            ds = new DataSet();
-
-            cmd = new SqlCommand();
-            cmd.CommandText = "BLOG_GetBlogsByCategory";
-            cmd.CommandTimeout = 0;
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Connection = con;
-            cmd.Parameters.AddWithValue("@CategoryId", categoryId);
-
-            da = new SqlDataAdapter(cmd);           
-
             try
             {
-                con.Open();
-                try
-                {
-                da.Fill(ds);
-                List<Blog> listBDao = new List<Blog>();
-                Blog bDao;
-
-                foreach (DataTable table in ds.Tables)
-                {
-                    foreach (DataRow dr in table.Rows)
-                    {
-                        bDao = new Blog();
-                        bDao.Blog_id = int.Parse(dr["Blog_id"].ToString());
-                        bDao.Utilisateur_id = int.Parse(dr["Utilisateur_id"].ToString());
-                        bDao.Categorie_id = int.Parse(dr["Categorie_id"].ToString());
-                        bDao.TitreBlog = dr["TitreBlog"].ToString();
-                        bDao.DateCreation = DateTime.Parse(dr["DateCreation"].ToString());
-                        bDao.Actif = bool.Parse(dr["Actif"].ToString());
-                        bDao.Promotion = bool.Parse(dr["Promotion"].ToString());
-                        bDao.Theme_id = int.Parse(dr["Theme_id"].ToString());
-                        bDao.Theme = GetThemeById(bDao.Theme_id);
-                        listBDao.Add(bDao);
-                    }
-                }
-                con.Close();
-                return listBDao;
-            }
-                catch(Exception ex)
-                {
-                    con.Close();
-                    throw ex;
-                }
-            }
-            catch (SqlException ex)
-            {
-                throw ex;
-            }
-        }
-        public List<Blog> GetBlogs()
-        {
-            ds = new DataSet();
-            
-            cmd = new SqlCommand();
-            cmd.CommandText = "BLOG_GetBlogs";
-            cmd.CommandTimeout = 0;
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Connection = con;
-            da = new SqlDataAdapter(cmd);
-
-            try
-            {
-                con.Open();
-                try
-                {
-                da.Fill(ds);
+                FillData("BLOG_GetBlogsByCategory", ref ds, new Dictionary<string, object>() { {"@CategoryId", categoryId} });
                 List<Blog> listBDao = new List<Blog>();
                 Blog bDao;
                 foreach (DataTable table in ds.Tables)
@@ -195,102 +155,36 @@ namespace ModuleBlog.DAL
                         bDao.Actif = bool.Parse(dr["Actif"].ToString());
                         bDao.Promotion = bool.Parse(dr["Promotion"].ToString());
                         bDao.Theme_id = int.Parse(dr["Theme_id"].ToString());
-                        bDao.Theme = GetThemeById(bDao.Theme_id);
-                        listBDao.Add(bDao);
-                    }
-                }
-
-                con.Close();
-                return listBDao;
-            }
-                catch(Exception ex)
-                {
-                    con.Close();
-                    throw ex;
-                }
-            }
-            catch (SqlException ex)
-            {
-                throw ex;
-            }
-        }
-
-        public List<Blog> GetBlogsBySearch(int categoryId, string keystring)
-        {
-            ds = new DataSet();
-
-            cmd= new SqlCommand();
-            cmd.CommandText = "BLOG_GetBlogsBySearch";
-            cmd.CommandTimeout = 0;
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Connection = con;
-            cmd.Parameters.AddWithValue("@Category", categoryId);
-            cmd.Parameters.AddWithValue("@KeyString", keystring);
-
-            da = new SqlDataAdapter(cmd);
-
-            try
-            {
-                con.Open();
-                try
-                {
-                da.Fill(ds);
-                List<Blog> listBDao = new List<Blog>();
-                Blog bDao;
-
-                foreach (DataTable table in ds.Tables)
-                {
-                    foreach (DataRow dr in table.Rows)
-                    {
-                        bDao = new Blog();
-                        bDao.Blog_id = int.Parse(dr["Blog_id"].ToString());
-                        bDao.Utilisateur_id = int.Parse(dr["Utilisateur_id"].ToString());
-                        bDao.Categorie_id = int.Parse(dr["Categorie_id"].ToString());
-                        bDao.TitreBlog = dr["TitreBlog"].ToString();
-                        bDao.DateCreation = DateTime.Parse(dr["DateCreation"].ToString());
-                        bDao.Actif = bool.Parse(dr["Actif"].ToString());
-                        bDao.Promotion = bool.Parse(dr["Promotion"].ToString());
-                        bDao.Theme_id = int.Parse(dr["Theme_id"].ToString());
+                        bDao.Theme = new ThemeDAL().GetThemeById(bDao.Theme_id);
                         listBDao.Add(bDao);
                     }
                 }
                 con.Close();
                 return listBDao;
             }
-                catch(Exception ex)
-                {
-                    con.Close();
-                    throw ex;
-                }
-            }
             catch (SqlException ex)
             {
-                throw ex;
+                LogException(ex, "Blog/BlogDAL/GetBlogsByCategory", ex.Message, 1);
+                return null;
             }
-           
+            catch(Exception ex)
+            {
+                LogException(ex, "Blog/BlogDAL/GetBlogsByCategory", ex.Message, 1);
+                return null;
+            }
+            finally
+            {
+                con.Close();
+            }
         }
-
+        
         public List<Blog> GetPromotedBlogs()
         {
-            ds = new DataSet();
-
-            cmd = new SqlCommand();
-            cmd.CommandText = "BLOG_GetPromotedBlogs";
-            cmd.CommandTimeout = 0;
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Connection = con;
-
-            da = new SqlDataAdapter(cmd);
-
             try
             {
-                con.Open();
-                try
-                {
-                da.Fill(ds);
+                FillData("BLOG_GetPromotedBlogs", ref ds);
                 List<Blog> listBDao = new List<Blog>();
                 Blog bDao;
-
                 foreach (DataTable table in ds.Tables)
                 {
                     foreach (DataRow dr in table.Rows)
@@ -307,233 +201,177 @@ namespace ModuleBlog.DAL
                         listBDao.Add(bDao);
                     }
                 }
-                con.Close();
                 return listBDao;
-            }
-                catch(Exception ex)
-                {
-                    con.Close();
-                    throw ex;
-                }
             }
             catch (SqlException ex)
             {
-                throw ex;
+                LogException(ex, "Blog/BlogDAL/GetPromotedBlogs", ex.Message, 1);
+                return null;
+            }
+            catch(Exception ex)
+            {
+                LogException(ex, "Blog/BlogDAL/GetPromotedBlogs", ex.Message, 1);
+                return null;
+            }
+            finally
+            {
+                con.Close();
             }
             
 
         }
-
-        public bool PromoteBlog(int userId, bool promoted)
+        
+        public List<Blog> GetBlogsBySearch(int categoryId, string keystring)
         {
-            ds = new DataSet();
-
-            cmd = new SqlCommand();
-            cmd.CommandText = "BLOG_PromoteBlog";
-            cmd.CommandTimeout = 0;
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Connection = con;
-            cmd.Parameters.AddWithValue("@UserId", userId);
-            cmd.Parameters.AddWithValue("@Promoted", promoted);
-
-            da = new SqlDataAdapter(cmd);
-
             try
             {
-                con.Open();
-                try
+                FillData("BLOG_GetBlogsBySearch", ref ds, 
+                    new Dictionary<string, object>() { {"@Category", categoryId}, {"@KeyString", keystring} });
+                List<Blog> listBDao = new List<Blog>();
+                Blog bDao;
+                foreach (DataTable table in ds.Tables)
                 {
-                da.Fill(ds);
-                con.Close();
-                return (ds.Tables[0].Rows[0]["Resultat"].ToString() == "OK");
-            }
-                catch(Exception ex)
-                {
-                    con.Close();
-                    return false;
+                    foreach (DataRow dr in table.Rows)
+                    {
+                        bDao = new Blog();
+                        bDao.Blog_id = int.Parse(dr["Blog_id"].ToString());
+                        bDao.Utilisateur_id = int.Parse(dr["Utilisateur_id"].ToString());
+                        bDao.Categorie_id = int.Parse(dr["Categorie_id"].ToString());
+                        bDao.TitreBlog = dr["TitreBlog"].ToString();
+                        bDao.DateCreation = DateTime.Parse(dr["DateCreation"].ToString());
+                        bDao.Actif = bool.Parse(dr["Actif"].ToString());
+                        bDao.Promotion = bool.Parse(dr["Promotion"].ToString());
+                        bDao.Theme_id = int.Parse(dr["Theme_id"].ToString());
+                        listBDao.Add(bDao);
+                    }
                 }
+                return listBDao;
             }
             catch (SqlException ex)
             {
+                LogException(ex, "Blog/BlogDAL/GetBlogsBySearch", ex.Message, 1);
+                return null;
+            }
+            catch(Exception ex)
+            {
+                LogException(ex, "Blog/BlogDAL/GetBlogsBySearch", ex.Message, 1);
+                return null;
+            }
+            finally
+            {
+                con.Close();
+            }
+           
+        }
+        
+        public bool AddBlog(Blog blog)
+        {
+            try
+            {            
+                Dictionary<string, object> listParams = new Dictionary<string, object>();            
+                listParams.Add("@UserId", blog.Utilisateur_id);
+                listParams.Add("@Title", blog.TitreBlog);
+                listParams.Add("@Category", blog.Categorie_id);
+                listParams.Add("@Theme", blog.Theme_id);
+                FillData("BLOG_AddBlog", ref ds, listParams);                
+                return (ds.Tables[0].Rows[0]["Resultat"].ToString() == "OK");
+            }
+            catch (SqlException ex)
+            {
+                LogException(ex, "Blog/BlogDAL/AddBlog", ex.Message, 1);
                 return false;
             }
+            catch(Exception ex)
+            {
+                LogException(ex, "Blog/BlogDAL/AdBlog", ex.Message, 1);
+                return false;
+            }
+            finally
+            {
+                con.Close();
+            }
         }
-
+        
         public bool UpdateBlog(Blog blog)
         {
-            ds = new DataSet();
-
-            cmd = new SqlCommand();
-            cmd.CommandText = "BLOG_UpdateBlog";
-            cmd.CommandTimeout = 0;
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Connection = con;
-            cmd.Parameters.AddWithValue("@UserId", blog.Utilisateur_id);
-            cmd.Parameters.AddWithValue("@Title", blog.TitreBlog);
-            cmd.Parameters.AddWithValue("@Category", blog.Categorie_id);
-            cmd.Parameters.AddWithValue("@Theme", blog.Theme_id);
-            cmd.Parameters.AddWithValue("@Actif", blog.Actif);
-
-            da = new SqlDataAdapter(cmd);
-           
             try
             {
-                con.Open();
-                try
-                {
-                da.Fill(ds);
-                con.Close();
+                Dictionary<string, object> listParams = new Dictionary<string, object>();
+                listParams.Add("@UserId", blog.Utilisateur_id);
+                listParams.Add("@Title", blog.TitreBlog);
+                listParams.Add("@Category", blog.Categorie_id);
+                listParams.Add("@Theme", blog.Theme_id);
+                listParams.Add("@Actif", blog.Actif);
+                FillData("BLOG_UpdateBlog", ref ds, listParams);
                 if (string.Equals(ds.Tables[0].Rows[0]["Resultat"].ToString(), "OK"))
                     return true;
                 else
                     return false;
             }
-                catch(Exception ex)
-                {
-                    con.Close();
-                    return false;
-                }
-            }
             catch (SqlException ex)
             {
+                LogException(ex, "Blog/BlogDAL/UpdateBLog", ex.Message, 1);
                 return false;
             }
+            catch(Exception ex)
+            {
+                LogException(ex, "Blog/BlogDAL/UpdateBLog", ex.Message, 1);
+                return false;
+            }
+            finally
+            {
+                con.Close();
+            }
         }
-
-
-        public bool AddBlog(Blog blog)
+        
+        public bool PromoteBlog(int userId, bool promoted)
         {
-            ds = new DataSet();
-
-            cmd = new SqlCommand();
-            cmd.CommandText = "BLOG_AddBlog";
-            cmd.CommandTimeout = 0;
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Connection = con;
-            cmd.Parameters.AddWithValue("@UserId", blog.Utilisateur_id);
-            cmd.Parameters.AddWithValue("@Title", blog.TitreBlog);
-            cmd.Parameters.AddWithValue("@Category", blog.Categorie_id);
-            cmd.Parameters.AddWithValue("@Theme", blog.Theme_id);
-
-            da = new SqlDataAdapter(cmd);
-
             try
             {
-                con.Open();
-                try
-                {
-                da.Fill(ds);
-                con.Close();
+                Dictionary<string, object> listParams = new Dictionary<string, object>();
+                listParams.Add("@UserId", userId);
+                listParams.Add("@Promoted", promoted);
+                FillData("BLOG_PromoteBlog", ref ds, listParams); 
                 return (ds.Tables[0].Rows[0]["Resultat"].ToString() == "OK");
             }
-                catch(Exception ex)
-                {
-                    con.Close();
-                    return false;
-                }
-            }
             catch (SqlException ex)
             {
+                LogException(ex, "Blog/BlogDAL/PromoteBlog", ex.Message, 1);
                 return false;
             }
-        }
-
-        public Theme GetThemeById(int themeId)
-        {
-            ds = new DataSet();
-
-            cmd = new SqlCommand();
-            cmd.CommandText = "BLOG_GetThemeById";
-            cmd.CommandTimeout = 0;
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Connection = con;
-            cmd.Parameters.AddWithValue("@ThemeId", themeId);
-
-
-            da = new SqlDataAdapter(cmd);
-
-            try
+            catch(Exception ex)
             {
-                if(con.State == ConnectionState.Closed)
-                    con.Open();
-                try
-                {
-                da.Fill(ds);
-                Theme tDao = new Theme();
-
-                foreach (DataTable table in ds.Tables)
-                {
-                    foreach (DataRow dr in table.Rows)
-                    {
-                        tDao.Theme_id = int.Parse(dr["Theme_id"].ToString());
-                        tDao.Couleur = dr["Couleur"].ToString();
-                        tDao.ImageChemin = dr["ImageChemin"].ToString();
-                    }
-                }
+                LogException(ex, "Blog/BlogDAL/PromoteBlog", ex.Message, 1);
                 con.Close();
-                return tDao;
+                return false;
             }
-                catch(Exception ex)
-                {
-                    con.Close();
-                    throw ex;
-                }
-            }
-            catch (SqlException ex)
+            finally
             {
-                throw ex;
+                con.Close();
             }
         }
-
-
-        public Blog GetBlogByUserId(int userId)
+        
+        public bool DeleteBlog(int userId)
         {
-            ds = new DataSet();
-
-            cmd = new SqlCommand();
-            cmd.CommandText = "BLOG_GetBlogByUserId";
-            cmd.CommandTimeout = 0;
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Connection = con;
-            cmd.Parameters.AddWithValue("@UserId", userId);
-
-            da = new SqlDataAdapter(cmd);
-
             try
             {
-                con.Open();
-                try
-                {
-                    da.Fill(ds);
-                    Blog bDao = new Blog();
-
-                    foreach (DataTable table in ds.Tables)
-                    {
-                        foreach (DataRow dr in table.Rows)
-                        {
-                            bDao.Blog_id = int.Parse(dr["Blog_id"].ToString());
-                            bDao.Utilisateur_id = int.Parse(dr["Utilisateur_id"].ToString());
-                            bDao.Categorie_id = int.Parse(dr["Categorie_id"].ToString());
-                            bDao.TitreBlog = dr["TitreBlog"].ToString();
-                            bDao.DateCreation = DateTime.Parse(dr["DateCreation"].ToString());
-                            bDao.Actif = bool.Parse(dr["Actif"].ToString());
-                            bDao.Promotion = bool.Parse(dr["Promotion"].ToString());
-                            bDao.Theme_id = int.Parse(dr["Theme_id"].ToString());
-                            bDao.Theme = GetThemeById(bDao.Theme_id);
-                        }
-                    }
-                    con.Close();
-                    return bDao;
-                }
-                catch (Exception ex)
-                {
-                    con.Close();
-                    throw ex;
-                }
+                FillData("BLOG_DeleteBlog", ref ds, new Dictionary<string, object>() { {"@userId", userId} });
+                return (ds.Tables[0].Rows[0]["Resultat"].ToString() == "OK");
             }
             catch (SqlException ex)
             {
-                throw ex;
+                LogException(ex, "Blog/BlogDAL/DeleteBlog", ex.Message, 1);
+                return false;
+            }
+            catch(Exception ex)
+            {
+                LogException(ex, "Blog/BlogDAL/DeleteBlog", ex.Message, 1);
+                con.Close();
+                return false;
+            }
+            finally
+            {
+                con.Close();
             }
         }
     }

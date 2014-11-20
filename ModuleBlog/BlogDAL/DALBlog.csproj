@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Logger">
+      <HintPath>C:\Users\Simon\Documents\DLL Logger\Logger.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -44,6 +47,7 @@
     <Compile Include="DAL\CategorieDAL.cs" />
     <Compile Include="DAL\CommentaireDAL.cs" />
     <Compile Include="DAL\Connector.cs" />
+    <Compile Include="DAL\ControllerDAL.cs" />
     <Compile Include="DAL\Models\Article.cs" />
     <Compile Include="DAL\Models\Articles.cs" />
     <Compile Include="DAL\Models\Blog.cs" />

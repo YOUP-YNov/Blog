@@ -7,421 +7,314 @@ using System.Data.SqlClient;
 using System.Configuration;
 using ModuleBlog.DAL.Models;
 using BlogDAL.DAL;
+using Logger;
 
 
 namespace ModuleBlog.DAL
 {
-    public class ArticleDAL
+    public class ArticleDAL : ControllerDAL
     {
-        string strcon = Connector.ConnectionString;
-        SqlCommand cmd;
-        SqlConnection con;
-        SqlDataAdapter da;
-        DataSet ds;
-
-        public ArticleDAL()
-        {
-            con = new SqlConnection(strcon);
-        }
-
         public Articles GetArticles(int idUtilisateur, int idBlog)
         {
-            ds = new DataSet();
-
-            cmd = new SqlCommand();
-            cmd.CommandText = "BLOG_GetArticles";
-            cmd.CommandTimeout = 0;
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Connection = con;
-            cmd.Parameters.AddWithValue("@UtilisateurId", idUtilisateur);
-            cmd.Parameters.AddWithValue("@BlogId", idBlog);
-
-            da = new SqlDataAdapter(cmd);
-
             try
             {
-                con.Open();
+                FillData("BLOG_GetArticles", ref ds, new Dictionary<string,object>(){ {"@UtilisateurId", idUtilisateur}, {"@BlogId", idBlog}});
+                Articles listaDao = new Articles();
+                foreach (DataTable table in ds.Tables)
+                {
+                    foreach (DataRow dr in table.Rows)
+                    {
+                        Article aDao = new Article();
 
-               try
-               {
-                   da.Fill(ds);
-                   con.Close();
-                   Articles listaDao = new Articles();
-                   foreach (DataTable table in ds.Tables)
-                   {
-                       foreach (DataRow dr in table.Rows)
-                       {
-                           Article aDao = new Article();
+                        aDao.Article_id = int.Parse(dr["Article_id"].ToString());
 
-                           aDao.Article_id = int.Parse(dr["Article_id"].ToString());
+                        if (!listaDao.Contains(aDao))
+                        {
+                            aDao.Blog_id = int.Parse(dr["Blog_id"].ToString());
+                            aDao.TitreArticle = dr["TitreArticle"].ToString();
+                            aDao.ImageChemin = dr["ImageChemin"].ToString();
+                            aDao.ContenuArticle = dr["ContenuArticle"].ToString();
 
-                           if (!listaDao.Contains(aDao))
-                           {
-                               aDao.Blog_id = int.Parse(dr["Blog_id"].ToString());
-                               aDao.TitreArticle = dr["TitreArticle"].ToString();
-                               aDao.ImageChemin = dr["ImageChemin"].ToString();
-                               aDao.ContenuArticle = dr["ContenuArticle"].ToString();
+                            string EvenementId = dr["Evenement_id"].ToString();
+                            if (!String.IsNullOrEmpty(EvenementId))
+                                aDao.Evenement_id = int.Parse(EvenementId);
 
-                               string EvenementId = dr["Evenement_id"].ToString();
-                               if (!String.IsNullOrEmpty(EvenementId))
-                                   aDao.Evenement_id = int.Parse(EvenementId);
+                            aDao.Actif = bool.Parse(dr["Actif"].ToString());
+                            aDao.DateCreation = Convert.ToDateTime(dr["DateCreation"].ToString());
 
-                               aDao.Actif = bool.Parse(dr["Actif"].ToString());
-                               aDao.DateCreation = Convert.ToDateTime(dr["DateCreation"].ToString());
+                            string DateModification = dr["DateModification"].ToString();
+                            if (!String.IsNullOrEmpty(DateModification))
+                                aDao.DateModification = Convert.ToDateTime(DateModification); aDao.Actif = bool.Parse(dr["Actif"].ToString());
 
-                               string DateModification = dr["DateModification"].ToString();
-                               if (!String.IsNullOrEmpty(DateModification))
-                                   aDao.DateModification = Convert.ToDateTime(DateModification); aDao.Actif = bool.Parse(dr["Actif"].ToString());
+                            aDao.IsLiked = Convert.ToBoolean(dr["IsLiked"].ToString());
+                            listaDao.Add(aDao);
+                        }
+                        else
+                            aDao = listaDao.Search(aDao.Article_id);
 
-                               aDao.IsLiked = Convert.ToBoolean(dr["IsLiked"].ToString());
-                               listaDao.Add(aDao);
-                           }
-                           else
-                               aDao = listaDao.Search(aDao.Article_id);
-
-                           string hashTagId = dr["HashTagArticle_id"].ToString();
-                           if (!String.IsNullOrEmpty(hashTagId))
-                           {
-                               HashTagArticle hashTagDao = new HashTagArticle();
-                               hashTagDao.HashTagArticle_id = int.Parse(hashTagId);
-                               hashTagDao.Mots = dr["Mots"].ToString();
-                               aDao.ListeTags.Add(hashTagDao);
-                           }
-                       }
-                   }
-                   return listaDao;
+                        string hashTagId = dr["HashTagArticle_id"].ToString();
+                        if (!String.IsNullOrEmpty(hashTagId))
+                        {
+                            HashTagArticle hashTagDao = new HashTagArticle();
+                            hashTagDao.HashTagArticle_id = int.Parse(hashTagId);
+                            hashTagDao.Mots = dr["Mots"].ToString();
+                            aDao.ListeTags.Add(hashTagDao);
+                        }
+                    }
                 }
-                catch(Exception ex)
-               {
-                   con.Close();
-                   throw ex;
-               }
+                return listaDao;
+
             }
             catch (SqlException ex)
             {
-                throw ex;
+                LogException(ex, "Blog/ArticleDAL/GetArticles", ex.Message, 1);
+                return null;
+            }
+            catch (Exception ex)
+            {
+                LogException(ex, "Blog/ArticleDAL/GetArticles", ex.Message, 1);
+                return null;
+            }
+            finally
+            {
+                con.Close();
             }
         }
 
         public Articles GetArticlesByTag(int utilisateurId, string tag)
         {
-            ds = new DataSet();
-
-            cmd = new SqlCommand();
-            cmd.CommandText = "BLOG_GetArticlesByTag";
-            cmd.CommandTimeout = 0;
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Connection = con;
-            cmd.Parameters.AddWithValue("@Utilisateur_id", utilisateurId);
-            cmd.Parameters.AddWithValue("@Tag", tag);
-
-            da = new SqlDataAdapter(cmd);
-
             try
             {
-                con.Open();
-                
-                try
+                FillData("BLOG_GetArticlesByTag", ref ds, new Dictionary<string,object>(){ {"@Utilisateur_id", utilisateurId}, {"@Tag", tag}});
+                Articles listaDao = new Articles();
+                foreach (DataTable table in ds.Tables)
                 {
-                    da.Fill(ds);
-                    con.Close();
-                    Articles listaDao = new Articles();
-                    foreach (DataTable table in ds.Tables)
+                    foreach (DataRow dr in table.Rows)
                     {
-                        foreach (DataRow dr in table.Rows)
+                        Article aDao = new Article();
+
+                        aDao.Article_id = int.Parse(dr["Article_id"].ToString());
+
+                        if (!listaDao.Contains(aDao))
                         {
-                            Article aDao = new Article();
+                            aDao.Blog_id = int.Parse(dr["Blog_id"].ToString());
+                            aDao.TitreArticle = dr["TitreArticle"].ToString();
+                            aDao.ImageChemin = dr["ImageChemin"].ToString();
+                            aDao.ContenuArticle = dr["ContenuArticle"].ToString();
 
-                            aDao.Article_id = int.Parse(dr["Article_id"].ToString());
+                            string EvenementId = dr["Evenement_id"].ToString();
+                            if (!String.IsNullOrEmpty(EvenementId))
+                                aDao.Evenement_id = int.Parse(EvenementId);
 
-                            if (!listaDao.Contains(aDao))
-                            {
-                                aDao.Blog_id = int.Parse(dr["Blog_id"].ToString());
-                                aDao.TitreArticle = dr["TitreArticle"].ToString();
-                                aDao.ImageChemin = dr["ImageChemin"].ToString();
-                                aDao.ContenuArticle = dr["ContenuArticle"].ToString();
+                            aDao.DateCreation = Convert.ToDateTime(dr["DateCreation"].ToString());
+                            string DateModification = dr["DateModification"].ToString();
+                            if (!String.IsNullOrEmpty(DateModification))
+                                aDao.DateModification = Convert.ToDateTime(DateModification);
+                            aDao.Actif = bool.Parse(dr["Actif"].ToString());
+                            aDao.IsLiked = Convert.ToBoolean(dr["IsLiked"].ToString());
+                            listaDao.Add(aDao);
+                        }
+                        else
+                            aDao = listaDao.Search(aDao.Article_id);
 
-                                string EvenementId = dr["Evenement_id"].ToString();
-                                if (!String.IsNullOrEmpty(EvenementId))
-                                    aDao.Evenement_id = int.Parse(EvenementId);
-
-                                aDao.DateCreation = Convert.ToDateTime(dr["DateCreation"].ToString());
-                                string DateModification = dr["DateModification"].ToString();
-                                if (!String.IsNullOrEmpty(DateModification))
-                                    aDao.DateModification = Convert.ToDateTime(DateModification);
-                                aDao.Actif = bool.Parse(dr["Actif"].ToString());
-                                aDao.IsLiked = Convert.ToBoolean(dr["IsLiked"].ToString());
-                                listaDao.Add(aDao);
-                            }
-                            else
-                                aDao = listaDao.Search(aDao.Article_id);
-
-                            string hashTagId = dr["HashTagArticle_id"].ToString();
-                            if (!String.IsNullOrEmpty(hashTagId))
-                            {
-                                HashTagArticle hashTagDao = new HashTagArticle();
-                                hashTagDao.HashTagArticle_id = int.Parse(hashTagId);
-                                hashTagDao.Mots = dr["Mots"].ToString();
-                                aDao.ListeTags.Add(hashTagDao);
-                            }
+                        string hashTagId = dr["HashTagArticle_id"].ToString();
+                        if (!String.IsNullOrEmpty(hashTagId))
+                        {
+                            HashTagArticle hashTagDao = new HashTagArticle();
+                            hashTagDao.HashTagArticle_id = int.Parse(hashTagId);
+                            hashTagDao.Mots = dr["Mots"].ToString();
+                            aDao.ListeTags.Add(hashTagDao);
                         }
                     }
-                    return listaDao;
                 }
-                catch(Exception ex)
-                {
-                    con.Close();
-                    throw ex;
-                }
+                return listaDao;
             }
             catch (SqlException ex)
             {
-                throw ex;
+                LogException(ex, "Blog/ArticleDAL/GetArticlesByTag", ex.Message, 1);
+                return null;
+            }
+            catch(Exception ex)
+            {
+                LogException(ex, "Blog/ArticleDAL/GetArticlesByTag", ex.Message, 1);
+                return null;
+            }
+            finally
+            {
+                con.Close();
             }
         }
 
         public bool LikeArticle(int utilisateurId, int articleId)
         {
-            ds = new DataSet();
-
-            cmd = new SqlCommand();
-            cmd.CommandText = "BLOG_LikeArticle";
-            cmd.CommandTimeout = 0;
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Connection = con;
-            cmd.Parameters.AddWithValue("@Utilisateur_id", utilisateurId);
-            cmd.Parameters.AddWithValue("@Article_id", articleId);
-
-            da = new SqlDataAdapter(cmd);
-
             try
             {
-                con.Open();
-                
-                try
-                {
-                    da.Fill(ds);
-                    con.Close();
-                    return (ds.Tables[0].Rows[0]["Resultat"].ToString() == "OK");
-                }
-                catch(Exception ex)
-                {
-                    con.Close();
-                    return false;
-                }
+                FillData("BLOG_LikeArticle", ref ds, new Dictionary<string,object>(){ {"@Utilisateur_id", utilisateurId}, {"@Article_id", articleId} });
+                return (ds.Tables[0].Rows[0]["Resultat"].ToString() == "OK");
             }
             catch (SqlException ex)
             {
+                LogException(ex, "Blog/ArticleDAL/LikeArticle", ex.Message, 1);
                 return false;
+            }
+            catch(Exception ex)
+            {
+                LogException(ex, "Blog/ArticleDAL/LikeArticle", ex.Message, 1);
+                return false;
+            }
+            finally
+            {
+                con.Close();
             }
         }
 
         public bool DislikeArticle(int utilisateurId, int articleId)
         {
-            ds = new DataSet();
-
-            cmd = new SqlCommand();
-            cmd.CommandText = "BLOG_DislikeArticle";
-            cmd.CommandTimeout = 0;
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Connection = con;
-            cmd.Parameters.AddWithValue("@Utilisateur_id", utilisateurId);
-            cmd.Parameters.AddWithValue("@Article_id", articleId);
-
-            da = new SqlDataAdapter(cmd);
-
             try
             {
-                con.Open();
-               
-                try
-                {
-                    da.Fill(ds);
-                    con.Close();
-                    return (ds.Tables[0].Rows[0]["Resultat"].ToString() == "OK");
-                }
-                catch(Exception ex)
-                {
-                    con.Close();
-                    return false;
-                }
+                FillData("BLOG_DislikeArticle", ref ds, new Dictionary<string,object>(){ {"@Utilisateur_id", utilisateurId}, {"@Article_id", articleId} });
+                return (ds.Tables[0].Rows[0]["Resultat"].ToString() == "OK");
+
             }
             catch (SqlException ex)
             {
+                LogException(ex, "Blog/ArticleDAL/DislikeArticle", ex.Message, 1);
                 return false;
+            }
+            catch(Exception ex)
+            {
+                LogException(ex, "Blog/ArticleDAL/DislikeArticle", ex.Message, 1);
+                return false;
+            }
+            finally
+            {
+                con.Close();
             }
         }
                 
         public bool UpdateArticle(Article article)
         {
-            ds = new DataSet();
-
-            cmd = new SqlCommand();
-            cmd.CommandText = "BLOG_UpdateArticle";
-            cmd.CommandTimeout = 0;
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Connection = con;
-            cmd.Parameters.AddWithValue("@Article_id", article.Article_id);
-            cmd.Parameters.AddWithValue("@TitreArticle", article.TitreArticle);
-            cmd.Parameters.AddWithValue("@ImageChemin", article.ImageChemin);
-            cmd.Parameters.AddWithValue("@ContenuArticle", article.ContenuArticle);
-            cmd.Parameters.AddWithValue("@Evenement_id", article.Evenement_id);
-
-            da = new SqlDataAdapter(cmd);
-           
             try
             {
-                con.Open();
-               
-                try
+                Dictionary<string, object> listParams = new Dictionary<string, object>();
+                listParams.Add("@Article_id", article.Article_id);
+                listParams.Add("@TitreArticle", article.TitreArticle);
+                listParams.Add("@ImageChemin", article.ImageChemin);
+                listParams.Add("@ContenuArticle", article.ContenuArticle);
+                listParams.Add("@Evenement_id", article.Evenement_id);
+                FillData("BLOG_UpdateArticle", ref ds, listParams);
+                string articleUpdatedId = ds.Tables[0].Rows[0].ItemArray[0].ToString();
+                if (articleUpdatedId != "PAS OK")
                 {
-                    da.Fill(ds);
-                    con.Close();
-
-                    string articleUpdatedId = ds.Tables[0].Rows[0].ItemArray[0].ToString();
-
-                    if (articleUpdatedId != "PAS OK")
+                    foreach (HashTagArticle hashtag in article.ListeTags)
                     {
-                        foreach (HashTagArticle hashtag in article.ListeTags)
-                        {
-                            hashtag.Article_id = int.Parse(articleUpdatedId);
-                            AddHashTag(hashtag, con);
-                        }
-
-                        return true;
+                        hashtag.Article_id = int.Parse(articleUpdatedId);
+                        AddHashTag(hashtag, con);
                     }
 
-                    return false;
+                    return true;
                 }
-                catch(Exception ex)
-                {
-                    con.Close();
-                    return false;
-                }
+                return false;
             }
             catch (SqlException ex)
             {
+                LogException(ex, "Blog/ArticleDAL/UpdateArticle", ex.Message, 1);
                 return false;
+            }
+            catch(Exception ex)
+            {
+                LogException(ex, "Blog/ArticleDAL/UpdateArticle", ex.Message, 1);
+                return false;
+            }
+            finally
+            {
+                con.Close();
             }
         }
         
         public string AddArticle(Article article)
         {
-            ds = new DataSet();
-
-            cmd = new SqlCommand();
-            cmd.CommandText = "BLOG_AddArticle";
-            cmd.CommandTimeout = 0;
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Connection = con;
-            cmd.Parameters.AddWithValue("@Blog_id", article.Blog_id);
-            cmd.Parameters.AddWithValue("@TitreArticle", article.TitreArticle);
-            cmd.Parameters.AddWithValue("@ImageChemin", article.ImageChemin);
-            cmd.Parameters.AddWithValue("@ContenuArticle", article.ContenuArticle);
-            cmd.Parameters.AddWithValue("@Evenement_id", article.Evenement_id);
-
-            da = new SqlDataAdapter(cmd);
-
             try
             {
-                con.Open();
-                
-                try
+                Dictionary<string, object> listParams = new Dictionary<string, object>();
+                listParams.Add("@Blog_id", article.Blog_id);
+                listParams.Add("@TitreArticle", article.TitreArticle);
+                listParams.Add("@ImageChemin", article.ImageChemin);
+                listParams.Add("@ContenuArticle", article.ContenuArticle);
+                listParams.Add("@Evenement_id", article.Evenement_id);
+                FillData("BLOG_AddArticle", ref ds, listParams);
+                string articleCreatedId = ds.Tables[0].Rows[0]["Resultat"].ToString();
+
+                if (articleCreatedId != "PAS OK")
                 {
-                    da.Fill(ds);
-                    con.Close();
-
-                    string articleCreatedId = ds.Tables[0].Rows[0]["Resultat"].ToString();
-
-                    if (articleCreatedId != "PAS OK")
+                    foreach (HashTagArticle hashtag in article.ListeTags)
                     {
-                        foreach (HashTagArticle hashtag in article.ListeTags)
-                        {
-                            hashtag.Article_id = int.Parse(articleCreatedId);
-                            AddHashTag(hashtag, con);
-                        }
+                        hashtag.Article_id = int.Parse(articleCreatedId);
+                        AddHashTag(hashtag, con);
                     }
+                }
 
-                    return articleCreatedId;
-                }
-                catch(Exception ex)
-                {
-                    con.Close();
-                    return ex.Message;
-                }
+                return articleCreatedId;
             }
             catch (SqlException ex)
             {
+                LogException(ex, "Blog/ArticleDAL/AddArticle", ex.Message, 1);
                 return ex.Message;
+            }
+            catch(Exception ex)
+            {
+                LogException(ex, "Blog/ArticleDAL/AddArticle", ex.Message, 1);
+                return ex.Message;
+            }
+            finally
+            {
+                con.Close();
             }
         }
 
         private void AddHashTag(HashTagArticle hashtag, SqlConnection con)
         {
-            SqlCommand command = new SqlCommand();
-            command.CommandText = "BLOG_AddHashTag";
-            command.CommandTimeout = 0;
-            command.CommandType = CommandType.StoredProcedure;
-            command.Connection = con;
-            command.Parameters.AddWithValue("@Article_id", hashtag.Article_id);
-            command.Parameters.AddWithValue("@Mots", hashtag.Mots);
-
-            SqlDataAdapter da = new SqlDataAdapter(command);
-            DataSet ds = new DataSet();
-
             try
             {
-                con.Open();
-                
-                try
-                {
-                    da.Fill(ds);
-                    string articleCreatedId = ds.Tables[0].Rows[0]["Resultat"].ToString();
-                }
-                catch(Exception ex)
-                {
-                    con.Close();
-                    throw ex;
-                }
+                FillData("BLOG_AddHashTag", ref ds, new Dictionary<string,object>(){ {"@Article_id", hashtag.Article_id}, {"@Mots", hashtag.Mots} });                
+                string articleCreatedId = ds.Tables[0].Rows[0]["Resultat"].ToString();
             }
             catch (SqlException ex)
-            { 
+            {
+                LogException(ex, "Blog/ArticleDAL/AddHashTag", ex.Message, 1);
                 throw ex;
+            }
+            catch(Exception ex)
+            {
+                LogException(ex, "Blog/ArticleDAL/AddHashTag", ex.Message, 1);
+                throw ex;
+            }
+            finally
+            {
+                con.Close();
             }
         }
 
         public bool DeleteArticle(int articleId)
         {
-            ds = new DataSet();
-
-            cmd = new SqlCommand();
-            cmd.CommandText = "BLOG_DeleteArticle";
-            cmd.CommandTimeout = 0;
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Connection = con;
-            cmd.Parameters.AddWithValue("@ArticleId", articleId);
-
-            da = new SqlDataAdapter(cmd);
-
             try
             {
-                con.Open();
-                
-                try
-                {
-                    da.Fill(ds);
-                    con.Close();
-                    return (ds.Tables[0].Rows[0]["Resultat"].ToString() == "OK");
-                }
-                catch(Exception ex)
-                {
-                    con.Close();
-                    return false;
-                }
+                FillData("BLOG_DeleteArticle", ref ds, new Dictionary<string, object>() { { "@ArticleId", articleId } });              
+                return (ds.Tables[0].Rows[0]["Resultat"].ToString() == "OK");
             }
             catch (SqlException ex)
             {
+                LogException(ex, "Blog/ArticleDAL/DeleteArticle", ex.Message, 1);
                 return false;
+            }
+            catch(Exception ex)
+            {
+                LogException(ex, "Blog/ArticleDAL/DeleteArticle", ex.Message, 1);
+                return false;
+            }
+            finally
+            {
+                con.Close();
             }
         }
 
@@ -431,36 +324,24 @@ namespace ModuleBlog.DAL
          * **/
         public string DeleteArticleForReal(int articleId)
         {
-            ds = new DataSet();
-
-            cmd = new SqlCommand();
-            cmd.CommandText = "BLOG_DeleteArticleForReal";
-            cmd.CommandTimeout = 0;
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Connection = con;
-            cmd.Parameters.AddWithValue("@Article_id", articleId);
-
-            da = new SqlDataAdapter(cmd);
-
             try
             {
-                con.Open();
-               
-                try
-                {
-                    da.Fill(ds);
-                    con.Close();
-                    return ds.Tables[0].Rows[0]["Resultat"].ToString();
-                }
-                catch (Exception ex)
-                {
-                    con.Close();
-                    return ex.Message;
-                }
+                FillData("BLOG_DeleteArticleForReal", ref ds, new Dictionary<string, object>() { { "@Article_id", articleId } });
+                return ds.Tables[0].Rows[0]["Resultat"].ToString();
             }
             catch (SqlException ex)
             {
+                LogException(ex, "Blog/ArticleDAL/DeleteArticleForReal", ex.Message, 1);
                 return ex.Message;
+            }
+            catch (Exception ex)
+            {
+                LogException(ex, "Blog/ArticleDAL/DeleteArticleForReal", ex.Message, 1);
+                return ex.Message;
+            }
+            finally
+            {
+                con.Close();
             }
         }
 

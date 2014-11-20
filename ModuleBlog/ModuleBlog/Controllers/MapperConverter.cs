@@ -12,12 +12,28 @@ namespace ModuleBlog.Controllers
     {
         public IEnumerable<TDest> Convert<TSource, TDest>(IEnumerable<TSource> element)
         {
-            return Mapper.Map<IEnumerable<TSource>, IEnumerable<TDest>>(element);
+            try
+            {
+                return Mapper.Map<IEnumerable<TSource>, IEnumerable<TDest>>(element);
+            }
+            catch(AutoMapperMappingException)
+            {
+                // TODO LOGGER
+                return default(IEnumerable<TDest>);
+            }
         }
 
         public TDest Convert<TSource, TDest>(TSource element)
         {
-            return Mapper.Map<TSource, TDest>(element);
+            try
+            {
+                return Mapper.Map<TSource, TDest>(element);
+            }
+            catch (AutoMapperMappingException)
+            {
+                // TODO LOGGER
+                return default(TDest);
+            }
         }
     }
 }
