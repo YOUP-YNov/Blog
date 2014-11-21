@@ -214,7 +214,7 @@ namespace ModuleBlog.DAL
                 con.Close();
             }
         }
-
+                
         /// <summary>
         /// Mise  à jour d'un article
         /// </summary>
@@ -264,12 +264,11 @@ namespace ModuleBlog.DAL
         }
 
         /// <summary>
-        /// Ajout d'un article
+        /// Ajout d'un article avec évènement
         /// </summary>
         /// <param name="article">article</param>
         /// <returns>True si ajout / False sinon</returns>
-
-        public string AddArticle(Article article)
+        public string AddArticleWithEvent(Article article)
         {
             try
             {
@@ -279,7 +278,7 @@ namespace ModuleBlog.DAL
                 listParams.Add("@ImageChemin", article.ImageChemin);
                 listParams.Add("@ContenuArticle", article.ContenuArticle);
                 listParams.Add("@Evenement_id", article.Evenement_id);
-                FillData("BLOG_AddArticle", ref ds, listParams);
+                FillData("BLOG_AddArticleWithEvent", ref ds, listParams);
                 string articleCreatedId = ds.Tables[0].Rows[0]["Resultat"].ToString();
 
                 con.Close();
@@ -312,11 +311,51 @@ namespace ModuleBlog.DAL
         }
 
         /// <summary>
-        /// Ajout de hastag
+        /// Ajout d'un article
         /// </summary>
-        /// <param name="hashtag">hashTagArticle</param>
-        /// <param name="con">connexion sql</param>
-        /// <returns></returns>
+        /// <param name="article">article</param>
+        /// <returns>True si ajout / False sinon</returns>
+
+        public string AddArticle(Article article)
+        {
+            try
+            {
+                Dictionary<string, object> listParams = new Dictionary<string, object>();
+                listParams.Add("@Blog_id", article.Blog_id);
+                listParams.Add("@TitreArticle", article.TitreArticle);
+                listParams.Add("@ImageChemin", article.ImageChemin);
+                listParams.Add("@ContenuArticle", article.ContenuArticle);
+                FillData("BLOG_AddArticle", ref ds, listParams);
+                string articleCreatedId = ds.Tables[0].Rows[0]["Resultat"].ToString();
+
+                con.Close();
+
+                if (articleCreatedId != "PAS OK")
+                {
+                    foreach (HashTagArticle hashtag in article.ListeTags)
+                    {
+                        hashtag.Article_id = int.Parse(articleCreatedId);
+                        AddHashTag(hashtag, con);
+                    }
+                }
+
+                return articleCreatedId;
+            }
+            catch (SqlException ex)
+            {
+                LogException(ex, "Blog/ArticleDAL/AddArticle", ex.Message, 1);
+                return ex.Message;
+            }
+            catch (Exception ex)
+            {
+                LogException(ex, "Blog/ArticleDAL/AddArticle", ex.Message, 1);
+                return ex.Message;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
 
         private void AddHashTag(HashTagArticle hashtag, SqlConnection con)
         {
