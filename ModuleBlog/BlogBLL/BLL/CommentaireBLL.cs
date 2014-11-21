@@ -27,7 +27,6 @@ namespace ModuleBlog.BLL
             List<ModuleBlog.DAL.Models.Commentaire> listCommentaireDao = commentaireDAL.GetCommentaires(articleId);
             if (listCommentaireDao.Count > 0)
             {
-                Mapper.CreateMap<ModuleBlog.DAL.Models.Commentaire, ModuleBlog.BLL.Models.Commentaire>();
                 List<ModuleBlog.BLL.Models.Commentaire> listCommentaireBLL = Mapper.Map<List<ModuleBlog.DAL.Models.Commentaire>, List<ModuleBlog.BLL.Models.Commentaire>>(listCommentaireDao);
                 return listCommentaireBLL;
             }
@@ -46,7 +45,6 @@ namespace ModuleBlog.BLL
         {
 
             ModuleBlog.DAL.Models.Commentaire commentaireDao = commentaireDAL.GetCommentaireById(commentaireId);
-            Mapper.CreateMap<ModuleBlog.DAL.Models.Commentaire, ModuleBlog.BLL.Models.Commentaire>();
             ModuleBlog.BLL.Models.Commentaire commentaireBLL = Mapper.Map<ModuleBlog.DAL.Models.Commentaire, ModuleBlog.BLL.Models.Commentaire>(commentaireDao);
             return commentaireBLL;
         }
@@ -58,7 +56,6 @@ namespace ModuleBlog.BLL
         /// <returns></returns>
         public bool AddCommentaire(ModuleBlog.BLL.Models.Commentaire commentaireBLL)
         {
-            Mapper.CreateMap<ModuleBlog.BLL.Models.Commentaire, ModuleBlog.DAL.Models.Commentaire>();
             ModuleBlog.DAL.Models.Commentaire commentaireDao = Mapper.Map<ModuleBlog.BLL.Models.Commentaire, ModuleBlog.DAL.Models.Commentaire>(commentaireBLL);
             return commentaireDAL.AddCommentaire(commentaireDao);
         }
@@ -70,7 +67,6 @@ namespace ModuleBlog.BLL
         /// <returns></returns>
         public bool UpdateCommentaire(ModuleBlog.BLL.Models.Commentaire commentaireBLL)
         {
-            Mapper.CreateMap<ModuleBlog.BLL.Models.Commentaire, ModuleBlog.DAL.Models.Commentaire>();
             ModuleBlog.DAL.Models.Commentaire commentaireDao = Mapper.Map<ModuleBlog.BLL.Models.Commentaire, ModuleBlog.DAL.Models.Commentaire>(commentaireBLL);
             return commentaireDAL.UpdateCommentaire(commentaireDao);
         }

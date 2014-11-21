@@ -33,9 +33,7 @@ namespace ModuleBlog.BLL
             ModuleBlog.DAL.Models.Theme themeDao = themeDal.GetThemeById(themeId);
             if (themeDao != null)
             {
-                Mapper.CreateMap<ModuleBlog.DAL.Models.Theme, ModuleBlog.BLL.Models.Theme>();
                 ModuleBlog.BLL.Models.Theme themeBll = Mapper.Map<ModuleBlog.DAL.Models.Theme, ModuleBlog.BLL.Models.Theme>(themeDao);
-
                 return themeBll;
             }
             return null;
@@ -50,9 +48,7 @@ namespace ModuleBlog.BLL
             List<ModuleBlog.DAL.Models.Theme> themeDao = themeDal.GetThemes();
             if (themeDao.Count > 0)
             {
-                Mapper.CreateMap<ModuleBlog.DAL.Models.Theme, ModuleBlog.BLL.Models.Theme>();
                 IEnumerable<ModuleBlog.BLL.Models.Theme> themeBll = Mapper.Map<IEnumerable<ModuleBlog.DAL.Models.Theme>, IEnumerable<ModuleBlog.BLL.Models.Theme>>(themeDao);
-
                 return themeBll;
             }
             return null;

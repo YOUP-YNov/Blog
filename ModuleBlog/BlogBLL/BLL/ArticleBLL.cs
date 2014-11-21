@@ -58,23 +58,16 @@ namespace ModuleBlog.BLL
         private ModuleBlog.BLL.Models.Articles Map(ModuleBlog.DAL.Models.Articles articlesToMap)
         {
             ModuleBlog.BLL.Models.Articles articlesBLL = new ModuleBlog.BLL.Models.Articles();
-
             if (articlesToMap.Count > 0) 
             {
-
                 foreach (ModuleBlog.DAL.Models.Article article in articlesToMap)
-                {
-                    Mapper.CreateMap<ModuleBlog.DAL.Models.HashTagArticle, ModuleBlog.BLL.Models.HashTagArticle>();
+                {                    
                     List<ModuleBlog.BLL.Models.HashTagArticle> hashTagsBLL = Mapper.Map<List<ModuleBlog.DAL.Models.HashTagArticle>, List<ModuleBlog.BLL.Models.HashTagArticle>>(article.ListeTags);
-
-                    Mapper.CreateMap<ModuleBlog.DAL.Models.Article, ModuleBlog.BLL.Models.Article>();
                     ModuleBlog.BLL.Models.Article articleBLL = Mapper.Map<ModuleBlog.DAL.Models.Article, ModuleBlog.BLL.Models.Article>(article);
-
                     articleBLL.ListeTags = hashTagsBLL;
                     articlesBLL.Add(articleBLL);
                 }
             }
-
             return articlesBLL;
         }
 
@@ -107,7 +100,6 @@ namespace ModuleBlog.BLL
         /// <returns></returns>
         public string AddArticle(ModuleBlog.BLL.Models.Article article)
         {
-            Mapper.CreateMap<ModuleBlog.BLL.Models.Article, ModuleBlog.DAL.Models.Article>();
             ModuleBlog.DAL.Models.Article articleDao = Mapper.Map<ModuleBlog.BLL.Models.Article, ModuleBlog.DAL.Models.Article>(article);
             return articleDal.AddArticle(articleDao);
         }
@@ -118,8 +110,7 @@ namespace ModuleBlog.BLL
         /// <param name="article">The article.</param>
         /// <returns></returns>
         public bool UpdateArticle(ModuleBlog.BLL.Models.Article article)
-        {
-            Mapper.CreateMap<ModuleBlog.BLL.Models.Article, ModuleBlog.DAL.Models.Article>();
+        {            
             ModuleBlog.DAL.Models.Article articleDao = Mapper.Map<ModuleBlog.BLL.Models.Article, ModuleBlog.DAL.Models.Article>(article);
             return articleDal.UpdateArticle(articleDao);
         }

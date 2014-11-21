@@ -31,9 +31,7 @@ namespace ModuleBlog.BLL
             List<ModuleBlog.DAL.Models.Categorie> categoriesDao = categoryDal.GetCategories();
             if (categoriesDao.Count > 0)
             {
-                Mapper.CreateMap<ModuleBlog.DAL.Models.Categorie, ModuleBlog.BLL.Models.Categorie>();
                 List<ModuleBlog.BLL.Models.Categorie> categoriesBll = Mapper.Map<List<ModuleBlog.DAL.Models.Categorie>, List<ModuleBlog.BLL.Models.Categorie>>(categoriesDao);
-
                 return categoriesBll;
             }
             return null;

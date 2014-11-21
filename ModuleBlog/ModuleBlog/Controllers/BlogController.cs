@@ -11,11 +11,11 @@ namespace ModuleBlog.Controllers
 {
     public class BlogController : MapperConverter
     {
-        private BlogBLL blogBLL;
+        private BLL.BlogBLL blogBLL;
 
         public BlogController()
         {
-            blogBLL = new BlogBLL();
+            blogBLL = new BLL.BlogBLL();
         }
 
         // GET: api/Blog

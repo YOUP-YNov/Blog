@@ -25,10 +25,8 @@ namespace ModuleBlog.BLL
         {
             ModuleBlog.DAL.Models.Publicite adDao = adDal.GetAdByBlogId(id);
             if (adDao != null)
-            {
-                Mapper.CreateMap<ModuleBlog.DAL.Models.Publicite, ModuleBlog.BLL.Models.Publicite>();
+            {                
                 ModuleBlog.BLL.Models.Publicite adBll = Mapper.Map<ModuleBlog.DAL.Models.Publicite, ModuleBlog.BLL.Models.Publicite>(adDao);
-
                 return adBll;
             }
             return null;
@@ -41,7 +39,6 @@ namespace ModuleBlog.BLL
         /// <returns></returns>
         public bool AddAd(ModuleBlog.BLL.Models.Publicite ad)
         {
-            Mapper.CreateMap<ModuleBlog.BLL.Models.Publicite, ModuleBlog.DAL.Models.Publicite>();
             ModuleBlog.DAL.Models.Publicite adDao = Mapper.Map<ModuleBlog.BLL.Models.Publicite, ModuleBlog.DAL.Models.Publicite>(ad);
             return adDal.AddAd(adDao);
         }
@@ -53,7 +50,6 @@ namespace ModuleBlog.BLL
         /// <returns></returns>
         public bool UpdateAdd(ModuleBlog.BLL.Models.Publicite ad)
         {
-            Mapper.CreateMap<ModuleBlog.BLL.Models.Publicite, ModuleBlog.DAL.Models.Publicite>();
             ModuleBlog.DAL.Models.Publicite adDao = Mapper.Map<ModuleBlog.BLL.Models.Publicite, ModuleBlog.DAL.Models.Publicite>(ad);
             return adDal.UpdateAd(adDao);
         }
