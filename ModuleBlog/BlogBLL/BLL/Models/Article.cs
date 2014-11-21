@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace ModuleBlog.BLL.Models
 {
+    /// <summary>
+    /// Objet Article
+    /// </summary>
     public class Article
     {
         /// <summary>

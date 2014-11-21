@@ -1,6 +1,9 @@
 ﻿
 namespace ModuleBlog.BLL.Models
 {
+    /// <summary>
+    /// Objet Theme
+    /// </summary>
     public class Theme
     {
         /// <summary>

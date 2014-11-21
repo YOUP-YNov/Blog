@@ -5,23 +5,30 @@ using System.Collections.Generic;
 
 namespace ModuleBlog.BLL
 {
+    /// <summary>
+    /// Classe de gestion de la BLL pour Article
+    /// </summary>
     public class ArticleBLL
     {
         /// <summary>
-        /// The article dal
+        /// Instance de la DAL Article
         /// </summary>
         private ArticleDAL articleDal;
+        
+        /// <summary>
+        /// Constructeur
+        /// </summary>
         public ArticleBLL()
         {
             articleDal = new ArticleDAL();
         }
 
         /// <summary>
-        /// Gets the articles.
+        /// Récupérer les articles
         /// </summary>
-        /// <param name="idUtilisateur">The identifier utilisateur.</param>
-        /// <param name="idBlog">The identifier blog.</param>
-        /// <returns></returns>
+        /// <param name="idUtilisateur">Identifiant de l'utilisateur</param>
+        /// <param name="idBlog">Identifiant du blog</param>
+        /// <returns>Liste des articles du blog</returns>
         public ModuleBlog.BLL.Models.Articles GetArticles(int idUtilisateur, int idBlog)
         {
             ModuleBlog.DAL.Models.Articles articlesDao = articleDal.GetArticles(idUtilisateur, idBlog);
@@ -34,11 +41,11 @@ namespace ModuleBlog.BLL
         }
 
         /// <summary>
-        /// Gets the articles by tag.
+        /// Récupérer les articles par tag
         /// </summary>
-        /// <param name="idUtilisateur">The identifier utilisateur.</param>
-        /// <param name="tag">The tag.</param>
-        /// <returns></returns>
+        /// <param name="idUtilisateur">Identifiant de l'utilisateur</param>
+        /// <param name="tag">Le tag</param>
+        /// <returns>Liste des articles</returns>
         public ModuleBlog.BLL.Models.Articles GetArticlesByTag(int idUtilisateur, string tag)
         {
             ModuleBlog.DAL.Models.Articles articlesDao = articleDal.GetArticlesByTag(idUtilisateur, tag);
@@ -51,10 +58,10 @@ namespace ModuleBlog.BLL
         }
 
         /// <summary>
-        /// Maps the specified articles to map.
+        /// Mapper les articles de la couche DAL vers la couche BLL
         /// </summary>
         /// <param name="articlesToMap">The articles to map.</param>
-        /// <returns></returns>
+        /// <returns>Liste des articles</returns>
         private ModuleBlog.BLL.Models.Articles Map(ModuleBlog.DAL.Models.Articles articlesToMap)
         {
             ModuleBlog.BLL.Models.Articles articlesBLL = new ModuleBlog.BLL.Models.Articles();
@@ -72,32 +79,32 @@ namespace ModuleBlog.BLL
         }
 
         /// <summary>
-        /// Likes the article.
+        /// Aimer un article
         /// </summary>
-        /// <param name="idUtilisateur">The identifier utilisateur.</param>
-        /// <param name="idArticle">The identifier article.</param>
-        /// <returns></returns>
+        /// <param name="idUtilisateur">Identifiant de l'utilisateur</param>
+        /// <param name="idArticle">Identifiant de l'article</param>
+        /// <returns>True si la DAL a réussi / False sinon</returns>
         public bool LikeArticle(int idUtilisateur, int idArticle)
         {
             return articleDal.LikeArticle(idUtilisateur, idArticle);
         }
 
         /// <summary>
-        /// Dislikes the article.
+        /// Dislike un article
         /// </summary>
-        /// <param name="idUtilisateur">The identifier utilisateur.</param>
-        /// <param name="idArticle">The identifier article.</param>
-        /// <returns></returns>
+        /// <param name="idUtilisateur">Identifiant de l'utilisateur</param>
+        /// <param name="idArticle">Identifiant de l'article</param>
+        /// <returns>True si la DAL a réussi / False sinon</returns>
         public bool DislikeArticle(int idUtilisateur, int idArticle)
         {
             return articleDal.DislikeArticle(idUtilisateur, idArticle);
         }
 
         /// <summary>
-        /// Adds the article.
+        /// Ajouter un article
         /// </summary>
-        /// <param name="article">The article.</param>
-        /// <returns></returns>
+        /// <param name="article">l'article à ajouter</param>
+        /// <returns>Id de l'article ajouté</returns>
         public string AddArticle(ModuleBlog.BLL.Models.Article article)
         {
             ModuleBlog.DAL.Models.Article articleDao = Mapper.Map<ModuleBlog.BLL.Models.Article, ModuleBlog.DAL.Models.Article>(article);
@@ -105,10 +112,10 @@ namespace ModuleBlog.BLL
         }
 
         /// <summary>
-        /// Updates the article.
+        /// Mettre à jour un article
         /// </summary>
-        /// <param name="article">The article.</param>
-        /// <returns></returns>
+        /// <param name="article">L'article à mettre à jour</param>
+        /// <returns>True si DAL OK / False sinon</returns>
         public bool UpdateArticle(ModuleBlog.BLL.Models.Article article)
         {            
             ModuleBlog.DAL.Models.Article articleDao = Mapper.Map<ModuleBlog.BLL.Models.Article, ModuleBlog.DAL.Models.Article>(article);
@@ -116,10 +123,10 @@ namespace ModuleBlog.BLL
         }
 
         /// <summary>
-        /// Deletes the article.
+        /// Désactiver un article
         /// </summary>
-        /// <param name="idArticle">The identifier article.</param>
-        /// <returns></returns>
+        /// <param name="idArticle">L'identifiant de l'article</param>
+        /// <returns>True si DAL OK/ False sinon</returns>
         public bool DeleteArticle(int idArticle)
         {
             return articleDal.DeleteArticle(idArticle);

@@ -1,6 +1,9 @@
 ﻿
 namespace ModuleBlog.BLL.Models
 {
+    /// <summary>
+    /// Objet Hashtag
+    /// </summary>
     public class HashTagArticle
     {
         /// <summary>

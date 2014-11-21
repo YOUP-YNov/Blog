@@ -1,6 +1,9 @@
 ﻿
 namespace ModuleBlog.BLL.Models
 {
+    /// <summary>
+    /// Objet Publicite
+    /// </summary>
     public class Publicite
     {
         /// <summary>
