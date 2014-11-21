@@ -8,8 +8,15 @@ using BlogDAL.DAL;
 
 namespace ModuleBlog.DAL
 {
+    /// <summary>
+    /// DAL pour les blogs
+    /// </summary>
     public class BlogDAL : ControllerDAL
     {
+        /// <summary>
+        /// Récupérer la liste des blogs
+        /// </summary>
+        /// <returns>liste de blogs</returns>
         public List<Blog> GetBlogs()
         {
             try
@@ -51,7 +58,14 @@ namespace ModuleBlog.DAL
                 con.Close();
             }
         }
-        
+
+        /// <summary>
+        /// Récupérer un blog par Id
+        /// </summary>
+        /// <param name="idBlog">identifiant du blog</param>
+        /// <param name="userId">identifiant de l'utilisateur</param>
+        /// <returns>Blog</returns>
+
         public Blog GetBlogById(int idBlog, int userId)
         {
             try
@@ -91,7 +105,12 @@ namespace ModuleBlog.DAL
                 con.Close();
             }
         }
-        
+
+        /// <summary>
+        /// Récupérer le blog d'un utilisateur
+        /// </summary>
+        /// <param name="userId">identifiant de l'utilisateur</param>
+        /// <returns>Blog</returns>
         public Blog GetBlogByUserId(int userId)
         {
             try
@@ -131,7 +150,12 @@ namespace ModuleBlog.DAL
                 con.Close();
             }
         }
-        
+
+        /// <summary>
+        /// Récupérer les blogs d'une catégorie
+        /// </summary>
+        /// <param name="categoryId">identifiant de la catégorie</param>
+        /// <returns>Liste de blogs</returns>
         public List<Blog> GetBlogsByCategory(int categoryId)
         {
             try
@@ -174,7 +198,11 @@ namespace ModuleBlog.DAL
                 con.Close();
             }
         }
-        
+
+        /// <summary>
+        /// Récupérer les blogs promus
+        /// </summary>
+        /// <returns>Liste de blogs</returns>
         public List<Blog> GetPromotedBlogs()
         {
             try
@@ -217,7 +245,13 @@ namespace ModuleBlog.DAL
             
 
         }
-        
+
+        /// <summary>
+        /// Récupérer les blogs par recherche
+        /// </summary>
+        /// <param name="categoryId">identifiant de la catégorie</param>
+        /// <param name="keystring">mots-clé de la recherche</param>
+        /// <returns>Liste de blogs</returns>
         public List<Blog> GetBlogsBySearch(int categoryId, string keystring)
         {
             try
@@ -260,7 +294,12 @@ namespace ModuleBlog.DAL
             }
            
         }
-        
+
+        /// <summary>
+        /// Ajout d'un blog
+        /// </summary>
+        /// <param name="blog">blog</param>
+        /// <returns>True si ajout / False sinon</returns>
         public bool AddBlog(Blog blog)
         {
             try
@@ -288,7 +327,12 @@ namespace ModuleBlog.DAL
                 con.Close();
             }
         }
-        
+
+        /// <summary>
+        /// Mise à jour d'un blog
+        /// </summary>
+        /// <param name="blog">blog</param>
+        /// <returns>True si update / False sinon</returns>
         public bool UpdateBlog(Blog blog)
         {
             try
@@ -320,7 +364,13 @@ namespace ModuleBlog.DAL
                 con.Close();
             }
         }
-        
+
+        /// <summary>
+        /// Promouvoir un blog
+        /// </summary>
+        /// <param name="userId">identifiant d'un utilisateur</param>
+        /// <param name="promoted">promotion</param>
+        /// <returns>True si promu / False sinon</returns>
         public bool PromoteBlog(int userId, bool promoted)
         {
             try
@@ -347,7 +397,12 @@ namespace ModuleBlog.DAL
                 con.Close();
             }
         }
-        
+
+        /// <summary>
+        /// Désactivation d'un blog
+        /// </summary>
+        /// <param name="userId">identifiant d'un utilisateur</param>
+        /// <returns>True si désactivé / False sinon</returns>
         public bool DeleteBlog(int userId)
         {
             try

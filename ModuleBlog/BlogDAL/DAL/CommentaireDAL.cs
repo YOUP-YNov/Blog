@@ -10,8 +10,16 @@ using BlogDAL.DAL;
 
 namespace ModuleBlog.DAL
 {
+    /// <summary>
+    /// DAL pour les commentaires
+    /// </summary>
     public class CommentaireDAL : ControllerDAL
     {
+        /// <summary>
+        /// Récupérer la liste des commentaires d'un article
+        /// </summary>
+        /// <param name="articleId">identifiant d'un article</param>
+        /// <returns>liste des commentaires</returns>
         public List<Commentaire> GetCommentaires(int articleId)
         {
             try
@@ -56,6 +64,11 @@ namespace ModuleBlog.DAL
 
         }
 
+        /// <summary>
+        /// Récupérer un commentaire
+        /// </summary>
+        /// <param name="commentaireId">identifiant d'un commentaire</param>
+        /// <returns>commentaire</returns>
         public Commentaire GetCommentaireById(int commentaireId)
         {
             try
@@ -96,6 +109,11 @@ namespace ModuleBlog.DAL
             }
         }
 
+        /// <summary>
+        /// Ajout d'un commentaire
+        /// </summary>
+        /// <param name="commentaire">commentaire</param>
+        /// <returns>True si ajout / False sinon</returns>
         public bool AddCommentaire(Commentaire commentaire)
         {
             try
@@ -123,6 +141,11 @@ namespace ModuleBlog.DAL
             }
         }
 
+        /// <summary>
+        /// Mise à jour d'un commentaire
+        /// </summary>
+        /// <param name="commentaire">commentaire</param>
+        /// <returns>True si update / False sinon</returns>
         public bool UpdateCommentaire(Commentaire commentaire)
         {
             try
@@ -150,6 +173,12 @@ namespace ModuleBlog.DAL
             }
         }
 
+        /// <summary>
+        /// Report d'un commentaire
+        /// </summary>
+        /// <param name="commentId">identifiant du commentaire</param>
+        /// <param name="userId">identifiant de l'utilisateur</param>
+        /// <returns>True si report / False sinon</returns>
         public bool ReportCommentaire(int commentId,int userId )
         {
             try
@@ -172,8 +201,13 @@ namespace ModuleBlog.DAL
             {
                 con.Close();
             }
-        }        
-        
+        }
+
+        /// <summary>
+        /// désactivation d'un commentaire
+        /// </summary>
+        /// <param name="commentId">identifiant du commentaire</param>
+        /// <returns>True si désactivation / False sinon</returns>
         public bool DeleteCommentaire(int commentaireId)
         {
             try

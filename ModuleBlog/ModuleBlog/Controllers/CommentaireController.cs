@@ -65,7 +65,7 @@ namespace ModuleBlog.Controllers
                     try
                     {
                         UriBuilder uriB = new UriBuilder();
-                        uriB.Host = "www.youp-recherche.azurewebsites.net";
+                        uriB.Host = "youp-recherche.azurewebsites.net";
                         uriB.Path = "add/get_blogpostcomment";
                         uriB.Query = string.Format("id={0}&content={1}&author={2}", comment.Commentaire_id,comment.ContenuCommentaire,comment.Utilisateur_id);
                         HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uriB.Uri);
@@ -118,7 +118,7 @@ namespace ModuleBlog.Controllers
                     try
                     {
                         UriBuilder uriB = new UriBuilder();
-                        uriB.Host = "www.youp-recherche.azurewebsites.net";
+                        uriB.Host = "youp-recherche.azurewebsites.net";
                         uriB.Path = "update/get_blogpostcomment";
                         uriB.Query = string.Format("id={0}&content={1}&author={2}", comment.Commentaire_id, comment.ContenuCommentaire, comment.Utilisateur_id);
                         HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uriB.Uri);
@@ -151,7 +151,7 @@ namespace ModuleBlog.Controllers
                 try
                 {
                     UriBuilder uriB = new UriBuilder();
-                    uriB.Host = "www.youp-recherche.azurewebsites.net";
+                    uriB.Host = "youp-recherche.azurewebsites.net";
                     uriB.Path = "remove/get_blogpostcomment";
                     uriB.Query = string.Format("id={0}", id);
                     HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uriB.Uri);
