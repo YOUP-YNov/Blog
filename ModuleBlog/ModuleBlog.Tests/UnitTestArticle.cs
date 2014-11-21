@@ -40,7 +40,7 @@ namespace ModuleBlog.Tests
             hashTag1.Mots = "Tag1";
             articleToInsert.ListeTags.Add(hashTag1);
 
-            ArticleId = int.Parse(ArticleDal.AddArticleWithEvent(articleToInsert));
+            ArticleId = int.Parse(ArticleDal.AddArticle(articleToInsert));
         }
 
 
@@ -71,7 +71,7 @@ namespace ModuleBlog.Tests
         /// Tests the insert article.
         /// </summary>
         [TestMethod]
-        public void TestInsertArticleWithEvent()
+        public void TestInsertArticle()
         {
             Article articleToInsert = new Article();
             articleToInsert.Blog_id = 4;
@@ -80,7 +80,7 @@ namespace ModuleBlog.Tests
             articleToInsert.ImageChemin = "";
             articleToInsert.Evenement_id = 2;
 
-            string id = ArticleDal.AddArticleWithEvent(articleToInsert);
+            string id = ArticleDal.AddArticle(articleToInsert);
 
             Article articleAdded = ArticleDal.GetArticles(1, 4).Search(int.Parse(id));
             Assert.AreEqual(articleToInsert.Blog_id, articleAdded.Blog_id);
@@ -88,20 +88,6 @@ namespace ModuleBlog.Tests
             Assert.AreEqual(articleToInsert.TitreArticle, articleAdded.TitreArticle);
             Assert.AreEqual(articleToInsert.ImageChemin, articleAdded.ImageChemin);
             Assert.AreEqual(articleToInsert.Evenement_id, articleAdded.Evenement_id);
-        }
-
-        [TestMethod]
-        public void TestInsertArticle()
-        {
-            Article articleToInsert = new Article();
-            articleToInsert.Blog_id = 128;
-            articleToInsert.ContenuArticle = "Contenu d'un article inséré pour les tests";
-            articleToInsert.TitreArticle = "Article de test";
-            articleToInsert.ImageChemin = "";
-
-            string id = ArticleDal.AddArticle(articleToInsert);
-
-            Assert.IsNotNull(id);
         }
 
         /// <summary>
@@ -129,7 +115,7 @@ namespace ModuleBlog.Tests
             articleToInsert.ListeTags.Add(hashTag2);
             articleToInsert.ListeTags.Add(hashTag3);
 
-            string id = ArticleDal.AddArticleWithEvent(articleToInsert);
+            string id = ArticleDal.AddArticle(articleToInsert);
 
             Article articleAdded = ArticleDal.GetArticles(1, 4).Search(int.Parse(id));
             Assert.AreEqual(articleToInsert.Blog_id, articleAdded.Blog_id);

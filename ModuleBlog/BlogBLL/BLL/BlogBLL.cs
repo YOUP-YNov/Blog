@@ -5,12 +5,18 @@ using AutoMapper;
 
 namespace ModuleBlog.BLL
 {
+    /// <summary>
+    /// Classe de gestion des Blogs sur la couche BLL
+    /// </summary>
     public class BlogBLL
     {
+        /// <summary>
+        /// Instance de la couche DAL des blogs
+        /// </summary>
         private ModuleBlog.DAL.BlogDAL blogDAL;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BlogBLL"/> class.
+        /// Initialise une nouvelle instance de la classe <see cref="BlogBLL"/>.
         /// </summary>
         public BlogBLL()
         {
@@ -18,21 +24,21 @@ namespace ModuleBlog.BLL
         }
 
         /// <summary>
-        /// Deletes the blog.
+        /// Désactive un blog
         /// </summary>
-        /// <param name="userId">The user identifier.</param>
-        /// <returns></returns>
+        /// <param name="userId">L'identifiant de l'utilisateur</param>
+        /// <returns>True si DAL OK / False sinon</returns>
         public bool DeleteBlog(int userId)
         {
             return blogDAL.DeleteBlog(userId);
         }
 
         /// <summary>
-        /// Gets the blog by identifier.
+        /// Récupérer un blog par son identifiant
         /// </summary>
-        /// <param name="idBlog">The identifier blog.</param>
-        /// <param name="userId">The user identifier.</param>
-        /// <returns></returns>
+        /// <param name="idBlog">identifiant du blog</param>
+        /// <param name="userId">identifiant de l'utilisateur<param>
+        /// <returns>Blog</returns>
         public ModuleBlog.BLL.Models.Blog GetBlogById(int idBlog, int userId)
         {
             ModuleBlog.DAL.Models.Blog blogDao = blogDAL.GetBlogById(idBlog, userId);
@@ -41,10 +47,10 @@ namespace ModuleBlog.BLL
         }
 
         /// <summary>
-        /// Gets the blogs by category.
+        /// Récupérer les blogs pour une catégorie
         /// </summary>
-        /// <param name="categoryId">The category identifier.</param>
-        /// <returns></returns>
+        /// <param name="categoryId">identifiant de la catégorie</param>
+        /// <returns>Liste des blogs de la catégorie</returns>
         public List<ModuleBlog.BLL.Models.Blog> GetBlogsByCategory(int categoryId)
         {
             List<ModuleBlog.DAL.Models.Blog> blogsDao = blogDAL.GetBlogsByCategory(categoryId);
@@ -57,9 +63,9 @@ namespace ModuleBlog.BLL
         }
 
         /// <summary>
-        /// Gets the blogs.
+        /// Récupérer tous les blogs
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Liste des blogs</returns>
         public List<ModuleBlog.BLL.Models.Blog> GetBlogs()
         {
             List<ModuleBlog.DAL.Models.Blog> blogsDao = blogDAL.GetBlogs();
@@ -72,11 +78,11 @@ namespace ModuleBlog.BLL
         }
 
         /// <summary>
-        /// Gets the blogs by search.
+        /// Récupérer les blogs selon une recherche
         /// </summary>
-        /// <param name="categoryId">The category identifier.</param>
-        /// <param name="keystring">The keystring.</param>
-        /// <returns></returns>
+        /// <param name="categoryId">identifiant de la catégorie</param>
+        /// <param name="keystring">chaine de caractère à rechercher</param>
+        /// <returns>Liste des blogs</returns>
         public List<ModuleBlog.BLL.Models.Blog> GetBlogsBySearch(int categoryId, string keystring)
         {
             List<ModuleBlog.DAL.Models.Blog> blogsDao = blogDAL.GetBlogsBySearch(categoryId, keystring);
@@ -89,9 +95,9 @@ namespace ModuleBlog.BLL
         }
 
         /// <summary>
-        /// Gets the promoted blogs.
+        /// Récupérer les blogs promus
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Liste des blogs</returns>
         public List<ModuleBlog.BLL.Models.Blog> GetPromotedBlogs()
         {
             List<ModuleBlog.DAL.Models.Blog> blogsDao = blogDAL.GetPromotedBlogs();
@@ -104,10 +110,10 @@ namespace ModuleBlog.BLL
         }
 
         /// <summary>
-        /// Promotes the blog.
+        /// Promouvoir un blog
         /// </summary>
-        /// <param name="userId">The user identifier.</param>
-        /// <param name="promoted">if set to <c>true</c> [promoted].</param>
+        /// <param name="userId">identifiant de l'utilisateur</param>
+        /// <param name="promoted"><c>true</c> si à promouvoir, <c>false</c> pour enlever le privilège</param>
         /// <returns></returns>
         public bool PromoteBlog(int userId, bool promoted)
         {
@@ -115,10 +121,10 @@ namespace ModuleBlog.BLL
         }
 
         /// <summary>
-        /// Updates the blog.
+        /// Mettre à jour un blog
         /// </summary>
-        /// <param name="blog">The blog.</param>
-        /// <returns></returns>
+        /// <param name="blog">Blog à mettre à jour</param>
+        /// <returns>True si DAL OK / False sinon</returns>
         public bool UpdateBlog(ModuleBlog.BLL.Models.Blog blog)
         {   
             ModuleBlog.DAL.Models.Blog blogDao = Mapper.Map<ModuleBlog.BLL.Models.Blog, ModuleBlog.DAL.Models.Blog>(blog);
@@ -127,10 +133,10 @@ namespace ModuleBlog.BLL
         }
 
         /// <summary>
-        /// Adds the blog.
+        /// Ajouter un blog
         /// </summary>
-        /// <param name="blog">The blog.</param>
-        /// <returns></returns>
+        /// <param name="blog">Blog à ajouter</param>
+        /// <returns>True si DAL OK / False sinon</returns>
         public bool AddBlog(ModuleBlog.BLL.Models.Blog blog)
         {   
             ModuleBlog.DAL.Models.Blog blogDao = Mapper.Map<ModuleBlog.BLL.Models.Blog, ModuleBlog.DAL.Models.Blog>(blog);
@@ -139,10 +145,10 @@ namespace ModuleBlog.BLL
         }
 
         /// <summary>
-        /// Gets the theme by identifier.
+        /// Récupérer le thème par un identifiant
         /// </summary>
-        /// <param name="themeId">The theme identifier.</param>
-        /// <returns></returns>
+        /// <param name="themeId">identifiant du thème</param>
+        /// <returns>Theme</returns>
         public ModuleBlog.BLL.Models.Theme GetThemeById(int themeId)
         {
             ModuleBlog.DAL.Models.Theme themeDao = new ThemeDAL().GetThemeById(themeId);
@@ -151,10 +157,10 @@ namespace ModuleBlog.BLL
         }
 
         /// <summary>
-        /// Gets the blog by user identifier.
+        /// Récupérer le blog d'un utilisateur
         /// </summary>
-        /// <param name="userId">The user identifier.</param>
-        /// <returns></returns>
+        /// <param name="userId">identifiant de l'utilisateur</param>
+        /// <returns>Blog</returns>
         public Models.Blog GetBlogByUserId(int userId)
         {
             ModuleBlog.DAL.Models.Blog blogDao = blogDAL.GetBlogByUserId(userId);

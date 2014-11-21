@@ -6,6 +6,9 @@ using System.Linq;
 
 namespace BlogDAL.DAL
 {
+    /// <summary>
+    /// Controller Dal
+    /// </summary>
     public class ControllerDAL
     {
         internal SqlCommand cmd;
@@ -23,11 +26,19 @@ namespace BlogDAL.DAL
             ds = new DataSet();
             cmd = new SqlCommand();
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Connection = con;
+            cmd.Connection = con;  
         }
 
+        /// <summary>
+        /// Remplissage de la dataset à partir de procédure stockée
+        /// </summary>
+        /// <param name="psText">nom de la procédure stockée</param>
+        /// <param name="ds">dataset</param>
+        /// <param name="listParameters">liste des paramètres</param>       
+        /// <returns></returns>
         public void FillData(string psText, ref DataSet ds, Dictionary<string, object> listParameters = null)
         {
+          
             cmd.Parameters.Clear();
             ds.Clear();
             cmd.CommandText = psText;

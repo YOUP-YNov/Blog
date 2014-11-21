@@ -8,6 +8,9 @@ using Logger;
 
 namespace ModuleBlog.BLL
 {
+    /// <summary>
+    /// Classe de configuration des mappages entre la couche DAL et BLL
+    /// </summary>
     public static class AutoMapperConfiguration
     {
         /// <summary>

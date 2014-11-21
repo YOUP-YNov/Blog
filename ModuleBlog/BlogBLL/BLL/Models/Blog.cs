@@ -3,6 +3,9 @@
 
 namespace ModuleBlog.BLL.Models
 {
+    /// <summary>
+    /// Objet Blog
+    /// </summary>
     public class Blog
     {
         /// <summary>

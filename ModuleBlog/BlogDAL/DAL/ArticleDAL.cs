@@ -8,6 +8,9 @@ using BlogDAL.DAL;
 
 namespace ModuleBlog.DAL
 {
+    /// <summary>
+    /// DAL pour les articles
+    /// </summary>
     public class ArticleDAL : ControllerDAL
     {
         public Articles GetArticles(int idUtilisateur, int idBlog)
@@ -80,6 +83,12 @@ namespace ModuleBlog.DAL
             }
         }
 
+        /// <summary>
+        /// Récupérer des articles par tag
+        /// </summary>
+        /// <param name="utilisateurId">identifiant de l'utilisateur</param>
+        /// <param name="tag">liste de tags</param>
+        /// <returns>articles</returns>
         public Articles GetArticlesByTag(int utilisateurId, string tag)
         {
             try
@@ -147,6 +156,12 @@ namespace ModuleBlog.DAL
             }
         }
 
+        /// <summary>
+        /// Like d'un article
+        /// </summary>
+        /// <param name="utilisateurId">identifiant de l'utilisateur</param>
+        /// <param name="articleId">identifiant de l'article</param>
+        /// <returns>True si like / False sinon</returns>
         public bool LikeArticle(int utilisateurId, int articleId)
         {
             try
@@ -170,6 +185,12 @@ namespace ModuleBlog.DAL
             }
         }
 
+        /// <summary>
+        /// DisLike d'un article
+        /// </summary>
+        /// <param name="utilisateurId">identifiant de l'utilisateur</param>
+        /// <param name="articleId">identifiant de l'article</param>
+        /// <returns>True si dislike / False sinon</returns>
         public bool DislikeArticle(int utilisateurId, int articleId)
         {
             try
@@ -194,6 +215,11 @@ namespace ModuleBlog.DAL
             }
         }
                 
+        /// <summary>
+        /// Mise  à jour d'un article
+        /// </summary>
+        /// <param name="article">article</param>
+        /// <returns>True si update / False sinon</returns>
         public bool UpdateArticle(Article article)
         {
             try
@@ -236,7 +262,12 @@ namespace ModuleBlog.DAL
                 con.Close();
             }
         }
-        
+
+        /// <summary>
+        /// Ajout d'un article avec évènement
+        /// </summary>
+        /// <param name="article">article</param>
+        /// <returns>True si ajout / False sinon</returns>
         public string AddArticleWithEvent(Article article)
         {
             try
@@ -279,6 +310,12 @@ namespace ModuleBlog.DAL
             }
         }
 
+        /// <summary>
+        /// Ajout d'un article
+        /// </summary>
+        /// <param name="article">article</param>
+        /// <returns>True si ajout / False sinon</returns>
+
         public string AddArticle(Article article)
         {
             try
@@ -320,9 +357,6 @@ namespace ModuleBlog.DAL
             }
         }
 
-
-
-
         private void AddHashTag(HashTagArticle hashtag, SqlConnection con)
         {
             try
@@ -345,6 +379,11 @@ namespace ModuleBlog.DAL
             }
         }
 
+        /// <summary>
+        /// Suppression d'un article
+        /// </summary>
+        /// <param name="articleId">identifiant article</param>
+        /// <returns>True si suppression / False sinon</returns>
         public bool DeleteArticle(int articleId)
         {
             try
