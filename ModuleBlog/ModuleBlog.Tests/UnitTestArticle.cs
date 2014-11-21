@@ -34,7 +34,7 @@ namespace ModuleBlog.Tests
             hashTag1.Mots = "Tag1";
             articleToInsert.ListeTags.Add(hashTag1);
 
-            ArticleId = int.Parse(ArticleDal.AddArticle(articleToInsert));
+            ArticleId = int.Parse(ArticleDal.AddArticleWithEvent(articleToInsert));
         }
 
 
@@ -65,7 +65,7 @@ namespace ModuleBlog.Tests
             articleToInsert.ImageChemin = "";
             articleToInsert.Evenement_id = 2;
 
-            string id = ArticleDal.AddArticle(articleToInsert);
+            string id = ArticleDal.AddArticleWithEvent(articleToInsert);
 
             Article articleAdded = ArticleDal.GetArticles(1, 4).Search(int.Parse(id));
             Assert.AreEqual(articleToInsert.Blog_id, articleAdded.Blog_id);
@@ -97,7 +97,7 @@ namespace ModuleBlog.Tests
             articleToInsert.ListeTags.Add(hashTag2);
             articleToInsert.ListeTags.Add(hashTag3);
 
-            string id = ArticleDal.AddArticle(articleToInsert);
+            string id = ArticleDal.AddArticleWithEvent(articleToInsert);
 
             Article articleAdded = ArticleDal.GetArticles(1, 4).Search(int.Parse(id));
             Assert.AreEqual(articleToInsert.Blog_id, articleAdded.Blog_id);

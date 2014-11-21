@@ -76,7 +76,11 @@ namespace ModuleBlog.BLL
         {
             Mapper.CreateMap<ModuleBlog.BLL.Models.Article, ModuleBlog.DAL.Models.Article>();
             ModuleBlog.DAL.Models.Article articleDao = Mapper.Map<ModuleBlog.BLL.Models.Article, ModuleBlog.DAL.Models.Article>(article);
-            return articleDal.AddArticle(articleDao);
+
+            if (article.Evenement_id != 0 && article.Evenement_id != -1 && article.Evenement_id != null)
+                return articleDal.AddArticleWithEvent(articleDao);
+            else
+                return articleDal.AddArticle(articleDao);
         }
 
         public bool UpdateArticle(ModuleBlog.BLL.Models.Article article)
