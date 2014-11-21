@@ -16,7 +16,7 @@ namespace ModuleBlog.DAL
         /// <summary>
         /// Récupération de la liste des catégories
         /// </summary>
-        /// <returns></returns>
+        /// <returns>liste de catégorie</returns>
         public List<Categorie> GetCategories()
         {
             try

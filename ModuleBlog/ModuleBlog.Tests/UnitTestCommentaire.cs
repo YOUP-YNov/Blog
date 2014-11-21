@@ -42,6 +42,7 @@ namespace ModuleBlog.Tests
         /// </summary>
         [TestInitialize]
         public void Init(){
+            AutoMapperConfiguration.CreateMap();
              cdal = new ModuleBlog.DAL.CommentaireDAL();
             Assert.IsNotNull(cdal);
             cbll = new ModuleBlog.BLL.CommentaireBLL();
@@ -61,7 +62,8 @@ namespace ModuleBlog.Tests
             commentaireBLL = cbll.GetCommentaireById(2);
             Assert.IsNotNull(commentaireBLL);
             Assert.IsTrue(commentaireBLL.Article_id == 10002);         
-        }
+        
+             }
 
         /// <summary>
         /// Tests the method get commentaires.
@@ -89,10 +91,11 @@ namespace ModuleBlog.Tests
         {
                          // Assert.IsTrue(blogDAL.UpdateBlog(new Blog { Blog_id = 12, Utilisateur_id = 25, TitreBlog = "Blog de l'utilisateur Test", Categorie_id = 3, Promotion = false, Actif = true, Theme_id = 3, DateCreation = DateTime.Now }), "Blog non modifié");
             Assert.IsTrue(cdal.UpdateCommentaire(new ModuleBlog.DAL.Models.Commentaire { Commentaire_id = 2, ContenuCommentaire="update commentaire Dal test", Actif=true }));
+            Assert.IsTrue(cbll.UpdateCommentaire(new ModuleBlog.BLL.Models.Commentaire { Commentaire_id = 2, ContenuCommentaire = "update commentaire Dal test", Actif = true }));
             
-         //   commentaireBLL = cbll.GetCommentaireById(2);
-          //  commentaireBLL.ContenuCommentaire = "Update Commentaire Test BLL";
-           // Assert.IsTrue(cbll.UpdateCommentaire(commentaireBLL));
+           commentaireBLL = cbll.GetCommentaireById(2);
+            commentaireBLL.ContenuCommentaire = "Update Commentaire Test BLL";
+            Assert.IsTrue(cbll.UpdateCommentaire(commentaireBLL));
 
         }
         /// <summary>
