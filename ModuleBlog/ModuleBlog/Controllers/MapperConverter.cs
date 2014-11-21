@@ -1,15 +1,18 @@
 ﻿using AutoMapper;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace ModuleBlog.Controllers
 {
     public class MapperConverter : ApiController
     {
+        /// <summary>
+        /// Converts the specified element.
+        /// </summary>
+        /// <typeparam name="TSource">The type of the source.</typeparam>
+        /// <typeparam name="TDest">The type of the dest.</typeparam>
+        /// <param name="element">The element.</param>
+        /// <returns></returns>
         public IEnumerable<TDest> Convert<TSource, TDest>(IEnumerable<TSource> element)
         {
             try
@@ -23,6 +26,13 @@ namespace ModuleBlog.Controllers
             }
         }
 
+        /// <summary>
+        /// Converts the specified element.
+        /// </summary>
+        /// <typeparam name="TSource">The type of the source.</typeparam>
+        /// <typeparam name="TDest">The type of the dest.</typeparam>
+        /// <param name="element">The element.</param>
+        /// <returns></returns>
         public TDest Convert<TSource, TDest>(TSource element)
         {
             try

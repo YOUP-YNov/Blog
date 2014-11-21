@@ -23,7 +23,7 @@ namespace ModuleBlog.App_Start
             }
             catch (AutoMapperConfigurationException e)
             {
-                // TODO : mettre dans le logger
+                //new LErreur(e, "Blog/BLL/AutoMapperConfiguration", "AutoMapperConfigurationException", 1).Save("http://loggerasp.azurewebsites.net/");
             }
         }
         private static void CreateMapBlog()

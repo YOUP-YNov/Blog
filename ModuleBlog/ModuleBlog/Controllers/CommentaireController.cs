@@ -1,14 +1,8 @@
-﻿using ModuleBlog.Controllers.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Net;
-using System.Net.Http;
 using System.Web.Http;
-using AutoMapper;
 using ModuleBlog.BLL;
-using ModuleBlog.BLL.Models;
-using ModuleBlog.Controllers.Models;
+using System;
 
 namespace ModuleBlog.Controllers
 {
@@ -67,7 +61,22 @@ namespace ModuleBlog.Controllers
                     return BadRequest("parameters format is not correct.");
                 ModuleBlog.BLL.Models.Commentaire commentaireBll = Convert<ModuleBlog.Controllers.Models.Commentaire, ModuleBlog.BLL.Models.Commentaire>(comment);
                 if (commentaireBLL.AddCommentaire(commentaireBll))
+                {
+                    try
+                    {
+                        UriBuilder uriB = new UriBuilder();
+                        uriB.Host = "youp-recherche.azurewebsites.net";
+                        uriB.Path = "add/get_blogpostcomment";
+                        uriB.Query = string.Format("id={0}&content={1}&author={2}", comment.Commentaire_id,comment.ContenuCommentaire,comment.Utilisateur_id);
+                        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uriB.Uri);
+                        using ((HttpWebResponse)request.GetResponse()) { };
+                    }
+                    catch (Exception e)
+                    {
+                        throw;
+                    }
                     return StatusCode(HttpStatusCode.Created);
+                }
                 else
                     return BadRequest("an error occured");
             }
@@ -105,7 +114,23 @@ namespace ModuleBlog.Controllers
                     return BadRequest("parameters format is not correct.");
                 ModuleBlog.BLL.Models.Commentaire commentaireBll = Convert<ModuleBlog.Controllers.Models.Commentaire, ModuleBlog.BLL.Models.Commentaire>(comment);
                 if (commentaireBLL.UpdateCommentaire(commentaireBll))
+                {
+                    try
+                    {
+                        UriBuilder uriB = new UriBuilder();
+                        uriB.Host = "youp-recherche.azurewebsites.net";
+                        uriB.Path = "update/get_blogpostcomment";
+                        uriB.Query = string.Format("id={0}&content={1}&author={2}", comment.Commentaire_id, comment.ContenuCommentaire, comment.Utilisateur_id);
+                        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uriB.Uri);
+                        using ((HttpWebResponse)request.GetResponse()) { };
+                    }
+                    catch (Exception e)
+                    {
+                        throw;
+                    }
+
                     return StatusCode(HttpStatusCode.Created);
+                }
                 else
                     return BadRequest("an error occured");
             }
@@ -122,7 +147,24 @@ namespace ModuleBlog.Controllers
         public IHttpActionResult Delete(int id)
         {
             if (commentaireBLL.DeleteCommentaire(id))
+            {
+                try
+                {
+                    UriBuilder uriB = new UriBuilder();
+                    uriB.Host = "youp-recherche.azurewebsites.net";
+                    uriB.Path = "remove/get_blogpostcomment";
+                    uriB.Query = string.Format("id={0}", id);
+                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uriB.Uri);
+                    using ((HttpWebResponse)request.GetResponse()) { };
+                }
+                catch (Exception e)
+                {
+                    throw;
+                }
+
+
                 return Ok();
+            }
             else
                 return StatusCode(HttpStatusCode.InternalServerError);
         }

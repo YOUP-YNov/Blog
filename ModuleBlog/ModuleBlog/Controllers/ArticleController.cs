@@ -1,13 +1,10 @@
-﻿using AutoMapper;
-using ModuleBlog.BLL;
+﻿using ModuleBlog.BLL;
 using BLLModels = ModuleBlog.BLL.Models;
 using ControllersModels = ModuleBlog.Controllers.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Web.Http;
+using System;
 
 namespace ModuleBlog.Controllers
 {
@@ -33,14 +30,20 @@ namespace ModuleBlog.Controllers
         {
             ControllersModels.Articles articles = new ControllersModels.Articles();
 
-            if (articlesToMap.Count > 0)
+            if (articlesToMap != null)
             {
-                foreach (BLLModels.Article article in articlesToMap)
+                if (articlesToMap.Count > 0)
                 {
-                    List<ControllersModels.HashTagArticle> hashTags = Convert<List<BLLModels.HashTagArticle>, List<ControllersModels.HashTagArticle>>(article.ListeTags);
-                    ControllersModels.Article articleToAdd = Convert<BLLModels.Article, ControllersModels.Article>(article);
-                    articleToAdd.ListeTags = hashTags;
-                    articles.Add(articleToAdd);
+                    foreach (BLLModels.Article article in articlesToMap)
+                    {
+                        List<ControllersModels.HashTagArticle> hashTags =
+                            Convert<List<BLLModels.HashTagArticle>, List<ControllersModels.HashTagArticle>>(
+                                article.ListeTags);
+                        ControllersModels.Article articleToAdd =
+                            Convert<BLLModels.Article, ControllersModels.Article>(article);
+                        articleToAdd.ListeTags = hashTags;
+                        articles.Add(articleToAdd);
+                    }
                 }
             }
             return articles;
@@ -149,8 +152,25 @@ namespace ModuleBlog.Controllers
 
                 BLLModels.Article articleBll = Map(article);
                 string result = articleBLL.AddArticle(articleBll);
-                if(int.Parse(result) > 0)
+                if (int.Parse(result) > 0)
+                {
+                    try
+                    {
+                        UriBuilder uriB = new UriBuilder();
+                        uriB.Host = "youp-recherche.azurewebsites.net";
+                        uriB.Path = "add/get_blogpost";
+                        uriB.Query = string.Format("id={0}&content={1}&author={2}&title={3}", article.Article_id
+                            , article.ContenuArticle,article.Blog_id,article.TitreArticle);
+                        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uriB.Uri);
+                        using ((HttpWebResponse)request.GetResponse()) { };
+                    }
+                    catch (Exception e)
+                    {
+                        throw;
+                    }
                     return Ok(result);
+
+                }
                 else
                     return BadRequest("an error occured");
             }
@@ -174,7 +194,23 @@ namespace ModuleBlog.Controllers
                     article.Article_id = id;
                 BLLModels.Article articleBll = Map(article);
                 if (articleBLL.UpdateArticle(articleBll))
+                {
+                    try
+                    {
+                        UriBuilder uriB = new UriBuilder();
+                        uriB.Host = "youp-recherche.azurewebsites.net";
+                        uriB.Path = "update/get_blogpost";
+                        uriB.Query = string.Format("id={0}&content={1}&author={2}&title={3}", article.Article_id
+                            , article.ContenuArticle, article.Blog_id, article.TitreArticle);
+                        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uriB.Uri);
+                        using ((HttpWebResponse)request.GetResponse()) { };
+                    }
+                    catch (Exception e)
+                    {
+                        throw;
+                    }
                     return StatusCode(HttpStatusCode.Created);
+                }
                 else
                     return BadRequest("an error occured");
             }
@@ -195,7 +231,22 @@ namespace ModuleBlog.Controllers
             bool result = articleBLL.DeleteArticle(id);
 
             if (result)
+            {
+                try
+                {
+                    UriBuilder uriB = new UriBuilder();
+                    uriB.Host = "youp-recherche.azurewebsites.net";
+                    uriB.Path = "remove/get_blogpost";
+                    uriB.Query = string.Format("id={0}",id);
+                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uriB.Uri);
+                    using ((HttpWebResponse)request.GetResponse()) { };
+                }
+                catch (Exception e)
+                {
+                    throw;
+                }
                 return StatusCode(HttpStatusCode.OK);
+            }
             else
                 return StatusCode(HttpStatusCode.InternalServerError);
         }

@@ -1,9 +1,6 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ModuleBlog.DAL;
 using System.Collections.Generic;
-using ModuleBlog.DAL.Models;
-using ModuleBlog.BLL.Models;
 using ModuleBlog.BLL;
 
 namespace ModuleBlog.Tests
@@ -11,9 +8,18 @@ namespace ModuleBlog.Tests
     [TestClass]
     public class UnitTestCategorie
     {
+        /// <summary>
+        /// The category dal
+        /// </summary>
         private CategorieDAL categoryDal;
+        /// <summary>
+        /// The category BLL
+        /// </summary>
         private CategorieBLL categoryBll;
 
+        /// <summary>
+        /// Initializes this instance.
+        /// </summary>
         [TestInitialize]
         public void Init()
         {
@@ -24,6 +30,9 @@ namespace ModuleBlog.Tests
             Assert.IsNotNull(categoryBll);
         }
 
+        /// <summary>
+        /// Tests the lecture categories dal.
+        /// </summary>
         [TestMethod]
         public void TestLectureCategoriesDAL()
         {
@@ -34,6 +43,9 @@ namespace ModuleBlog.Tests
             Assert.IsTrue(categoryList.Count > 0, "Liste des catégories vide");
         }
 
+        /// <summary>
+        /// Tests the lecture categories BLL.
+        /// </summary>
         [TestMethod]
         public void TestLectureCategoriesBLL()
         {

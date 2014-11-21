@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace ModuleBlog.Controllers.Models
 {
@@ -49,7 +47,7 @@ namespace ModuleBlog.Controllers.Models
         /// <value>
         /// The evenement_id.
         /// </value>
-        public int Evenement_id { get; set; }
+        public int? Evenement_id { get; set; }
         /// <summary>
         /// Gets or sets the date creation.
         /// </summary>
@@ -79,6 +77,7 @@ namespace ModuleBlog.Controllers.Models
         /// The liste tags.
         /// </value>
         public List<HashTagArticle> ListeTags { get; set; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Article"/> class.
         /// </summary>

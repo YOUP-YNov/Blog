@@ -1,23 +1,21 @@
-﻿using AutoMapper;
+﻿
 using ModuleBlog.BLL;
 using BLLModels = ModuleBlog.BLL.Models;
 using ControllersModels = ModuleBlog.Controllers.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 
 namespace ModuleBlog.Controllers
 {
     public class BlogController : MapperConverter
     {
-        private BlogBLL blogBLL;
+        private BLL.BlogBLL blogBLL;
 
         public BlogController()
         {
-            blogBLL = new BlogBLL();
+            blogBLL = new BLL.BlogBLL();
         }
 
         // GET: api/Blog
@@ -26,7 +24,7 @@ namespace ModuleBlog.Controllers
         /// </summary>
         /// <returns>La liste des blogs</returns>
         [HttpGet, Route("api/blog")]
-        public IEnumerable<ControllersModels.Blog> Get()
+        public IEnumerable<ControllersModels.Blog> sGet()
         {
             IEnumerable<BLLModels.Blog> blogsBLL = blogBLL.GetBlogs();
             try
@@ -190,7 +188,22 @@ namespace ModuleBlog.Controllers
                 ControllersModels.Theme theme = tcontroller.Get(blog.Theme_id);
                 BLLModels.Blog blogBll = Convert<ControllersModels.Blog, BLLModels.Blog>(blog);
                 if (blogBLL.AddBlog(blogBll))
+                {
+                    try
+                    {
+                        UriBuilder uriB = new UriBuilder();
+                        uriB.Host = "youp-recherche.azurewebsites.net";
+                        uriB.Path = "add/get_blog";
+                        uriB.Query = string.Format("id={0}&author={1}&category={3}", blog.Blog_id, blog.Utilisateur_id, blog.Categorie_id);
+                        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uriB.Uri);
+                        using ((HttpWebResponse)request.GetResponse()) { };
+                    }catch(Exception e)
+                    {
+                        throw e;
+                    }
                     return StatusCode(HttpStatusCode.Created);
+                    
+                }
                 else
                     return BadRequest("an error occured");
             }
@@ -216,7 +229,22 @@ namespace ModuleBlog.Controllers
                 ControllersModels.Theme theme = tcontroller.Get(blog.Theme_id);
                 BLLModels.Blog blogBll = Convert<ControllersModels.Blog, BLLModels.Blog>(blog);
                 if (blogBLL.UpdateBlog(blogBll))
+                {
+                    try
+                    {
+                        UriBuilder uriB = new UriBuilder();
+                        uriB.Host = "youp-recherche.azurewebsites.net";
+                        uriB.Path = "update/get_blog";
+                        uriB.Query = string.Format("id={0}&author={1}&category={3}", blog.Blog_id, blog.Utilisateur_id, blog.Categorie_id);
+                        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uriB.Uri);
+                        using ((HttpWebResponse)request.GetResponse()) { };
+                    }
+                    catch (Exception e)
+                    {
+                        throw;
+                    }
                     return StatusCode(HttpStatusCode.Created);
+                }
                 else
                     return BadRequest("an error occured");
             }
@@ -258,7 +286,22 @@ namespace ModuleBlog.Controllers
             if (userId != 0)
             {
                 if (blogBLL.DeleteBlog(userId))
+                {
+                    try
+                    {
+                        UriBuilder uriB = new UriBuilder();
+                        uriB.Host = "youp-recherche.azurewebsites.net";
+                        uriB.Path = "remove/get_blog";
+                        uriB.Query = string.Format("id={0}", userId);
+                        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uriB.Uri);
+                        using ((HttpWebResponse)request.GetResponse()) { };
+                    }
+                    catch (Exception e)
+                    {
+                        throw ;
+                    }
                     return Ok();
+                }
                 else
                     return BadRequest("an error occured");
             }
