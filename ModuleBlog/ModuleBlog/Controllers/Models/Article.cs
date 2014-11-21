@@ -47,7 +47,7 @@ namespace ModuleBlog.Controllers.Models
         /// <value>
         /// The evenement_id.
         /// </value>
-        public int Evenement_id { get; set; }
+        public int? Evenement_id { get; set; }
         /// <summary>
         /// Gets or sets the date creation.
         /// </summary>
