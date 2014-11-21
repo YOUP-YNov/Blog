@@ -1,14 +1,7 @@
-﻿using ModuleBlog.Controllers.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Net;
-using System.Net.Http;
 using System.Web.Http;
-using AutoMapper;
 using ModuleBlog.BLL;
-using ModuleBlog.BLL.Models;
-using ModuleBlog.Controllers.Models;
 
 namespace ModuleBlog.Controllers
 {

@@ -1,15 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace ModuleBlog.Controllers.Models
 {
     public class Theme
     {
+        /// <summary>
+        /// Gets or sets the theme_id.
+        /// </summary>
+        /// <value>
+        /// The theme_id.
+        /// </value>
         public int Theme_id { get; set; }
+
+        /// <summary>
+        /// Gets or sets the couleur.
+        /// </summary>
+        /// <value>
+        /// The couleur.
+        /// </value>
         public string Couleur { get; set; }
+
+        /// <summary>
+        /// Gets or sets the image chemin.
+        /// </summary>
+        /// <value>
+        /// The image chemin.
+        /// </value>
         public string ImageChemin { get; set; }
         public Theme()
         {

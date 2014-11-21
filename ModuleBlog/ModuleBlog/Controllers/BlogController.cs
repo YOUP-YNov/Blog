@@ -1,12 +1,10 @@
-﻿using AutoMapper;
+﻿
 using ModuleBlog.BLL;
 using BLLModels = ModuleBlog.BLL.Models;
 using ControllersModels = ModuleBlog.Controllers.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 
 namespace ModuleBlog.Controllers
@@ -26,7 +24,7 @@ namespace ModuleBlog.Controllers
         /// </summary>
         /// <returns>La liste des blogs</returns>
         [HttpGet, Route("api/blog")]
-        public IEnumerable<ControllersModels.Blog> Get()
+        public IEnumerable<ControllersModels.Blog> sGet()
         {
             IEnumerable<BLLModels.Blog> blogsBLL = blogBLL.GetBlogs();
             try

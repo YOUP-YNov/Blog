@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 
 namespace ModuleBlog.Controllers.Models
 {
+    /// <summary>
+    /// Liste d'articles
+    /// </summary>
     public class Articles : List<Article>
     {
     }

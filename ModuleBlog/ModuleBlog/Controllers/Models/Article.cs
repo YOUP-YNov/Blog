@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace ModuleBlog.Controllers.Models
 {
@@ -79,6 +77,7 @@ namespace ModuleBlog.Controllers.Models
         /// The liste tags.
         /// </value>
         public List<HashTagArticle> ListeTags { get; set; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Article"/> class.
         /// </summary>
