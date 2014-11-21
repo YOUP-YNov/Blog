@@ -36,11 +36,7 @@ namespace ModuleBlog.BLL
         public ModuleBlog.BLL.Models.Blog GetBlogById(int idBlog, int userId)
         {
             ModuleBlog.DAL.Models.Blog blogDao = blogDAL.GetBlogById(idBlog, userId);
-
-            Mapper.CreateMap<ModuleBlog.DAL.Models.Blog, ModuleBlog.BLL.Models.Blog>();
-            Mapper.CreateMap<ModuleBlog.DAL.Models.Theme, ModuleBlog.BLL.Models.Theme>();
             ModuleBlog.BLL.Models.Blog blogBLL = Mapper.Map<ModuleBlog.DAL.Models.Blog, ModuleBlog.BLL.Models.Blog>(blogDao);
-
             return blogBLL;
         }
 
@@ -53,11 +49,8 @@ namespace ModuleBlog.BLL
         {
             List<ModuleBlog.DAL.Models.Blog> blogsDao = blogDAL.GetBlogsByCategory(categoryId);
             if (blogsDao.Count > 0)
-            {
-                Mapper.CreateMap<ModuleBlog.DAL.Models.Blog, ModuleBlog.BLL.Models.Blog>();
-                Mapper.CreateMap<ModuleBlog.DAL.Models.Theme, ModuleBlog.BLL.Models.Theme>();
+            {   
                 List<ModuleBlog.BLL.Models.Blog> blogsBll = Mapper.Map<List<ModuleBlog.DAL.Models.Blog>, List<ModuleBlog.BLL.Models.Blog>>(blogsDao);
-
                 return blogsBll;
             }
             return null;
@@ -71,9 +64,7 @@ namespace ModuleBlog.BLL
         {
             List<ModuleBlog.DAL.Models.Blog> blogsDao = blogDAL.GetBlogs();
             if (blogsDao.Count > 0)
-            {
-                Mapper.CreateMap<ModuleBlog.DAL.Models.Blog, ModuleBlog.BLL.Models.Blog>();
-                Mapper.CreateMap<ModuleBlog.DAL.Models.Theme, ModuleBlog.BLL.Models.Theme>();
+            {   
                 List<ModuleBlog.BLL.Models.Blog> blogsBll = Mapper.Map<List<ModuleBlog.DAL.Models.Blog>, List<ModuleBlog.BLL.Models.Blog>>(blogsDao);
                 return blogsBll;
             }
@@ -91,9 +82,7 @@ namespace ModuleBlog.BLL
             List<ModuleBlog.DAL.Models.Blog> blogsDao = blogDAL.GetBlogsBySearch(categoryId, keystring);
             if (blogsDao.Count > 0)
             {
-                Mapper.CreateMap<ModuleBlog.DAL.Models.Blog, ModuleBlog.BLL.Models.Blog>();
                 List<ModuleBlog.BLL.Models.Blog> blogsBll = Mapper.Map<List<ModuleBlog.DAL.Models.Blog>, List<ModuleBlog.BLL.Models.Blog>>(blogsDao);
-
                 return blogsBll;
             }
             return null;
@@ -108,9 +97,7 @@ namespace ModuleBlog.BLL
             List<ModuleBlog.DAL.Models.Blog> blogsDao = blogDAL.GetPromotedBlogs();
             if (blogsDao.Count > 0)
             {
-                Mapper.CreateMap<ModuleBlog.DAL.Models.Blog, ModuleBlog.BLL.Models.Blog>();
                 List<ModuleBlog.BLL.Models.Blog> blogsBll = Mapper.Map<List<ModuleBlog.DAL.Models.Blog>, List<ModuleBlog.BLL.Models.Blog>>(blogsDao);
-
                 return blogsBll;
             }
             return null;
@@ -133,9 +120,7 @@ namespace ModuleBlog.BLL
         /// <param name="blog">The blog.</param>
         /// <returns></returns>
         public bool UpdateBlog(ModuleBlog.BLL.Models.Blog blog)
-        {
-            Mapper.CreateMap<ModuleBlog.BLL.Models.Blog, ModuleBlog.DAL.Models.Blog>();
-            Mapper.CreateMap<ModuleBlog.BLL.Models.Theme, ModuleBlog.DAL.Models.Theme>();
+        {   
             ModuleBlog.DAL.Models.Blog blogDao = Mapper.Map<ModuleBlog.BLL.Models.Blog, ModuleBlog.DAL.Models.Blog>(blog);
             bool resultat = blogDAL.UpdateBlog(blogDao);
             return resultat;
@@ -147,12 +132,8 @@ namespace ModuleBlog.BLL
         /// <param name="blog">The blog.</param>
         /// <returns></returns>
         public bool AddBlog(ModuleBlog.BLL.Models.Blog blog)
-        {
-            Mapper.CreateMap<ModuleBlog.BLL.Models.Blog, ModuleBlog.DAL.Models.Blog>();
-            Mapper.CreateMap<ModuleBlog.BLL.Models.Theme, ModuleBlog.DAL.Models.Theme>();
+        {   
             ModuleBlog.DAL.Models.Blog blogDao = Mapper.Map<ModuleBlog.BLL.Models.Blog, ModuleBlog.DAL.Models.Blog>(blog);
-            //ThemeDao themeDao = Mapper.Map<ThemeBLL, ThemeDao>(blog.Theme);
-            //blogDao.Theme = themeDao;
             bool resultat = blogDAL.AddBlog(blogDao);
             return resultat;
         }
@@ -165,10 +146,7 @@ namespace ModuleBlog.BLL
         public ModuleBlog.BLL.Models.Theme GetThemeById(int themeId)
         {
             ModuleBlog.DAL.Models.Theme themeDao = new ThemeDAL().GetThemeById(themeId);
-
-            Mapper.CreateMap<ModuleBlog.DAL.Models.Theme, ModuleBlog.BLL.Models.Theme>();
             ModuleBlog.BLL.Models.Theme themeBll = Mapper.Map<ModuleBlog.DAL.Models.Theme, ModuleBlog.BLL.Models.Theme>(themeDao);
-
             return themeBll;
         }
 
@@ -181,11 +159,8 @@ namespace ModuleBlog.BLL
         {
             ModuleBlog.DAL.Models.Blog blogDao = blogDAL.GetBlogByUserId(userId);
             if (blogDao.DateCreation > new DateTime(1, 1, 1, 0, 0, 0))
-            {
-                Mapper.CreateMap<ModuleBlog.DAL.Models.Blog, ModuleBlog.BLL.Models.Blog>();
-                Mapper.CreateMap<ModuleBlog.DAL.Models.Theme, ModuleBlog.BLL.Models.Theme>();
+            {   
                 ModuleBlog.BLL.Models.Blog blogBLL = Mapper.Map<ModuleBlog.DAL.Models.Blog, ModuleBlog.BLL.Models.Blog>(blogDao);
-
                 return blogBLL;
             }
             else
