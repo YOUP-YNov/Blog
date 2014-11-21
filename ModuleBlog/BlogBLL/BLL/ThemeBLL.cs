@@ -1,12 +1,7 @@
 ﻿using AutoMapper;
-using ModuleBlog.BLL.Models;
 using ModuleBlog.DAL;
-using ModuleBlog.DAL.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace ModuleBlog.BLL
 {
@@ -46,6 +41,10 @@ namespace ModuleBlog.BLL
             return null;
         }
 
+        /// <summary>
+        /// Gets the themes.
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<Models.Theme> GetThemes()
         {
             List<ModuleBlog.DAL.Models.Theme> themeDao = themeDal.GetThemes();
