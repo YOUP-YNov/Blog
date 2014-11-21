@@ -4,6 +4,7 @@ using ControllersModels = ModuleBlog.Controllers.Models;
 using System.Collections.Generic;
 using System.Net;
 using System.Web.Http;
+using System;
 
 namespace ModuleBlog.Controllers
 {
@@ -156,7 +157,7 @@ namespace ModuleBlog.Controllers
                     try
                     {
                         UriBuilder uriB = new UriBuilder();
-                        uriB.Host = "www.youp-recherche.azurewebsites.net";
+                        uriB.Host = "youp-recherche.azurewebsites.net";
                         uriB.Path = "add/get_blogpost";
                         uriB.Query = string.Format("id={0}&content={1}&author={2}&title={3}", article.Article_id
                             , article.ContenuArticle,article.Blog_id,article.TitreArticle);
@@ -197,7 +198,7 @@ namespace ModuleBlog.Controllers
                     try
                     {
                         UriBuilder uriB = new UriBuilder();
-                        uriB.Host = "www.youp-recherche.azurewebsites.net";
+                        uriB.Host = "youp-recherche.azurewebsites.net";
                         uriB.Path = "update/get_blogpost";
                         uriB.Query = string.Format("id={0}&content={1}&author={2}&title={3}", article.Article_id
                             , article.ContenuArticle, article.Blog_id, article.TitreArticle);
@@ -234,7 +235,7 @@ namespace ModuleBlog.Controllers
                 try
                 {
                     UriBuilder uriB = new UriBuilder();
-                    uriB.Host = "www.youp-recherche.azurewebsites.net";
+                    uriB.Host = "youp-recherche.azurewebsites.net";
                     uriB.Path = "remove/get_blogpost";
                     uriB.Query = string.Format("id={0}",id);
                     HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uriB.Uri);
