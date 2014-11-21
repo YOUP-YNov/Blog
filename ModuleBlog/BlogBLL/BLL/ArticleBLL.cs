@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using ModuleBlog.BLL.Models;
 using ModuleBlog.DAL;
 using System.Collections.Generic;
 
@@ -72,6 +73,23 @@ namespace ModuleBlog.BLL
         }
 
         /// <summary>
+        /// Maps the specified articles to map.
+        /// </summary>
+        /// <param name="articlesToMap">The articles to map.</param>
+        /// <returns></returns>
+        private ModuleBlog.DAL.Models.Article Map(ModuleBlog.BLL.Models.Article articleToMap)
+        {
+            ModuleBlog.DAL.Models.Article articleDao = new ModuleBlog.DAL.Models.Article();
+
+            List<ModuleBlog.DAL.Models.HashTagArticle> hashTagsDao = Mapper.Map<List<ModuleBlog.BLL.Models.HashTagArticle>, List<ModuleBlog.DAL.Models.HashTagArticle>>(articleToMap.ListeTags);
+                    
+            articleDao = Mapper.Map<ModuleBlog.BLL.Models.Article, ModuleBlog.DAL.Models.Article>(articleToMap);
+            articleDao.ListeTags = hashTagsDao;
+
+            return articleDao;
+        }
+
+        /// <summary>
         /// Likes the article.
         /// </summary>
         /// <param name="idUtilisateur">The identifier utilisateur.</param>
@@ -100,7 +118,7 @@ namespace ModuleBlog.BLL
         /// <returns></returns>
         public string AddArticle(ModuleBlog.BLL.Models.Article article)
         {
-            ModuleBlog.DAL.Models.Article articleDao = Mapper.Map<ModuleBlog.BLL.Models.Article, ModuleBlog.DAL.Models.Article>(article);
+            ModuleBlog.DAL.Models.Article articleDao = Map(article);
 
             if (article.Evenement_id != 0 && article.Evenement_id != -1 && article.Evenement_id != null)
                 return articleDal.AddArticleWithEvent(articleDao);

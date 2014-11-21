@@ -47,6 +47,7 @@ namespace ModuleBlog.BLL
         private static void CreateMapHashTag()
         {
             Mapper.CreateMap<ModuleBlog.DAL.Models.HashTagArticle, ModuleBlog.BLL.Models.HashTagArticle>();
+            Mapper.CreateMap<ModuleBlog.BLL.Models.HashTagArticle, ModuleBlog.DAL.Models.HashTagArticle>();
         }
 
         /// <summary>
