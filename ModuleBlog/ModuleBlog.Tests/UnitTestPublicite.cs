@@ -1,18 +1,25 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ModuleBlog.DAL;
-using ModuleBlog.DAL.Models;
 using ModuleBlog.BLL;
-using ModuleBlog.BLL.Models;
+
 
 namespace ModuleBlog.Tests
 {
     [TestClass]
     public class UnitTestPublicite
     {
+        /// <summary>
+        /// The ad dal
+        /// </summary>
         private PubliciteDAL adDal;
+        /// <summary>
+        /// The ad BLL
+        /// </summary>
         private PubliciteBLL adBll;
 
+        /// <summary>
+        /// Initializes this instance.
+        /// </summary>
         [TestInitialize]
         public void Init()
         {
@@ -24,14 +31,21 @@ namespace ModuleBlog.Tests
         }
 
         #region DAL_TESTS
+        /// <summary>
+        /// Tests the ajout publicite dal.
+        /// </summary>
         [TestMethod]
         public void TestAjoutPubliciteDAL()
         {
-            ModuleBlog.DAL.Models.Publicite adDao = new ModuleBlog.DAL.Models.Publicite(105, 150, 150, "sample content");
+            ModuleBlog.DAL.Models.Publicite adDao = new ModuleBlog.DAL.Models.Publicite(12, 150, 150, "sample content");
 
             Assert.IsTrue(adDal.AddAd(adDao));
         }
 
+        /// <summary>
+        /// Tests the lecture publicite dal.
+        /// </summary>
+        /// <returns></returns>
         [TestMethod]
         public ModuleBlog.DAL.Models.Publicite TestLecturePubliciteDAL()
         {
@@ -44,6 +58,9 @@ namespace ModuleBlog.Tests
             return dao;
         }
 
+        /// <summary>
+        /// Tests the modification publicite dal.
+        /// </summary>
         [TestMethod]
         public void TestModificationPubliciteDAL()
         {
@@ -57,14 +74,21 @@ namespace ModuleBlog.Tests
         #endregion
 
         #region BLL_TESTS
+        /// <summary>
+        /// Tests the ajout publicite BLL.
+        /// </summary>
         [TestMethod]
         public void TestAjoutPubliciteBLL()
         {
-            ModuleBlog.BLL.Models.Publicite adBllModel = new ModuleBlog.BLL.Models.Publicite(106, 150, 150, "sample content");
+            ModuleBlog.BLL.Models.Publicite adBllModel = new ModuleBlog.BLL.Models.Publicite(4, 150, 150, "sample content");
 
             Assert.IsTrue(adBll.AddAd(adBllModel));
         }
 
+        /// <summary>
+        /// Tests the lecture publicite BLL.
+        /// </summary>
+        /// <returns></returns>
         [TestMethod]
         public ModuleBlog.BLL.Models.Publicite TestLecturePubliciteBLL()
         {
@@ -77,6 +101,9 @@ namespace ModuleBlog.Tests
             return bll;
         }
 
+        /// <summary>
+        /// Tests the modification publicite BLL.
+        /// </summary>
         [TestMethod]
         public void TestModificationPubliciteBLL()
         {

@@ -481,6 +481,24 @@
             </summary>
             <param name="documentPath">The physical path to XML document.</param>
         </member>
+        <member name="M:ModuleBlog.Controllers.MapperConverter.Convert``2(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Converts the specified element.
+            </summary>
+            <typeparam name="TSource">The type of the source.</typeparam>
+            <typeparam name="TDest">The type of the dest.</typeparam>
+            <param name="element">The element.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ModuleBlog.Controllers.MapperConverter.Convert``2(``0)">
+            <summary>
+            Converts the specified element.
+            </summary>
+            <typeparam name="TSource">The type of the source.</typeparam>
+            <typeparam name="TDest">The type of the dest.</typeparam>
+            <param name="element">The element.</param>
+            <returns></returns>
+        </member>
         <member name="M:ModuleBlog.Controllers.PubliciteController.Get(System.Int32)">
             <summary>
             Récupérer la publicité associée à un blog
@@ -502,6 +520,25 @@
             <param name="id">identifiant de la publicité</param>
             <param name="publicite">publicité à mettre à jour</param>
             <returns>Réponse HTTP</returns>
+        </member>
+        <member name="M:ModuleBlog.Controllers.ArticleController.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:ModuleBlog.Controllers.ArticleController"/> class.
+            </summary>
+        </member>
+        <member name="M:ModuleBlog.Controllers.ArticleController.Map(ModuleBlog.BLL.Models.Articles)">
+            <summary>
+            Maps the specified articles to map.
+            </summary>
+            <param name="articlesToMap">The articles to map.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ModuleBlog.Controllers.ArticleController.Map(ModuleBlog.Controllers.Models.Article)">
+            <summary>
+            Maps the specified article to map.
+            </summary>
+            <param name="articleToMap">The article to map.</param>
+            <returns></returns>
         </member>
         <member name="M:ModuleBlog.Controllers.ArticleController.Get(System.Int32,System.Int32)">
             <summary>
@@ -557,7 +594,7 @@
             <param name="articleId">identifiant de l'article qui est désactivé</param>
             <returns></returns>
         </member>
-        <member name="M:ModuleBlog.Controllers.BlogController.Get">
+        <member name="M:ModuleBlog.Controllers.BlogController.sGet">
             <summary>
             Récupérer la liste des blogs
             </summary>
@@ -729,6 +766,173 @@
             <param name="id">identifiant du commentaire</param>
             <returns></returns>
         </member>
+        <member name="M:ModuleBlog.Controllers.Models.Article.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:ModuleBlog.Controllers.Models.Article"/> class.
+            </summary>
+        </member>
+        <member name="P:ModuleBlog.Controllers.Models.Article.Article_id">
+            <summary>
+            Gets or sets the article_id.
+            </summary>
+            <value>
+            The article_id.
+            </value>
+        </member>
+        <member name="P:ModuleBlog.Controllers.Models.Article.Blog_id">
+            <summary>
+            Gets or sets the blog_id.
+            </summary>
+            <value>
+            The blog_id.
+            </value>
+        </member>
+        <member name="P:ModuleBlog.Controllers.Models.Article.TitreArticle">
+            <summary>
+            Gets or sets the titre article.
+            </summary>
+            <value>
+            The titre article.
+            </value>
+        </member>
+        <member name="P:ModuleBlog.Controllers.Models.Article.ImageChemin">
+            <summary>
+            Gets or sets the image chemin.
+            </summary>
+            <value>
+            The image chemin.
+            </value>
+        </member>
+        <member name="P:ModuleBlog.Controllers.Models.Article.ContenuArticle">
+            <summary>
+            Gets or sets the contenu article.
+            </summary>
+            <value>
+            The contenu article.
+            </value>
+        </member>
+        <member name="P:ModuleBlog.Controllers.Models.Article.Evenement_id">
+            <summary>
+            Gets or sets the evenement_id.
+            </summary>
+            <value>
+            The evenement_id.
+            </value>
+        </member>
+        <member name="P:ModuleBlog.Controllers.Models.Article.DateCreation">
+            <summary>
+            Gets or sets the date creation.
+            </summary>
+            <value>
+            The date creation.
+            </value>
+        </member>
+        <member name="P:ModuleBlog.Controllers.Models.Article.DateModification">
+            <summary>
+            Gets or sets the date modification.
+            </summary>
+            <value>
+            The date modification.
+            </value>
+        </member>
+        <member name="P:ModuleBlog.Controllers.Models.Article.Actif">
+            <summary>
+            Gets or sets a value indicating whether this <see cref="T:ModuleBlog.Controllers.Models.Article"/> is actif.
+            </summary>
+            <value>
+              <c>true</c> if actif; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:ModuleBlog.Controllers.Models.Article.ListeTags">
+            <summary>
+            Gets or sets the liste tags.
+            </summary>
+            <value>
+            The liste tags.
+            </value>
+        </member>
+        <member name="T:ModuleBlog.Controllers.Models.Articles">
+            <summary>
+            Liste d'articles
+            </summary>
+        </member>
+        <member name="M:ModuleBlog.Controllers.Models.Blog.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:ModuleBlog.Controllers.Models.Blog"/> class.
+            </summary>
+        </member>
+        <member name="P:ModuleBlog.Controllers.Models.Blog.Blog_id">
+            <summary>
+            Gets or sets the blog_id.
+            </summary>
+            <value>
+            The blog_id.
+            </value>
+        </member>
+        <member name="P:ModuleBlog.Controllers.Models.Blog.Utilisateur_id">
+            <summary>
+            Gets or sets the utilisateur_id.
+            </summary>
+            <value>
+            The utilisateur_id.
+            </value>
+        </member>
+        <member name="P:ModuleBlog.Controllers.Models.Blog.TitreBlog">
+            <summary>
+            Gets or sets the titre blog.
+            </summary>
+            <value>
+            The titre blog.
+            </value>
+        </member>
+        <member name="P:ModuleBlog.Controllers.Models.Blog.DateCreation">
+            <summary>
+            Gets or sets the date creation.
+            </summary>
+            <value>
+            The date creation.
+            </value>
+        </member>
+        <member name="P:ModuleBlog.Controllers.Models.Blog.Categorie_id">
+            <summary>
+            Gets or sets the categorie_id.
+            </summary>
+            <value>
+            The categorie_id.
+            </value>
+        </member>
+        <member name="P:ModuleBlog.Controllers.Models.Blog.Actif">
+            <summary>
+            Gets or sets a value indicating whether this <see cref="T:ModuleBlog.Controllers.Models.Blog"/> is actif.
+            </summary>
+            <value>
+              <c>true</c> if actif; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:ModuleBlog.Controllers.Models.Blog.Promotion">
+            <summary>
+            Gets or sets a value indicating whether this <see cref="T:ModuleBlog.Controllers.Models.Blog"/> is promotion.
+            </summary>
+            <value>
+              <c>true</c> if promotion; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:ModuleBlog.Controllers.Models.Blog.Theme_id">
+            <summary>
+            Gets or sets the theme_id.
+            </summary>
+            <value>
+            The theme_id.
+            </value>
+        </member>
+        <member name="P:ModuleBlog.Controllers.Models.Blog.Theme">
+            <summary>
+            Gets or sets the theme.
+            </summary>
+            <value>
+            The theme.
+            </value>
+        </member>
         <member name="T:ModuleBlog.Controllers.Models.Categorie">
             <summary>
             Objet categorie
@@ -748,6 +952,184 @@
             <summary>
             libellé
             </summary>
+        </member>
+        <member name="M:ModuleBlog.Controllers.Models.Commentaire.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:ModuleBlog.Controllers.Models.Commentaire"/> class.
+            </summary>
+        </member>
+        <member name="P:ModuleBlog.Controllers.Models.Commentaire.Commentaire_id">
+            <summary>
+            Gets or sets the commentaire_id.
+            </summary>
+            <value>
+            The commentaire_id.
+            </value>
+        </member>
+        <member name="P:ModuleBlog.Controllers.Models.Commentaire.Article_id">
+            <summary>
+            Gets or sets the article_id.
+            </summary>
+            <value>
+            The article_id.
+            </value>
+        </member>
+        <member name="P:ModuleBlog.Controllers.Models.Commentaire.Utilisateur_id">
+            <summary>
+            Gets or sets the utilisateur_id.
+            </summary>
+            <value>
+            The utilisateur_id.
+            </value>
+        </member>
+        <member name="P:ModuleBlog.Controllers.Models.Commentaire.ContenuCommentaire">
+            <summary>
+            Gets or sets the contenu commentaire.
+            </summary>
+            <value>
+            The contenu commentaire.
+            </value>
+        </member>
+        <member name="P:ModuleBlog.Controllers.Models.Commentaire.DateCreation">
+            <summary>
+            Gets or sets the date creation.
+            </summary>
+            <value>
+            The date creation.
+            </value>
+        </member>
+        <member name="P:ModuleBlog.Controllers.Models.Commentaire.DateModification">
+            <summary>
+            Gets or sets the date modification.
+            </summary>
+            <value>
+            The date modification.
+            </value>
+        </member>
+        <member name="P:ModuleBlog.Controllers.Models.Commentaire.Actif">
+            <summary>
+            Gets or sets a value indicating whether this <see cref="T:ModuleBlog.Controllers.Models.Commentaire"/> is actif.
+            </summary>
+            <value>
+              <c>true</c> if actif; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="M:ModuleBlog.Controllers.Models.HashTagArticle.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:ModuleBlog.Controllers.Models.HashTagArticle"/> class.
+            </summary>
+        </member>
+        <member name="P:ModuleBlog.Controllers.Models.HashTagArticle.HashTagArticle_id">
+            <summary>
+            Gets or sets the hash tag article_id.
+            </summary>
+            <value>
+            The hash tag article_id.
+            </value>
+        </member>
+        <member name="P:ModuleBlog.Controllers.Models.HashTagArticle.Article_id">
+            <summary>
+            Gets or sets the article_id.
+            </summary>
+            <value>
+            The article_id.
+            </value>
+        </member>
+        <member name="P:ModuleBlog.Controllers.Models.HashTagArticle.Mots">
+            <summary>
+            Gets or sets the mots.
+            </summary>
+            <value>
+            The mots.
+            </value>
+        </member>
+        <member name="M:ModuleBlog.Controllers.Models.Publicite.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:ModuleBlog.Controllers.Models.Publicite"/> class.
+            </summary>
+        </member>
+        <member name="M:ModuleBlog.Controllers.Models.Publicite.#ctor(System.Int32,System.Int32,System.Int32,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ModuleBlog.Controllers.Models.Publicite"/> class.
+            </summary>
+            <param name="blog_id">The blog_id.</param>
+            <param name="largeur">The largeur.</param>
+            <param name="hauteur">The hauteur.</param>
+            <param name="contenu">The contenu.</param>
+        </member>
+        <member name="M:ModuleBlog.Controllers.Models.Publicite.#ctor(System.Int32,System.Int32,System.Int32,System.Int32,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ModuleBlog.Controllers.Models.Publicite"/> class.
+            </summary>
+            <param name="publicite_id">The publicite_id.</param>
+            <param name="blog_id">The blog_id.</param>
+            <param name="largeur">The largeur.</param>
+            <param name="hauteur">The hauteur.</param>
+            <param name="contenu">The contenu.</param>
+        </member>
+        <member name="P:ModuleBlog.Controllers.Models.Publicite.Publicite_id">
+            <summary>
+            Gets or sets the publicite_id.
+            </summary>
+            <value>
+            The publicite_id.
+            </value>
+        </member>
+        <member name="P:ModuleBlog.Controllers.Models.Publicite.Blog_id">
+            <summary>
+            Gets or sets the blog_id.
+            </summary>
+            <value>
+            The blog_id.
+            </value>
+        </member>
+        <member name="P:ModuleBlog.Controllers.Models.Publicite.Largeur">
+            <summary>
+            Gets or sets the largeur.
+            </summary>
+            <value>
+            The largeur.
+            </value>
+        </member>
+        <member name="P:ModuleBlog.Controllers.Models.Publicite.Hauteur">
+            <summary>
+            Gets or sets the hauteur.
+            </summary>
+            <value>
+            The hauteur.
+            </value>
+        </member>
+        <member name="P:ModuleBlog.Controllers.Models.Publicite.ContenuPublicite">
+            <summary>
+            Gets or sets the contenu publicite.
+            </summary>
+            <value>
+            The contenu publicite.
+            </value>
+        </member>
+        <member name="P:ModuleBlog.Controllers.Models.Theme.Theme_id">
+            <summary>
+            Gets or sets the theme_id.
+            </summary>
+            <value>
+            The theme_id.
+            </value>
+        </member>
+        <member name="P:ModuleBlog.Controllers.Models.Theme.Couleur">
+            <summary>
+            Gets or sets the couleur.
+            </summary>
+            <value>
+            The couleur.
+            </value>
+        </member>
+        <member name="P:ModuleBlog.Controllers.Models.Theme.ImageChemin">
+            <summary>
+            Gets or sets the image chemin.
+            </summary>
+            <value>
+            The image chemin.
+            </value>
         </member>
     </members>
 </doc>

@@ -2,15 +2,20 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ModuleBlog.DAL.Models;
 using System.Collections.Generic;
-using ModuleBlog.DAL;
 
 namespace ModuleBlog.Tests
 {
     [TestClass]
     public class UnitTestBlog
     {
+        /// <summary>
+        /// The blog dal
+        /// </summary>
         private ModuleBlog.DAL.BlogDAL blogDAL;
 
+        /// <summary>
+        /// Initializes this instance.
+        /// </summary>
         [TestInitialize]
         public void Init()
         {
@@ -19,6 +24,9 @@ namespace ModuleBlog.Tests
             Assert.IsNotNull(blogDAL);
         }
 
+        /// <summary>
+        /// Tests the get blogs.
+        /// </summary>
         [TestMethod]
         public void TestGetBlogs()
         {
@@ -29,6 +37,9 @@ namespace ModuleBlog.Tests
             Assert.IsTrue(blogList.Count > 0, "Liste des blogs vide");
         }
 
+        /// <summary>
+        /// Tests the get blogs by category.
+        /// </summary>
         [TestMethod]
         public void TestGetBlogsByCategory()
         {
@@ -45,6 +56,9 @@ namespace ModuleBlog.Tests
 
         }
 
+        /// <summary>
+        /// Tests the get blogs by search.
+        /// </summary>
         [TestMethod]
         public void TestGetBlogsBySearch()
         {
@@ -79,6 +93,9 @@ namespace ModuleBlog.Tests
             }
         }
 
+        /// <summary>
+        /// Tests the get promoted blogs.
+        /// </summary>
         [TestMethod]
         public void TestGetPromotedBlogs()
         {
@@ -94,14 +111,20 @@ namespace ModuleBlog.Tests
             }
         }
 
+        /// <summary>
+        /// Tests the add blog.
+        /// </summary>
         [TestMethod]
         public void TestAddBlog()
         {
             //Utilisateur_id 119 à 127 n'ont pas de plog on peut les utiliser pour les test
-            Assert.IsTrue(blogDAL.AddBlog(new Blog { Utilisateur_id = 118, TitreBlog = "Blog de l'utilisateur Test", Categorie_id = 3, Promotion = false, Actif = true, Theme_id = 4 }), "Blog existe déjà");
+            Assert.IsTrue(blogDAL.AddBlog(new Blog { Utilisateur_id = 120, TitreBlog = "Blog de l'utilisateur Test", Categorie_id = 3, Theme_id = 4 }), "Blog existe déjà");
         }
 
 
+        /// <summary>
+        /// Tests the update blog.
+        /// </summary>
         [TestMethod]
         public void TestUpdateBlog()
         {

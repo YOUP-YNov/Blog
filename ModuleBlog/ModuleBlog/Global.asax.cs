@@ -12,6 +12,7 @@ namespace ModuleBlog
             AreaRegistration.RegisterAllAreas();
 
             AutoMapperConfiguration.CreateMap();
+            ModuleBlog.BLL.AutoMapperConfiguration.CreateMap();
         }
 
         

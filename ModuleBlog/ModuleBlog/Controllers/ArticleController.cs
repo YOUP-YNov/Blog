@@ -1,12 +1,8 @@
-﻿using AutoMapper;
-using ModuleBlog.BLL;
+﻿using ModuleBlog.BLL;
 using BLLModels = ModuleBlog.BLL.Models;
 using ControllersModels = ModuleBlog.Controllers.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 
 namespace ModuleBlog.Controllers
@@ -16,28 +12,47 @@ namespace ModuleBlog.Controllers
 
         private ArticleBLL articleBLL;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ArticleController"/> class.
+        /// </summary>
         public ArticleController()
         {
             articleBLL = new ArticleBLL();
         }
 
+        /// <summary>
+        /// Maps the specified articles to map.
+        /// </summary>
+        /// <param name="articlesToMap">The articles to map.</param>
+        /// <returns></returns>
         private ControllersModels.Articles Map(BLLModels.Articles articlesToMap)
         {
             ControllersModels.Articles articles = new ControllersModels.Articles();
 
-            if (articlesToMap.Count > 0)
+            if (articlesToMap != null)
             {
-                foreach (BLLModels.Article article in articlesToMap)
+                if (articlesToMap.Count > 0)
                 {
-                    List<ControllersModels.HashTagArticle> hashTags = Convert<List<BLLModels.HashTagArticle>, List<ControllersModels.HashTagArticle>>(article.ListeTags);
-                    ControllersModels.Article articleToAdd = Convert<BLLModels.Article, ControllersModels.Article>(article);
-                    articleToAdd.ListeTags = hashTags;
-                    articles.Add(articleToAdd);
+                    foreach (BLLModels.Article article in articlesToMap)
+                    {
+                        List<ControllersModels.HashTagArticle> hashTags =
+                            Convert<List<BLLModels.HashTagArticle>, List<ControllersModels.HashTagArticle>>(
+                                article.ListeTags);
+                        ControllersModels.Article articleToAdd =
+                            Convert<BLLModels.Article, ControllersModels.Article>(article);
+                        articleToAdd.ListeTags = hashTags;
+                        articles.Add(articleToAdd);
+                    }
                 }
             }
             return articles;
         }
 
+        /// <summary>
+        /// Maps the specified article to map.
+        /// </summary>
+        /// <param name="articleToMap">The article to map.</param>
+        /// <returns></returns>
         private BLLModels.Article Map(ControllersModels.Article articleToMap)
         {
             BLLModels.Article article = new BLLModels.Article();

@@ -1,12 +1,7 @@
 ﻿using AutoMapper;
-using ModuleBlog.BLL.Models;
 using ModuleBlog.DAL;
-using ModuleBlog.DAL.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace ModuleBlog.BLL
 {
@@ -38,22 +33,22 @@ namespace ModuleBlog.BLL
             ModuleBlog.DAL.Models.Theme themeDao = themeDal.GetThemeById(themeId);
             if (themeDao != null)
             {
-                Mapper.CreateMap<ModuleBlog.DAL.Models.Theme, ModuleBlog.BLL.Models.Theme>();
                 ModuleBlog.BLL.Models.Theme themeBll = Mapper.Map<ModuleBlog.DAL.Models.Theme, ModuleBlog.BLL.Models.Theme>(themeDao);
-
                 return themeBll;
             }
             return null;
         }
 
+        /// <summary>
+        /// Gets the themes.
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<Models.Theme> GetThemes()
         {
             List<ModuleBlog.DAL.Models.Theme> themeDao = themeDal.GetThemes();
             if (themeDao.Count > 0)
             {
-                Mapper.CreateMap<ModuleBlog.DAL.Models.Theme, ModuleBlog.BLL.Models.Theme>();
                 IEnumerable<ModuleBlog.BLL.Models.Theme> themeBll = Mapper.Map<IEnumerable<ModuleBlog.DAL.Models.Theme>, IEnumerable<ModuleBlog.BLL.Models.Theme>>(themeDao);
-
                 return themeBll;
             }
             return null;
