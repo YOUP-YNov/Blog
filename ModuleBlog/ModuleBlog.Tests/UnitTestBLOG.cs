@@ -2,15 +2,20 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ModuleBlog.DAL.Models;
 using System.Collections.Generic;
-using ModuleBlog.DAL;
 
 namespace ModuleBlog.Tests
 {
     [TestClass]
     public class UnitTestBlog
     {
+        /// <summary>
+        /// The blog dal
+        /// </summary>
         private ModuleBlog.DAL.BlogDAL blogDAL;
 
+        /// <summary>
+        /// Initializes this instance.
+        /// </summary>
         [TestInitialize]
         public void Init()
         {
@@ -19,6 +24,9 @@ namespace ModuleBlog.Tests
             Assert.IsNotNull(blogDAL);
         }
 
+        /// <summary>
+        /// Tests the get blogs.
+        /// </summary>
         [TestMethod]
         public void TestGetBlogs()
         {
@@ -29,6 +37,9 @@ namespace ModuleBlog.Tests
             Assert.IsTrue(blogList.Count > 0, "Liste des blogs vide");
         }
 
+        /// <summary>
+        /// Tests the get blogs by category.
+        /// </summary>
         [TestMethod]
         public void TestGetBlogsByCategory()
         {
@@ -45,6 +56,9 @@ namespace ModuleBlog.Tests
 
         }
 
+        /// <summary>
+        /// Tests the get blogs by search.
+        /// </summary>
         [TestMethod]
         public void TestGetBlogsBySearch()
         {
@@ -79,6 +93,9 @@ namespace ModuleBlog.Tests
             }
         }
 
+        /// <summary>
+        /// Tests the get promoted blogs.
+        /// </summary>
         [TestMethod]
         public void TestGetPromotedBlogs()
         {
@@ -94,6 +111,9 @@ namespace ModuleBlog.Tests
             }
         }
 
+        /// <summary>
+        /// Tests the add blog.
+        /// </summary>
         [TestMethod]
         public void TestAddBlog()
         {
@@ -102,6 +122,9 @@ namespace ModuleBlog.Tests
         }
 
 
+        /// <summary>
+        /// Tests the update blog.
+        /// </summary>
         [TestMethod]
         public void TestUpdateBlog()
         {

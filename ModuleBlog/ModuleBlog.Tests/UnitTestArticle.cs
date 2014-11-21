@@ -1,21 +1,27 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ModuleBlog.DAL;
 using ModuleBlog.DAL.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ModuleBlog.Tests
 {
     [TestClass]
     public class UnitTestArticle
     {
+        /// <summary>
+        /// The article dal
+        /// </summary>
         private ArticleDAL ArticleDal;
 
+        /// <summary>
+        /// The article identifier
+        /// </summary>
         private int ArticleId;
 
+        /// <summary>
+        /// Tests the initialize.
+        /// </summary>
         [TestInitialize]
         public void TestInitialize()
         {
@@ -38,6 +44,9 @@ namespace ModuleBlog.Tests
         }
 
 
+        /// <summary>
+        /// Tests the get articles.
+        /// </summary>
         [TestMethod]
         public void TestGetArticles()
         {
@@ -45,6 +54,9 @@ namespace ModuleBlog.Tests
             Assert.IsTrue(articles.Count != 0);
         }
 
+        /// <summary>
+        /// Tests the get articles by tag.
+        /// </summary>
         [TestMethod]
         public void TestGetArticlesByTag()
         {
@@ -55,6 +67,9 @@ namespace ModuleBlog.Tests
             Assert.IsTrue(articles.Count == 0);
         }
 
+        /// <summary>
+        /// Tests the insert article.
+        /// </summary>
         [TestMethod]
         public void TestInsertArticle()
         {
@@ -75,6 +90,9 @@ namespace ModuleBlog.Tests
             Assert.AreEqual(articleToInsert.Evenement_id, articleAdded.Evenement_id);
         }
 
+        /// <summary>
+        /// Tests the add article with hash tags.
+        /// </summary>
         [TestMethod]
         public void TestAddArticleWithHashTags()
         {
@@ -109,6 +127,9 @@ namespace ModuleBlog.Tests
 
         }
 
+        /// <summary>
+        /// Tests the update article.
+        /// </summary>
         [TestMethod]
         public void TestUpdateArticle()
         {
@@ -122,6 +143,9 @@ namespace ModuleBlog.Tests
             Assert.IsTrue(ArticleDal.GetArticlesByTag(0, "Tag1")[0].ContenuArticle == NouveauContenu);
         }
 
+        /// <summary>
+        /// Tests the update article with tags.
+        /// </summary>
         [TestMethod]
         public void TestUpdateArticleWithTags()
         {
@@ -149,6 +173,9 @@ namespace ModuleBlog.Tests
             Assert.AreEqual(ArticleToUpdate.ListeTags.Count, ArticleUpdated.ListeTags.Count);       
         }
 
+        /// <summary>
+        /// Tests the delete article.
+        /// </summary>
         [TestMethod]
         public void TestDeleteArticle()
         {
@@ -168,6 +195,9 @@ namespace ModuleBlog.Tests
 
         }
 
+        /// <summary>
+        /// Tests the like article.
+        /// </summary>
         [TestMethod]
         public void TestLikeArticle()
         {
@@ -177,6 +207,9 @@ namespace ModuleBlog.Tests
             Assert.IsTrue(articleToLike.IsLiked);
         }
 
+        /// <summary>
+        /// Tests the dislike article.
+        /// </summary>
         [TestMethod]
         public void TestDislikeArticle()
         {
@@ -188,6 +221,9 @@ namespace ModuleBlog.Tests
             Assert.IsFalse(articleToDislike.IsLiked);
         }
 
+        /// <summary>
+        /// Tests the clean up.
+        /// </summary>
         [TestCleanup]
         public void TestCleanUp()
         {
