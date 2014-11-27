@@ -36,5 +36,10 @@ namespace ModuleBlog.BLL
             }
             return null;
         }
+
+        public ModuleBlog.BLL.Models.Categorie GetCategoryById(int id)
+        {
+            return Mapper.Map<ModuleBlog.DAL.Models.Categorie, ModuleBlog.BLL.Models.Categorie>(categoryDal.GetCategoryById(id));
+        }
     }
 }

@@ -55,5 +55,11 @@ namespace ModuleBlog.Tests
             Assert.IsNotNull(categoryList);
             Assert.IsTrue(categoryList.Count > 0, "Liste des catégories vide");
         }
+
+        [TestMethod]
+        public void TestGetCategoryById()
+        {
+            Assert.IsNotNull(categoryDal.GetCategoryById(2));
+        }
     }
 }

@@ -56,5 +56,39 @@ namespace ModuleBlog.DAL
                 con.Close();
             }
         }
+
+        public Categorie GetCategoryById(int id)
+        {
+            try
+            {
+                FillData("BLOG_GetCategoryById", ref ds,
+                    new Dictionary<string, object>() { { "@CategoryId", id }});
+
+                Categorie cDao = new Categorie();
+                foreach (DataTable table in ds.Tables)
+                {
+                    foreach (DataRow dr in table.Rows)
+                    {
+                        cDao.Categorie_id = int.Parse(dr["Categorie_id"].ToString());
+                        cDao.Libelle = dr["Libelle"].ToString();
+                    }
+                }
+                return cDao;
+            }
+            catch (SqlException ex)
+            {
+                LogException(ex, "Blog/CategorieDal/GetCategoryById", ex.Message, 1);
+                return null;
+            }
+            catch (Exception ex)
+            {
+                LogException(ex, "Blog/CategorieDal/GetCategoryById", ex.Message, 1);
+                return null;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
     }
 }

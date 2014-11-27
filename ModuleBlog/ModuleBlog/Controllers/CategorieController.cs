@@ -36,5 +36,11 @@ namespace ModuleBlog.Controllers
             IEnumerable<ControllersModels.Categorie> categories = Convert<IEnumerable<BLLModels.Categorie>, IEnumerable<ControllersModels.Categorie>>(categoriesBll);
             return categories;
         }
+
+        [HttpGet, Route("api/category/{id}")]
+        public ControllersModels.Categorie Get(int id)
+        {
+            return Convert<BLLModels.Categorie, Controllers.Models.Categorie>(categoryBLL.GetCategoryById(id));
+        }
     }
 }
