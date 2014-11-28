@@ -52,6 +52,7 @@ namespace ModuleBlog.Controllers
         /// </summary>
         /// <param name="comment">commentaire à ajouter</param>
         /// <returns>Réponse HTTP</returns>
+        [HttpPost, Route("api/comment")]
         public IHttpActionResult Post([FromBody]ModuleBlog.Controllers.Models.Commentaire comment)
         {
             
