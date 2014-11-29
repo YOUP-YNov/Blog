@@ -28,6 +28,7 @@ namespace ModuleBlog.DAL
                 List<Commentaire> listCDao = new List<Commentaire>();
                 foreach (DataTable table in ds.Tables)
                 {
+                    
                     foreach (DataRow dr in table.Rows)
                     {
                         Commentaire cDao = new Commentaire();
