@@ -28,9 +28,9 @@ namespace ModuleBlog.DAL
                 List<Commentaire> listCDao = new List<Commentaire>();
                 foreach (DataTable table in ds.Tables)
                 {
-                    Commentaire cDao = new Commentaire();
                     foreach (DataRow dr in table.Rows)
                     {
+                        Commentaire cDao = new Commentaire();
                         cDao.ContenuCommentaire = Convert.ToString(dr["ContenuCommentaire"].ToString());
                         cDao.Actif = Convert.ToBoolean(dr["Actif"].ToString());
                         cDao.Article_id = Convert.ToInt32(dr["Article_id"].ToString());

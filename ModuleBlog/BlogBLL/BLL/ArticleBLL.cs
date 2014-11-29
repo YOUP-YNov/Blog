@@ -139,9 +139,12 @@ namespace ModuleBlog.BLL
         /// <param name="article">L'article à mettre à jour</param>
         /// <returns>True si DAL OK / False sinon</returns>
         public bool UpdateArticle(ModuleBlog.BLL.Models.Article article)
-        {            
-            ModuleBlog.DAL.Models.Article articleDao = Mapper.Map<ModuleBlog.BLL.Models.Article, ModuleBlog.DAL.Models.Article>(article);
-            return articleDal.UpdateArticle(articleDao);
+        {
+            ModuleBlog.DAL.Models.Article articleDao = Map(article);
+            if (article.Evenement_id != 0 && article.Evenement_id != -1 && article.Evenement_id != null)
+                return articleDal.UpdateArticleWithEvent(articleDao);
+            else
+                return articleDal.UpdateArticle(articleDao);
         }
 
         /// <summary>

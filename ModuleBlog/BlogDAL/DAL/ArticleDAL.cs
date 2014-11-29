@@ -229,7 +229,6 @@ namespace ModuleBlog.DAL
                 listParams.Add("@TitreArticle", article.TitreArticle);
                 listParams.Add("@ImageChemin", article.ImageChemin);
                 listParams.Add("@ContenuArticle", article.ContenuArticle);
-                listParams.Add("@Evenement_id", article.Evenement_id);
                 FillData("BLOG_UpdateArticle", ref ds, listParams);
                 string articleUpdatedId = ds.Tables[0].Rows[0].ItemArray[0].ToString();
 
@@ -255,6 +254,54 @@ namespace ModuleBlog.DAL
             catch(Exception ex)
             {
                 LogException(ex, "Blog/ArticleDAL/UpdateArticle", ex.Message, 1);
+                return false;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
+        /// <summary>
+        /// Mise  à jour d'un article lié à un évènement
+        /// </summary>
+        /// <param name="article">article</param>
+        /// <returns>True si update / False sinon</returns>
+        public bool UpdateArticleWithEvent(Article article)
+        {
+            try
+            {
+                Dictionary<string, object> listParams = new Dictionary<string, object>();
+                listParams.Add("@Article_id", article.Article_id);
+                listParams.Add("@TitreArticle", article.TitreArticle);
+                listParams.Add("@ImageChemin", article.ImageChemin);
+                listParams.Add("@ContenuArticle", article.ContenuArticle);
+                listParams.Add("@Evenement_id", article.Evenement_id);
+                FillData("BLOG_UpdateArticleWithEvent", ref ds, listParams);
+                string articleUpdatedId = ds.Tables[0].Rows[0].ItemArray[0].ToString();
+
+                con.Close();
+
+                if (articleUpdatedId != "PAS OK")
+                {
+                    foreach (HashTagArticle hashtag in article.ListeTags)
+                    {
+                        hashtag.Article_id = int.Parse(articleUpdatedId);
+                        AddHashTag(hashtag, con);
+                    }
+
+                    return true;
+                }
+                return false;
+            }
+            catch (SqlException ex)
+            {
+                LogException(ex, "Blog/ArticleDAL/UpdateArticleWithEvent", ex.Message, 1);
+                return false;
+            }
+            catch (Exception ex)
+            {
+                LogException(ex, "Blog/ArticleDAL/UpdateArticleWithEvent", ex.Message, 1);
                 return false;
             }
             finally
